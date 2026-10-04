@@ -1,0 +1,105 @@
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type SyntheticEvent,
+} from 'react'
+import { Button } from '../../../components/ui/Button'
+import type { TemplateId } from '../../../lib/defaults'
+import type { ResumeData } from '../../../types/resume'
+import { usePreview } from '../hooks/usePreview'
+
+const PREVIEW_WIDTH = 794
+
+interface PreviewPaneProps {
+  data: ResumeData
+  template: TemplateId
+}
+
+export function PreviewPane({ data, template }: PreviewPaneProps) {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [containerWidth, setContainerWidth] = useState(PREVIEW_WIDTH)
+  const [contentHeight, setContentHeight] = useState(1123)
+  const { html, loading, error, retry } = usePreview(data, template)
+  const scale = Math.min(1, containerWidth / PREVIEW_WIDTH)
+
+  useEffect(() => {
+    const container = containerRef.current
+    if (!container || typeof ResizeObserver === 'undefined') {
+      return
+    }
+
+    const resizeObserver = new ResizeObserver((entries) => {
+      const entry = entries[0]
+      if (entry && entry.contentRect.width > 0) {
+        setContainerWidth(entry.contentRect.width)
+      }
+    })
+    resizeObserver.observe(container)
+    return () => resizeObserver.disconnect()
+  }, [])
+
+  const updateContentHeight = useCallback(
+    (event: SyntheticEvent<HTMLIFrameElement>) => {
+      const height = event.currentTarget.contentDocument?.documentElement
+        .scrollHeight
+      if (height && height > 0) {
+        setContentHeight(height)
+      }
+    },
+    [],
+  )
+
+  return (
+    <section
+      aria-labelledby="preview-title"
+      className="grid min-w-0 gap-3"
+    >
+      <h2 id="preview-title" className="text-lg font-semibold text-slate-900">
+        Live preview
+      </h2>
+      <div
+        ref={containerRef}
+        className="relative min-h-64 overflow-hidden rounded-lg border border-slate-200 bg-slate-100"
+      >
+        <div
+          className="origin-top-left"
+          style={{
+            width: PREVIEW_WIDTH,
+            height: contentHeight,
+            transform: `scale(${scale})`,
+          }}
+        >
+          <iframe
+            title="Resume preview"
+            sandbox="allow-same-origin"
+            srcDoc={html}
+            onLoad={updateContentHeight}
+            className="block border-0 bg-white"
+            style={{ width: PREVIEW_WIDTH, height: contentHeight }}
+          />
+        </div>
+        {loading && (
+          <div
+            role="status"
+            className="absolute inset-0 grid place-items-center bg-white/80 text-sm font-medium text-slate-700"
+          >
+            Updating preview…
+          </div>
+        )}
+        {error && (
+          <div
+            role="alert"
+            className="absolute inset-0 grid content-center justify-items-center gap-3 bg-white/95 p-5 text-center"
+          >
+            <p className="text-sm text-red-700">{error}</p>
+            <Button variant="secondary" onClick={retry}>
+              Retry preview
+            </Button>
+          </div>
+        )}
+      </div>
+    </section>
+  )
+}
