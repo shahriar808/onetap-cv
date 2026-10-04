@@ -1,6 +1,7 @@
 from typing import Any
 
 from jinja2 import Environment, FileSystemLoader
+from weasyprint import HTML
 
 from app.schemas.resume import ResumeData
 from app.services.formatting import date_range, display_url, fmt_date, href_url
@@ -233,3 +234,7 @@ def render_html(data: ResumeData, template_id: str) -> str:
         + (template_dir / "style.css").read_text(encoding="utf-8")
     )
     return environment.get_template("template.html.j2").render(**context)
+
+
+def render_pdf(data: ResumeData, template_id: str) -> bytes:
+    return HTML(string=render_html(data, template_id)).write_pdf()
