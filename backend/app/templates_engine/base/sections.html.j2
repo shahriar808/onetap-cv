@@ -8,3 +8,37 @@
   {% endif %}
 </div>
 {%- endmacro %}
+
+{% macro render_experience(items, layout) -%}
+{% for item in items %}
+<div class="entry">
+  {% if layout == 'company_first' %}
+    {{ entry_head(layout, item.company, item.position, item.location, item.dates) }}
+  {% elif layout == 'inline' %}
+    {% set primary = [item.position, item.company, item.location] | reject('equalto', '') | join(', ') %}
+    {{ entry_head(layout, primary, '', '', item.dates) }}
+  {% else %}
+    {{ entry_head(layout, item.position, item.company, item.location, item.dates) }}
+  {% endif %}
+  {% if item.summary %}<p class="entry-summary">{{ item.summary }}</p>{% endif %}
+  {% if item.bullets %}<ul>{% for bullet in item.bullets %}<li>{{ bullet }}</li>{% endfor %}</ul>{% endif %}
+</div>
+{% endfor %}
+{%- endmacro %}
+
+{% macro render_education(items, layout) -%}
+{% for item in items %}
+<div class="entry">
+  {% set meta = [item.location, item.gpa_text] | reject('equalto', '') | join(' | ') %}
+  {% if layout == 'company_first' %}
+    {{ entry_head(layout, item.institution, item.degree_line, meta, item.dates) }}
+  {% elif layout == 'inline' %}
+    {% set primary = [item.degree_line, item.institution, item.gpa_text] | reject('equalto', '') | join(', ') %}
+    {{ entry_head(layout, primary, '', '', item.dates) }}
+  {% else %}
+    {{ entry_head(layout, item.degree_line, item.institution, meta, item.dates) }}
+  {% endif %}
+  {% if item.details %}<ul>{% for detail in item.details %}<li>{{ detail }}</li>{% endfor %}</ul>{% endif %}
+</div>
+{% endfor %}
+{%- endmacro %}

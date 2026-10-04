@@ -50,3 +50,72 @@ def test_entry_head_skips_empty_values_and_escapes_html() -> None:
     assert 'class="entry-dates"' not in html
     assert 'class="line2"' not in html
     assert "<span></span>" not in html
+
+
+def test_experience_macro_renders_bullets_only_when_present() -> None:
+    macro = environment.get_template("sections.html.j2").module.render_experience
+    html = macro(
+        [
+            {
+                "position": "Engineer",
+                "company": "Example",
+                "location": "",
+                "dates": "2024",
+                "summary": "Built systems",
+                "bullets": ["First", "Second"],
+            },
+            {
+                "position": "Intern",
+                "company": "Other",
+                "location": "",
+                "dates": "",
+                "summary": "",
+                "bullets": [],
+            },
+        ],
+        "position_first",
+    )
+
+    assert "<li>First</li>" in html
+    assert "<li>Second</li>" in html
+    assert html.count("<ul>") == 1
+    assert "Built systems" in html
+
+
+def test_experience_inline_macro_joins_fields_in_reading_order() -> None:
+    macro = environment.get_template("sections.html.j2").module.render_experience
+    html = macro(
+        [
+            {
+                "position": "Engineer",
+                "company": "Example",
+                "location": "Dhaka",
+                "dates": "2024",
+                "summary": "",
+                "bullets": [],
+            }
+        ],
+        "inline",
+    )
+
+    assert "Engineer, Example, Dhaka" in html
+    assert 'class="line2"' not in html
+
+
+def test_education_macro_swaps_institution_and_degree_by_layout() -> None:
+    macro = environment.get_template("sections.html.j2").module.render_education
+    item = {
+        "institution": "Example University",
+        "degree_line": "BSc, Computing",
+        "location": "Dhaka",
+        "dates": "2024",
+        "gpa_text": "CGPA: 3.41",
+        "details": [],
+    }
+
+    classic = macro([item], "company_first")
+    modern = macro([item], "position_first")
+
+    assert classic.index("Example University") < classic.index("BSc, Computing")
+    assert modern.index("BSc, Computing") < modern.index("Example University")
+    assert "CGPA: 3.41" in classic
