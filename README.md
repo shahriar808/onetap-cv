@@ -185,6 +185,21 @@ Netlify-style redirects, so refreshing `/build` serves the app. Set backend
    version. Do not rename or remove the `cvbuilder:v1` storage key without a
    deliberate migration plan.
 
+## Release QA (v1.0.0)
+
+- Backend: `pytest -q` — 98 passed. One upstream Starlette/httpx deprecation
+  warning remains.
+- Frontend: 59 tests passed; `npm run build` and `npm run lint` passed cleanly.
+- Local browser flow: the three template PDF requests returned HTTP 200 with
+  `application/pdf`; the built `/build` route loaded successfully; no horizontal
+  overflow was observed at 360, 390, 768, and 1280 pixel viewport widths.
+- Clear-data confirmation and browser-storage removal were checked in the
+  browser.
+- Public deployment and live-URL checks are deferred; no deployment was
+  requested. A Docker build could not be run because Docker/Podman is not
+  installed in the development environment. Physical-device and Lighthouse
+  checks remain outstanding.
+
 ## Assumptions
 
 - Resume content is stored locally under `cvbuilder:v1`; clearing it removes
