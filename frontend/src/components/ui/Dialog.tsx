@@ -24,7 +24,9 @@ export function Dialog({
   const dialogRef = useRef<HTMLDivElement>(null)
   const previousFocusRef = useRef<HTMLElement | null>(null)
   const onCancelRef = useRef(onCancel)
-  onCancelRef.current = onCancel
+  useEffect(() => {
+    onCancelRef.current = onCancel
+  }, [onCancel])
 
   useEffect(() => {
     if (!open) {

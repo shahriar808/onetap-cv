@@ -1,4 +1,4 @@
-import { useId } from 'react'
+import { useId, useState } from 'react'
 
 interface MonthYearInputProps {
   label: string
@@ -38,7 +38,7 @@ export function MonthYearInput({
 }: MonthYearInputProps) {
   const id = useId()
   const { year, month } = parseValue(value)
-  const currentYear = new Date().getFullYear()
+  const [currentYear] = useState(() => new Date().getFullYear())
 
   return (
     <fieldset className="grid gap-1.5">

@@ -1,4 +1,4 @@
-export const BUILDER_STEPS = [
+const BUILDER_STEPS = [
   'Contact',
   'Sections',
   'Details',

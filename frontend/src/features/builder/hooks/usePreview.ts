@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { fetchPreview } from '../../../lib/api'
 import type { TemplateId } from '../../../lib/defaults'
 import type { ResumeData } from '../../../types/resume'
@@ -9,6 +9,16 @@ interface PreviewState {
   loading: boolean
   error: string | null
   retry: () => void
+}
+
+interface PreviewResult {
+  requestKey: {
+    data: ResumeData
+    template: TemplateId
+    retryCount: number
+  }
+  html: string
+  error: string | null
 }
 
 function withPreviewContact(data: ResumeData): ResumeData {
@@ -28,41 +38,44 @@ export function usePreview(
   template: TemplateId,
 ): PreviewState {
   const debouncedData = useDebouncedValue(data, 600)
-  const [html, setHtml] = useState('')
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
   const [retryCount, setRetryCount] = useState(0)
+  const requestKey = useMemo(
+    () => ({ data: debouncedData, template, retryCount }),
+    [debouncedData, template, retryCount],
+  )
+  const [result, setResult] = useState<PreviewResult | null>(null)
 
   useEffect(() => {
     const controller = new AbortController()
-    setLoading(true)
-    setError(null)
 
     fetchPreview(withPreviewContact(debouncedData), template, controller.signal)
-      .then(setHtml)
+      .then((html) => {
+        if (!controller.signal.aborted) {
+          setResult({ requestKey, html, error: null })
+        }
+      })
       .catch((requestError: unknown) => {
         if (controller.signal.aborted) {
           return
         }
-        setError(
-          requestError instanceof Error
-            ? requestError.message
-            : 'Could not load the resume preview.',
-        )
-      })
-      .finally(() => {
-        if (!controller.signal.aborted) {
-          setLoading(false)
-        }
+        setResult({
+          requestKey,
+          html: '',
+          error:
+            requestError instanceof Error
+              ? requestError.message
+              : 'Could not load the resume preview.',
+        })
       })
 
     return () => controller.abort()
-  }, [debouncedData, template, retryCount])
+  }, [debouncedData, template, retryCount, requestKey])
 
+  const currentResult = result?.requestKey === requestKey ? result : null
   return {
-    html,
-    loading,
-    error,
+    html: currentResult?.html ?? result?.html ?? '',
+    loading: currentResult === null,
+    error: currentResult?.error ?? null,
     retry: () => setRetryCount((count) => count + 1),
   }
 }

@@ -1,43 +1,52 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { getTemplates, type TemplateMetadata } from '../../../lib/api'
 import { useResumeStore } from '../../../store/resumeStore'
 
 export function TemplatePicker() {
   const selectedTemplate = useResumeStore((state) => state.selectedTemplate)
   const setTemplate = useResumeStore((state) => state.setTemplate)
-  const [templates, setTemplates] = useState<TemplateMetadata[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
   const [reloadCount, setReloadCount] = useState(0)
+  const requestKey = useMemo(
+    () => ({ reloadCount }),
+    [reloadCount],
+  )
+  const [result, setResult] = useState<{
+    requestKey: { reloadCount: number }
+    templates: TemplateMetadata[]
+    error: string | null
+  } | null>(null)
 
   useEffect(() => {
-    const controller = new AbortController()
-    setLoading(true)
-    setError(null)
+    let active = true
 
     getTemplates()
       .then((result) => {
-        if (!controller.signal.aborted) {
-          setTemplates(result)
+        if (active) {
+          setResult({ requestKey, templates: result, error: null })
         }
       })
       .catch((requestError: unknown) => {
-        if (!controller.signal.aborted) {
-          setError(
-            requestError instanceof Error
-              ? requestError.message
-              : 'Could not load resume templates.',
-          )
-        }
-      })
-      .finally(() => {
-        if (!controller.signal.aborted) {
-          setLoading(false)
+        if (active) {
+          setResult({
+            requestKey,
+            templates: [],
+            error:
+              requestError instanceof Error
+                ? requestError.message
+                : 'Could not load resume templates.',
+          })
         }
       })
 
-    return () => controller.abort()
-  }, [reloadCount])
+    return () => {
+      active = false
+    }
+  }, [reloadCount, requestKey])
+
+  const currentResult = result?.requestKey === requestKey ? result : null
+  const loading = currentResult === null
+  const templates = currentResult?.templates ?? []
+  const error = currentResult?.error ?? null
 
   if (loading) {
     return <p role="status">Loading templates…</p>

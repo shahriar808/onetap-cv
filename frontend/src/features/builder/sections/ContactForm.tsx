@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Input } from '../../../components/ui/Input'
 import { LinksEditor } from '../components/LinksEditor'
 import { useResumeStore } from '../../../store/resumeStore'
@@ -15,11 +15,8 @@ export function ContactForm({ validationRequest = 0 }: ContactFormProps) {
   const updateContact = useResumeStore((state) => state.updateContact)
   const [errors, setErrors] = useState<Record<string, string>>({})
 
-  useEffect(() => {
-    if (validationRequest > 0) {
-      setErrors(validateContact(contact).errors)
-    }
-  }, [contact, validationRequest])
+  const visibleErrors =
+    validationRequest > 0 ? validateContact(contact).errors : errors
 
   function validateField(field: RequiredContactField) {
     const result = validateContact(contact)
@@ -55,7 +52,7 @@ export function ContactForm({ validationRequest = 0 }: ContactFormProps) {
         type={type}
         required
         value={contact[field]}
-        error={errors[field]}
+        error={visibleErrors[field]}
         onChange={(event) =>
           updateValue(event.currentTarget.value)
         }
