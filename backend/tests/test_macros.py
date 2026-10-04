@@ -119,3 +119,55 @@ def test_education_macro_swaps_institution_and_degree_by_layout() -> None:
     assert classic.index("Example University") < classic.index("BSc, Computing")
     assert modern.index("BSc, Computing") < modern.index("Example University")
     assert "CGPA: 3.41" in classic
+
+
+def test_skills_macro_renders_lines_and_inline_styles() -> None:
+    macro = environment.get_template("sections.html.j2").module.render_skills
+    items = [
+        {"group": "Languages", "text": "Java, Python"},
+        {"group": "Frameworks", "text": "React, FastAPI"},
+    ]
+
+    lines = macro(items, "lines")
+    inline = macro(items, "inline")
+
+    assert lines.count('class="skills-line"') == 2
+    assert inline.count('class="skills-inline"') == 1
+    assert "Languages:</strong> Java, Python | <strong>Frameworks:" in inline
+
+
+def test_projects_macro_renders_visible_links_and_compact_layout() -> None:
+    macro = environment.get_template("sections.html.j2").module.render_projects
+    item = {
+        "name": "Project",
+        "description": "Short description",
+        "tech_stack": "Python",
+        "dates": "",
+        "links": [{"label": "GitHub", "text": "github.com/example", "href": "https://github.com/example"}],
+        "bullets": ["Built a feature"],
+    }
+
+    standard = macro([item], "position_first")
+    compact = macro([item], "inline")
+
+    assert '<a href="https://github.com/example">github.com/example</a>' in standard
+    assert "<li>Built a feature</li>" in standard
+    assert "Project - Python" in compact
+    assert "Short description" in compact
+    assert '<a href="https://github.com/example">github.com/example</a>' in compact
+
+
+def test_compact_projects_omit_long_descriptions() -> None:
+    macro = environment.get_template("sections.html.j2").module.render_projects
+    item = {
+        "name": "Project",
+        "description": "x" * 91,
+        "tech_stack": "",
+        "dates": "",
+        "links": [],
+        "bullets": [],
+    }
+
+    compact = macro([item], "inline")
+
+    assert "x" * 91 not in compact

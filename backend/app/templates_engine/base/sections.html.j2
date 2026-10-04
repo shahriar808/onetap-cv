@@ -42,3 +42,32 @@
 </div>
 {% endfor %}
 {%- endmacro %}
+
+{% macro render_skills(items, skills_style) -%}
+{% if skills_style == 'inline' %}
+<p class="skills-inline">{% for item in items %}{% if not loop.first %} | {% endif %}{% if item.group %}<strong>{{ item.group }}:</strong> {% endif %}{{ item.text }}{% endfor %}</p>
+{% else %}
+{% for item in items %}
+<p class="skills-line">{% if item.group %}<strong>{{ item.group }}:</strong> {% endif %}{{ item.text }}</p>
+{% endfor %}
+{% endif %}
+{%- endmacro %}
+
+{% macro render_projects(items, layout) -%}
+{% for item in items %}
+<div class="entry">
+  {% if layout == 'inline' %}
+    {% set primary = [item.name, item.tech_stack] | reject('equalto', '') | join(' - ') %}
+    {{ entry_head(layout, primary, '', '', item.dates) }}
+    {% if item.links %}<p class="project-links">{% for link in item.links %}{% if not loop.first %} | {% endif %}<a href="{{ link.href }}">{{ link.text }}</a>{% endfor %}</p>{% endif %}
+    {% if item.description and item.description | length <= 90 %}<p class="project-description">{{ item.description }}</p>{% endif %}
+  {% else %}
+    {{ entry_head(layout, item.name, '', '', item.dates) }}
+    {% if item.description %}<p class="project-description">{{ item.description }}</p>{% endif %}
+    {% if item.tech_stack %}<p class="project-tech-stack"><em>{{ item.tech_stack }}</em></p>{% endif %}
+    {% if item.links %}<p class="project-links">{% for link in item.links %}{% if not loop.first %} | {% endif %}<a href="{{ link.href }}">{{ link.text }}</a>{% endfor %}</p>{% endif %}
+  {% endif %}
+  {% if item.bullets %}<ul>{% for bullet in item.bullets %}<li>{{ bullet }}</li>{% endfor %}</ul>{% endif %}
+</div>
+{% endfor %}
+{%- endmacro %}
