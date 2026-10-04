@@ -1,0 +1,22 @@
+{% from "sections.html.j2" import render_section %}
+{% set layout = 'inline' %}
+{% set skills_style = 'inline' %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>{{ contact.full_name }} - Resume</title>
+  <style>{{ css }}</style>
+</head>
+<body class="tpl-compact">
+  <header class="resume-header">
+    <h1>{{ contact.full_name }}{% if contact.job_title %} — <span class="job-title">{{ contact.job_title }}</span>{% endif %}</h1>
+    {% if contact.contact_line or contact.links %}
+    <p class="contact-line">{% if contact.contact_line %}{{ contact.contact_line }}{% endif %}{% for link in contact.links %}{% if contact.contact_line or not loop.first %} | {% endif %}{{ link.label }}: <a href="{{ link.href }}">{{ link.text }}</a>{% endfor %}</p>
+    {% endif %}
+  </header>
+  <main>
+    {% for section in sections %}{{ render_section(section, layout, skills_style) }}{% endfor %}
+  </main>
+</body>
+</html>

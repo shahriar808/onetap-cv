@@ -19,6 +19,12 @@ TEMPLATES: dict[str, TemplateMeta] = {
         "Centered serif layout with a formal look",
         "Finance, law, academia, traditional companies",
     ),
+    "compact": TemplateMeta(
+        "compact",
+        "Compact",
+        "Dense one-line entries that fit more on a page",
+        "Experienced people and long CVs",
+    ),
     "modern": TemplateMeta(
         "modern",
         "Modern",

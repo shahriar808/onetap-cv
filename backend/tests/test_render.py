@@ -7,7 +7,7 @@ from app.schemas.resume import ResumeData
 from app.services.render_service import render_html, render_pdf
 
 
-@pytest.mark.parametrize("template_id", ["modern", "classic"])
+@pytest.mark.parametrize("template_id", ["modern", "classic", "compact"])
 def test_template_html_contains_contact_and_resume_content(
     sample_resume: ResumeData,
     template_id: str,
@@ -23,8 +23,10 @@ def test_template_html_contains_contact_and_resume_content(
     position = html.index("Software Engineer", experience_start)
     if template_id == "classic":
         assert company < position
-    else:
+    elif template_id == "modern":
         assert position < company
+    else:
+        assert "Software Engineer, Ternary Solutions" in html
 
 
 def test_render_html_escapes_user_content(sample_resume: ResumeData) -> None:
@@ -52,7 +54,7 @@ def pdf_text(pdf: bytes) -> str:
     return "\n".join(page.extract_text() or "" for page in reader.pages)
 
 
-@pytest.mark.parametrize("template_id", ["modern", "classic"])
+@pytest.mark.parametrize("template_id", ["modern", "classic", "compact"])
 def test_render_pdf_contains_selectable_text_in_reading_order(
     sample_resume: ResumeData,
     template_id: str,
@@ -69,13 +71,15 @@ def test_render_pdf_contains_selectable_text_in_reading_order(
     position_position = text.index("Software Engineer", experience_start)
     if template_id == "classic":
         assert name_position < email_position < company_position < position_position
-    else:
+    elif template_id == "modern":
         assert name_position < email_position < position_position < company_position
+    else:
+        assert name_position < email_position < company_position
     assert "github.com/shahriar808" in text
     assert text.index("Programming Languages") < text.index("Frontend Frameworks")
 
 
-@pytest.mark.parametrize("template_id", ["modern", "classic"])
+@pytest.mark.parametrize("template_id", ["modern", "classic", "compact"])
 def test_render_pdf_omits_disabled_sections(
     sample_resume: ResumeData,
     template_id: str,
@@ -88,6 +92,26 @@ def test_render_pdf_omits_disabled_sections(
     assert "Ternary Solutions" in text
     assert "Professional Summary" not in text
     assert "Programming Languages" not in text
+
+
+@pytest.mark.parametrize("template_id", ["modern", "classic", "compact"])
+def test_templates_use_configured_layout_and_skills_styles(
+    sample_resume: ResumeData,
+    template_id: str,
+) -> None:
+    html = render_html(sample_resume, template_id)
+    experience = html.split(
+        'class="resume-section section-experience"', 1
+    )[1].split("</section>", 1)[0]
+
+    if template_id == "compact":
+        assert 'class="line2"' not in experience
+        assert html.count('class="skills-inline"') == 1
+        assert 'class="skills-line"' not in html
+    else:
+        assert 'class="line2"' in experience
+        assert html.count('class="skills-line"') > 1
+        assert 'class="skills-inline"' not in html
 
 
 def test_render_pdf_omits_enabled_but_empty_sections(sample_resume: ResumeData) -> None:

@@ -1,0 +1,14 @@
+@page { size: A4; margin: 0.5in; }
+.tpl-compact { font-family: Arial, Helvetica, sans-serif; font-size: 9.5pt; }
+.resume-header { padding-bottom: 4pt; }
+.resume-header h1 { font-size: 18pt; font-weight: 700; }
+.job-title { font-size: 12pt; font-weight: 400; }
+.contact-line { margin-top: 3pt; }
+.tpl-compact h2.section-title { background: #eeeeee; font-size: 10pt; font-weight: 700; margin: 6pt 0 4pt; padding: 2pt 4pt; text-transform: uppercase; }
+.tpl-compact .line1 .entry-primary { font-weight: 700; }
+.resume-section { margin-bottom: 6pt; }
+.entry { margin-bottom: 3pt; }
+.entry-summary, .project-description, .project-tech-stack, .project-links, .entry-link, .reference-contact { margin-top: 1pt; }
+.skills-inline { line-height: 1.25; }
+ul { margin: 1pt 0 0 12pt; }
+li { margin-bottom: 0.5pt; }
