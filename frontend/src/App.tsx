@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { ContactForm } from './features/builder/sections/ContactForm'
 import { getHealth } from './lib/api'
 
 type HealthStatus = 'checking' | 'ok' | 'down'
@@ -47,6 +48,9 @@ function App() {
       <p className="mt-8 rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">
         {message}
       </p>
+      <div className="mt-10 w-full max-w-xl text-left">
+        <ContactForm />
+      </div>
     </main>
   )
 }
