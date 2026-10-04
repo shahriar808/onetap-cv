@@ -19,6 +19,7 @@ SectionId = Literal[
 
 DATE_PATTERN = r"^(\d{4}(-(0[1-9]|1[0-2]))?)?$"
 Bullet = Annotated[str, Field(max_length=300)]
+ShortText = Annotated[str, Field(max_length=60)]
 
 
 class LinkItem(BaseModel):
@@ -64,7 +65,7 @@ class EducationItem(BaseModel):
 class SkillGroup(BaseModel):
     id: str
     group_name: str = Field(default="", max_length=60)
-    items: list[str] = Field(default_factory=list, max_length=40)
+    items: list[ShortText] = Field(default_factory=list, max_length=40)
 
 
 class ProjectLink(BaseModel):
@@ -136,4 +137,23 @@ class SummarySection(BaseModel):
 
 
 class InterestsSection(BaseModel):
-    items: list[str] = Field(default_factory=list, max_length=30)
+    items: list[ShortText] = Field(default_factory=list, max_length=30)
+
+
+class ResumeData(BaseModel):
+    version: int = 1
+    contact: Contact
+    enabled_sections: list[SectionId] = Field(default_factory=list)
+    section_order: list[SectionId] = Field(default_factory=list)
+    summary: SummarySection = Field(default_factory=SummarySection)
+    experience: list[ExperienceItem] = Field(default_factory=list, max_length=20)
+    education: list[EducationItem] = Field(default_factory=list, max_length=10)
+    skills: list[SkillGroup] = Field(default_factory=list, max_length=20)
+    projects: list[ProjectItem] = Field(default_factory=list, max_length=20)
+    certifications: list[CertificationItem] = Field(default_factory=list, max_length=20)
+    achievements: list[AchievementItem] = Field(default_factory=list, max_length=20)
+    languages: list[LanguageItem] = Field(default_factory=list, max_length=20)
+    publications: list[PublicationItem] = Field(default_factory=list, max_length=20)
+    volunteer: list[VolunteerItem] = Field(default_factory=list, max_length=20)
+    interests: InterestsSection = Field(default_factory=InterestsSection)
+    references: list[ReferenceItem] = Field(default_factory=list, max_length=20)

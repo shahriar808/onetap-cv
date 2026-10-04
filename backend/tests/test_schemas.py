@@ -2,6 +2,7 @@ import pytest
 from pydantic import ValidationError
 
 from app.schemas.resume import (
+    AchievementItem,
     CertificationItem,
     Contact,
     EducationItem,
@@ -14,6 +15,7 @@ from app.schemas.resume import (
     ProjectItem,
     ProjectLink,
     ReferenceItem,
+    ResumeData,
     SkillGroup,
     SummarySection,
     VolunteerItem,
@@ -186,3 +188,16 @@ def test_summary_limits_text_length() -> None:
 def test_interests_limits_item_count() -> None:
     with pytest.raises(ValidationError):
         InterestsSection(items=["interest"] * 31)
+
+
+def test_sample_resume_fixture_validates(sample_resume: ResumeData) -> None:
+    assert sample_resume.contact.full_name == "MD Shahriar Hasan"
+
+
+def test_resume_data_requires_contact_email(sample_data: dict[str, object]) -> None:
+    contact = sample_data["contact"]
+    assert isinstance(contact, dict)
+    contact.pop("email")
+
+    with pytest.raises(ValidationError):
+        ResumeData.model_validate(sample_data)
