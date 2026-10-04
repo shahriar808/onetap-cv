@@ -25,9 +25,25 @@ export function PreviewPane({ data, template }: PreviewPaneProps) {
   const scale = Math.min(1, containerWidth / PREVIEW_WIDTH)
 
   useEffect(() => {
-    const container = containerRef.current
-    if (!container || typeof ResizeObserver === 'undefined') {
+    if (!containerRef.current) {
       return
+    }
+
+    function updateWidth() {
+      const container = containerRef.current
+      if (!container) {
+        return
+      }
+      const width = container.clientWidth
+      if (width > 0) {
+        setContainerWidth(width)
+      }
+    }
+
+    updateWidth()
+    window.addEventListener('resize', updateWidth)
+    if (typeof ResizeObserver === 'undefined') {
+      return () => window.removeEventListener('resize', updateWidth)
     }
 
     const resizeObserver = new ResizeObserver((entries) => {
@@ -36,8 +52,11 @@ export function PreviewPane({ data, template }: PreviewPaneProps) {
         setContainerWidth(entry.contentRect.width)
       }
     })
-    resizeObserver.observe(container)
-    return () => resizeObserver.disconnect()
+    resizeObserver.observe(containerRef.current)
+    return () => {
+      resizeObserver.disconnect()
+      window.removeEventListener('resize', updateWidth)
+    }
   }, [])
 
   const updateContentHeight = useCallback(
@@ -61,24 +80,33 @@ export function PreviewPane({ data, template }: PreviewPaneProps) {
       </h2>
       <div
         ref={containerRef}
-        className="relative min-h-64 overflow-hidden rounded-lg border border-slate-200 bg-slate-100"
+        className="relative min-h-64 overflow-hidden rounded-xl border border-slate-200 bg-white"
       >
         <div
-          className="origin-top-left"
+          data-testid="preview-document"
+          className="relative w-full"
           style={{
-            width: PREVIEW_WIDTH,
-            height: contentHeight,
-            transform: `scale(${scale})`,
+            height: contentHeight * scale,
           }}
         >
-          <iframe
-            title="CV preview"
-            sandbox="allow-same-origin"
-            srcDoc={html}
-            onLoad={updateContentHeight}
-            className="block border-0 bg-white"
-            style={{ width: PREVIEW_WIDTH, height: contentHeight }}
-          />
+          <div
+            data-testid="preview-document-content"
+            className="absolute left-0 top-0 origin-top-left"
+            style={{
+              width: PREVIEW_WIDTH,
+              height: contentHeight,
+              transform: `scale(${scale})`,
+            }}
+          >
+            <iframe
+              title="CV preview"
+              sandbox="allow-same-origin"
+              srcDoc={html}
+              onLoad={updateContentHeight}
+              className="block border-0 bg-white"
+              style={{ width: PREVIEW_WIDTH, height: contentHeight }}
+            />
+          </div>
         </div>
         {loading && (
           <div
@@ -88,7 +116,10 @@ export function PreviewPane({ data, template }: PreviewPaneProps) {
             {html ? (
               'Updating preview…'
             ) : (
-              <div className="grid w-full max-w-sm gap-4" aria-label="Loading CV preview">
+              <div
+                className="grid w-full max-w-sm gap-4"
+                aria-label="Loading CV preview"
+              >
                 <span>Preparing your CV preview…</span>
                 <span className="h-5 animate-pulse rounded bg-slate-200" />
                 <span className="h-3 animate-pulse rounded bg-slate-200" />

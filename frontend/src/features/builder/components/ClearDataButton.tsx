@@ -21,7 +21,11 @@ export function ClearDataButton({ onCleared }: ClearDataButtonProps) {
 
   return (
     <>
-      <Button variant="ghost" onClick={() => setOpen(true)}>
+      <Button
+        variant="secondary"
+        className="border-slate-300 !bg-slate-100 text-slate-900 hover:!bg-slate-200"
+        onClick={() => setOpen(true)}
+      >
         Clear all my data
       </Button>
       <Dialog
