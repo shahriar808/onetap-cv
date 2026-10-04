@@ -1,0 +1,10 @@
+{% macro entry_head(layout, primary, secondary, meta, dates) -%}
+<div class="entry-head">
+  {% if primary or dates %}
+  <div class="line1">{% if primary %}<span class="entry-primary">{{ primary }}</span>{% endif %}{% if dates %}<span class="entry-dates">{{ dates }}</span>{% endif %}</div>
+  {% endif %}
+  {% if layout != 'inline' and (secondary or meta) %}
+  <div class="line2">{% if secondary %}<span class="entry-secondary">{{ secondary }}</span>{% endif %}{% if meta %}<span class="entry-meta">{{ meta }}</span>{% endif %}</div>
+  {% endif %}
+</div>
+{%- endmacro %}
