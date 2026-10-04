@@ -6,3 +6,4 @@ ALLOWED_ORIGINS = [
     if origin.strip()
 ]
 MAX_BODY_BYTES = int(os.getenv("MAX_BODY_BYTES", "1048576"))
+RATE_LIMIT = os.getenv("RATE_LIMIT", "30/minute")

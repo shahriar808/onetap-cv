@@ -1,6 +1,8 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Request
 from fastapi.responses import HTMLResponse, Response
 
+from app import config
+from app.limiter import limiter
 from app.schemas.resume import ResumeData
 from app.services.formatting import safe_filename
 from app.services.render_service import render_pdf, render_preview_html
@@ -10,14 +12,24 @@ router = APIRouter(prefix="/api/resume")
 
 
 @router.post("/preview", response_class=HTMLResponse)
-def preview_resume(data: ResumeData, template: str = "modern") -> HTMLResponse:
+@limiter.limit(lambda: config.RATE_LIMIT)
+def preview_resume(
+    request: Request,
+    data: ResumeData,
+    template: str = "modern",
+) -> HTMLResponse:
     if template not in TEMPLATES:
         raise HTTPException(status_code=404, detail="Unknown template")
     return HTMLResponse(content=render_preview_html(data, template))
 
 
 @router.post("/pdf")
-def download_resume(data: ResumeData, template: str = "modern") -> Response:
+@limiter.limit(lambda: config.RATE_LIMIT)
+def download_resume(
+    request: Request,
+    data: ResumeData,
+    template: str = "modern",
+) -> Response:
     if template not in TEMPLATES:
         raise HTTPException(status_code=404, detail="Unknown template")
     filename = safe_filename(data.contact.full_name)
