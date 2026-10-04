@@ -17,7 +17,17 @@ def test_template_html_contains_contact_and_resume_content(
     assert "MD Shahriar Hasan" in html
     assert "shasan5525@gmail.com" in html
     assert f'class="tpl-{template_id}"' in html
-    assert "github.com/shahriar808" in html
+    assert 'href="https://github.com/shahriar808"' in html
+    assert "GitHub" in html
+    header = html.split("</header>", 1)[0]
+    assert header.index("MD Shahriar Hasan") < header.index(
+        "Banasree, Rampura, Dhaka-1219, Bangladesh"
+    )
+    assert header.index("Banasree, Rampura, Dhaka-1219, Bangladesh") < header.index(
+        "+8801763785508"
+    )
+    assert header.index("+8801763785508") < header.index("LinkedIn")
+    assert ">github.com/shahriar808<" not in header
     experience_start = html.index("Work Experience")
     company = html.index("Ternary Solutions", experience_start)
     position = html.index("Software Engineer", experience_start)
@@ -75,7 +85,8 @@ def test_render_pdf_contains_selectable_text_in_reading_order(
         assert name_position < email_position < position_position < company_position
     else:
         assert name_position < email_position < company_position
-    assert "github.com/shahriar808" in text
+    assert "GitHub" in text
+    assert "github.com/shahriar808" not in text
     assert text.index("Programming Languages") < text.index("Frontend Frameworks")
 
 

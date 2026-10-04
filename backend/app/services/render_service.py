@@ -5,7 +5,7 @@ from markupsafe import Markup
 from weasyprint import HTML
 
 from app.schemas.resume import ResumeData
-from app.services.formatting import date_range, display_url, fmt_date, href_url
+from app.services.formatting import date_range, fmt_date, href_url
 from app.templates_engine.registry import BASE, get_template_dir
 
 SECTION_LABELS = {
@@ -35,7 +35,7 @@ def _links(links: list[Any]) -> list[dict[str, str]]:
     return [
         {
             "label": link.label,
-            "text": display_url(link.url),
+            "text": link.label or "Project link",
             "href": href_url(link.url),
         }
         for link in links
@@ -108,7 +108,7 @@ def _section_items(data: ResumeData, section_id: str) -> tuple[str, list[dict[st
                 "issuer": item.issuer.strip(),
                 "date_text": "Ongoing" if item.is_ongoing else fmt_date(item.date),
                 "link": (
-                    {"text": display_url(item.link), "href": href_url(item.link)}
+                    {"text": "Credential", "href": href_url(item.link)}
                     if item.link.strip()
                     else None
                 ),
@@ -139,7 +139,7 @@ def _section_items(data: ResumeData, section_id: str) -> tuple[str, list[dict[st
                 "publisher": item.publisher.strip(),
                 "date": fmt_date(item.date),
                 "link": (
-                    {"text": display_url(item.link), "href": href_url(item.link)}
+                    {"text": "Publication link", "href": href_url(item.link)}
                     if item.link.strip()
                     else None
                 ),
@@ -176,7 +176,7 @@ def _section_items(data: ResumeData, section_id: str) -> tuple[str, list[dict[st
 
 def build_context(data: ResumeData) -> dict[str, Any]:
     contact = data.contact
-    contact_parts = [contact.location, contact.phone, str(contact.email)]
+    contact_parts = [contact.phone, str(contact.email)]
     enabled = set(data.enabled_sections)
     section_order = [
         section_id
@@ -193,11 +193,12 @@ def build_context(data: ResumeData) -> dict[str, Any]:
         "contact": {
             "full_name": contact.full_name,
             "job_title": contact.job_title,
+            "address_line": contact.location,
             "contact_line": " | ".join(part for part in contact_parts if part),
             "links": [
                 {
                     "label": link.type,
-                    "text": display_url(link.url),
+                    "text": link.type,
                     "href": href_url(link.url),
                 }
                 for link in contact.links

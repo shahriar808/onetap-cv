@@ -3,7 +3,8 @@
 .resume-header { border-bottom: 3px double #111; padding-bottom: 8pt; text-align: center; }
 .resume-header h1 { font-size: 22pt; font-variant: small-caps; font-weight: 400; }
 .job-title { font-size: 11pt; margin-top: 2pt; }
-.contact-line, .contact-links { margin-top: 3pt; }
+.address-line, .contact-line, .contact-links { margin-top: 3pt; }
+.job-title { font-size: 10pt; margin-top: 3pt; }
 .tpl-classic h2.section-title { border-bottom: 1px solid #111; font-variant: small-caps; letter-spacing: 1.5pt; margin: 12pt 0 6pt; text-align: center; }
 .tpl-classic .line1 .entry-primary { font-weight: 700; }
 .tpl-classic .line2 .entry-secondary { font-style: italic; }

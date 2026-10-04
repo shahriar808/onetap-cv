@@ -1,6 +1,8 @@
 interface MobileBarProps {
   activeTab: 'edit' | 'preview'
   onTabChange: (tab: 'edit' | 'preview') => void
+  previousDisabled: boolean
+  onPrevious: () => void
   primaryLabel: string
   onPrimaryAction: () => void
 }
@@ -8,12 +10,14 @@ interface MobileBarProps {
 export function MobileBar({
   activeTab,
   onTabChange,
+  previousDisabled,
+  onPrevious,
   primaryLabel,
   onPrimaryAction,
 }: MobileBarProps) {
   return (
     <div className="fixed inset-x-0 bottom-0 z-40 border-t border-slate-200 bg-white px-3 pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] shadow-[0_-4px_12px_rgba(15,23,42,0.08)] lg:hidden">
-      <div className="mx-auto grid max-w-6xl grid-cols-[1fr_auto] items-center gap-3">
+      <div className="mx-auto grid max-w-6xl grid-cols-[minmax(0,1fr)_auto_auto] items-center gap-2">
         <div
           role="group"
           aria-label="Builder view"
@@ -46,8 +50,16 @@ export function MobileBar({
         </div>
         <button
           type="button"
+          onClick={onPrevious}
+          disabled={previousDisabled}
+          className="min-h-11 rounded-lg border border-slate-300 px-3 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          Back
+        </button>
+        <button
+          type="button"
           onClick={onPrimaryAction}
-          className="min-h-11 rounded-lg bg-blue-700 px-5 py-2 text-sm font-semibold text-white hover:bg-blue-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
+          className="min-h-11 rounded-lg bg-blue-700 px-3 py-2 text-sm font-semibold text-white hover:bg-blue-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
         >
           {primaryLabel}
         </button>

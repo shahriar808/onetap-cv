@@ -139,6 +139,24 @@ export function BuilderPage() {
       </header>
 
       <Stepper currentStep={currentStep} onStepChange={changeStep} />
+      <nav
+        aria-label="Step navigation"
+        className="sticky top-0 z-30 hidden justify-between gap-3 border-b border-slate-200 bg-white/95 py-3 backdrop-blur lg:flex"
+      >
+        <Button
+          variant="secondary"
+          disabled={currentStep === 0}
+          onClick={() => changeStep(Math.max(0, currentStep - 1))}
+        >
+          Previous
+        </Button>
+        <Button
+          disabled={currentStep === 3}
+          onClick={() => changeStep(Math.min(3, currentStep + 1))}
+        >
+          Next
+        </Button>
+      </nav>
       {serverStatus === 'down' && (
         <div
           role="alert"
@@ -164,28 +182,12 @@ export function BuilderPage() {
         preview={<PreviewPane data={data} template={template} />}
         activeTab={activeTab}
         onTabChange={setActiveTab}
+        previousDisabled={currentStep === 0}
+        onPrevious={() => changeStep(Math.max(0, currentStep - 1))}
         primaryLabel={currentStep === 3 ? 'Download' : 'Next'}
         onPrimaryAction={goNext}
       />
 
-      <nav
-        aria-label="Step navigation"
-        className="hidden justify-between gap-3 lg:flex"
-      >
-        <Button
-          variant="secondary"
-          disabled={currentStep === 0}
-          onClick={() => changeStep(Math.max(0, currentStep - 1))}
-        >
-          Previous
-        </Button>
-        <Button
-          disabled={currentStep === 3}
-          onClick={() => changeStep(Math.min(3, currentStep + 1))}
-        >
-          Next
-        </Button>
-      </nav>
       <footer className="grid justify-items-center gap-2 border-t border-slate-200 pt-4 text-center">
         <p className="max-w-2xl text-sm text-slate-600">
           Your data is saved only in this browser. It is sent to our server only

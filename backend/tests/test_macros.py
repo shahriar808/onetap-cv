@@ -157,13 +157,13 @@ def test_projects_macro_renders_visible_links_and_compact_layout() -> None:
     standard = macro([item], "position_first")
     compact = macro([item], "inline")
 
-    assert '<a href="https://github.com/example">github.com/example</a>' in standard
+    assert '<a href="https://github.com/example">GitHub</a>' in standard
     assert "<li>Built a feature</li>" in standard
     assert "<strong>Project</strong> - Python" in compact
     assert "Short description" in compact
-    assert '<a href="https://github.com/example">github.com/example</a>' in compact
+    assert '<a href="https://github.com/example">GitHub</a>' in compact
     compact_line = compact.split('class="line1"', 1)[1].split("</div>", 1)[0]
-    assert "github.com/example" in compact_line
+    assert ">GitHub</a>" in compact_line
 
 
 def test_compact_projects_omit_long_descriptions() -> None:

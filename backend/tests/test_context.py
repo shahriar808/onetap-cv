@@ -8,24 +8,22 @@ def test_build_context_formats_contact_and_links(sample_resume: ResumeData) -> N
     assert context["contact"] == {
         "full_name": "MD Shahriar Hasan",
         "job_title": "Software Engineer",
-        "contact_line": (
-            "Banasree, Rampura, Dhaka-1219, Bangladesh | "
-            "+8801763785508 | shasan5525@gmail.com"
-        ),
+        "address_line": "Banasree, Rampura, Dhaka-1219, Bangladesh",
+        "contact_line": "+8801763785508 | shasan5525@gmail.com",
         "links": [
             {
                 "label": "LinkedIn",
-                "text": "linkedin.com/in/shahriarhasan808",
+                "text": "LinkedIn",
                 "href": "https://www.linkedin.com/in/shahriarhasan808/",
             },
             {
                 "label": "GitHub",
-                "text": "github.com/shahriar808",
+                "text": "GitHub",
                 "href": "https://github.com/shahriar808",
             },
             {
                 "label": "LeetCode",
-                "text": "leetcode.com/u/MD_Shahriar_Hasan",
+                "text": "LeetCode",
                 "href": "https://leetcode.com/u/MD_Shahriar_Hasan",
             },
         ],
@@ -45,6 +43,7 @@ def test_build_context_skips_empty_contact_parts(sample_resume: ResumeData) -> N
 
     context = build_context(sample_resume)
 
+    assert context["contact"]["address_line"] == ""  # type: ignore[index]
     assert context["contact"]["contact_line"] == (  # type: ignore[index]
         "+8801763785508 | shasan5525@gmail.com"
     )
@@ -154,7 +153,7 @@ def test_build_context_formats_project_links_and_interests(
     assert sections["projects"]["items"][0]["links"] == [
         {
             "label": "GitHub",
-            "text": "github.com/example",
+            "text": "GitHub",
             "href": "https://github.com/example/",
         }
     ]

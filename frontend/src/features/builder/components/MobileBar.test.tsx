@@ -12,6 +12,8 @@ describe('MobileBar', () => {
       <MobileBar
         activeTab="edit"
         onTabChange={onTabChange}
+        previousDisabled={false}
+        onPrevious={vi.fn()}
         primaryLabel="Next"
         onPrimaryAction={onPrimaryAction}
       />,
@@ -21,5 +23,21 @@ describe('MobileBar', () => {
     expect(onTabChange).toHaveBeenCalledWith('preview')
     fireEvent.click(screen.getByRole('button', { name: 'Next' }))
     expect(onPrimaryAction).toHaveBeenCalledOnce()
+  })
+
+  it('keeps Previous available in the fixed mobile controls', () => {
+    const onPrevious = vi.fn()
+    render(
+      <MobileBar
+        activeTab="edit"
+        onTabChange={vi.fn()}
+        previousDisabled={false}
+        onPrevious={onPrevious}
+        primaryLabel="Next"
+        onPrimaryAction={vi.fn()}
+      />,
+    )
+    fireEvent.click(screen.getByRole('button', { name: 'Back' }))
+    expect(onPrevious).toHaveBeenCalledOnce()
   })
 })

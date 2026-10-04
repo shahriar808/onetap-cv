@@ -58,14 +58,14 @@
 <div class="entry">
   {% if layout == 'inline' %}
     <div class="entry-head">
-      <div class="line1"><span class="entry-primary">{% if item.name %}<strong>{{ item.name }}</strong>{% endif %}{% if item.tech_stack %}{% if item.name %} - {% endif %}{{ item.tech_stack }}{% endif %}{% if item.links %}{% if item.name or item.tech_stack %} | {% endif %}{% for link in item.links %}{% if not loop.first %}, {% endif %}<a href="{{ link.href }}">{{ link.text }}</a>{% endfor %}{% endif %}</span>{% if item.dates %}<span class="entry-dates">{{ item.dates }}</span>{% endif %}</div>
+      <div class="line1"><span class="entry-primary">{% if item.name %}<strong>{{ item.name }}</strong>{% endif %}{% if item.tech_stack %}{% if item.name %} - {% endif %}{{ item.tech_stack }}{% endif %}{% if item.links %}{% if item.name or item.tech_stack %} | {% endif %}{% for link in item.links %}{% if not loop.first %} | {% endif %}<a href="{{ link.href }}">{{ link.label }}</a>{% endfor %}{% endif %}</span>{% if item.dates %}<span class="entry-dates">{{ item.dates }}</span>{% endif %}</div>
     </div>
     {% if item.description and item.description | length <= 90 %}<p class="project-description">{{ item.description }}</p>{% endif %}
   {% else %}
     {{ entry_head(layout, item.name, '', '', item.dates) }}
     {% if item.description %}<p class="project-description">{{ item.description }}</p>{% endif %}
     {% if item.tech_stack %}<p class="project-tech-stack"><em>{{ item.tech_stack }}</em></p>{% endif %}
-    {% if item.links %}<p class="project-links">{% for link in item.links %}{% if not loop.first %} | {% endif %}<a href="{{ link.href }}">{{ link.text }}</a>{% endfor %}</p>{% endif %}
+    {% if item.links %}<p class="project-links">{% for link in item.links %}{% if not loop.first %} | {% endif %}<a href="{{ link.href }}">{{ link.label }}</a>{% endfor %}</p>{% endif %}
   {% endif %}
   {% if item.bullets %}<ul>{% for bullet in item.bullets %}<li>{{ bullet }}</li>{% endfor %}</ul>{% endif %}
 </div>

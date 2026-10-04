@@ -11,11 +11,12 @@
 <body class="tpl-classic">
   <header class="resume-header">
     <h1>{{ contact.full_name }}</h1>
-    {% if contact.job_title %}<p class="job-title">{{ contact.job_title }}</p>{% endif %}
+    {% if contact.address_line %}<p class="address-line">{{ contact.address_line }}</p>{% endif %}
     {% if contact.contact_line %}<p class="contact-line">{{ contact.contact_line }}</p>{% endif %}
     {% if contact.links %}
-    <p class="contact-links">{% for link in contact.links %}{% if not loop.first %} | {% endif %}{{ link.label }}: <a href="{{ link.href }}">{{ link.text }}</a>{% endfor %}</p>
+    <p class="contact-links">{% for link in contact.links %}{% if not loop.first %} | {% endif %}<a href="{{ link.href }}">{{ link.text }}</a>{% endfor %}</p>
     {% endif %}
+    {% if contact.job_title %}<p class="job-title">{{ contact.job_title }}</p>{% endif %}
   </header>
   <main>
     {% for section in sections %}{{ render_section(section, layout, skills_style) }}{% endfor %}

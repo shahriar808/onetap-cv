@@ -6,6 +6,8 @@ interface BuilderLayoutProps {
   preview: ReactNode
   activeTab: 'edit' | 'preview'
   onTabChange: (tab: 'edit' | 'preview') => void
+  previousDisabled: boolean
+  onPrevious: () => void
   primaryLabel: string
   onPrimaryAction: () => void
 }
@@ -15,6 +17,8 @@ export function BuilderLayout({
   preview,
   activeTab,
   onTabChange,
+  previousDisabled,
+  onPrevious,
   primaryLabel,
   onPrimaryAction,
 }: BuilderLayoutProps) {
@@ -37,6 +41,8 @@ export function BuilderLayout({
       <MobileBar
         activeTab={activeTab}
         onTabChange={onTabChange}
+        previousDisabled={previousDisabled}
+        onPrevious={onPrevious}
         primaryLabel={primaryLabel}
         onPrimaryAction={onPrimaryAction}
       />
