@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from 'react'
+import { useCallback, useRef, useState, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { Button } from '../components/ui/Button'
 import { Card } from '../components/ui/Card'
@@ -14,11 +14,30 @@ import { useResumeStore } from '../store/resumeStore'
 
 export function BuilderPage() {
   const [currentStep, setCurrentStep] = useState(0)
+  const [activeTab, setActiveTab] = useState<'edit' | 'preview'>('edit')
   const [validationRequest, setValidationRequest] = useState(0)
+  const downloadAction = useRef<() => void>(() => {})
   const data = useResumeStore((state) => state.data)
   const template = useResumeStore((state) => state.selectedTemplate)
   const enabledSections = useResumeStore((state) => state.data.enabled_sections)
   const sectionOrder = useResumeStore((state) => state.data.section_order)
+  const registerDownload = useCallback((download: () => void) => {
+    downloadAction.current = download
+  }, [])
+
+  function changeStep(step: number) {
+    setCurrentStep(step)
+    setActiveTab('edit')
+  }
+
+  function goNext() {
+    if (currentStep === 3) {
+      setActiveTab('edit')
+      downloadAction.current()
+    } else {
+      changeStep(currentStep + 1)
+    }
+  }
 
   const detailSections = sectionOrder
     .filter((sectionId) => enabledSections.includes(sectionId))
@@ -63,7 +82,8 @@ export function BuilderPage() {
             onValidationRequested={() =>
               setValidationRequest((request) => request + 1)
             }
-            onGoToContact={() => setCurrentStep(0)}
+            onGoToContact={() => changeStep(0)}
+            onRegisterDownload={registerDownload}
           />
         </div>
       </Card>
@@ -71,7 +91,7 @@ export function BuilderPage() {
   }
 
   return (
-    <main className="mx-auto grid min-h-screen max-w-6xl content-start gap-6 px-4 py-6 sm:px-6">
+    <main className="mx-auto grid min-h-screen max-w-6xl content-start gap-6 px-4 py-6 pb-40 sm:px-6 lg:pb-6">
       <header className="flex flex-wrap items-center justify-between gap-3">
         <Link
           to="/"
@@ -82,11 +102,15 @@ export function BuilderPage() {
         <p className="text-sm text-slate-600">Your work saves automatically</p>
       </header>
 
-      <Stepper currentStep={currentStep} onStepChange={setCurrentStep} />
+      <Stepper currentStep={currentStep} onStepChange={changeStep} />
 
       <BuilderLayout
         editor={editor}
         preview={<PreviewPane data={data} template={template} />}
+        activeTab={activeTab}
+        onTabChange={setActiveTab}
+        primaryLabel={currentStep === 3 ? 'Download' : 'Next'}
+        onPrimaryAction={goNext}
       />
 
       <nav
@@ -96,13 +120,13 @@ export function BuilderPage() {
         <Button
           variant="secondary"
           disabled={currentStep === 0}
-          onClick={() => setCurrentStep((step) => Math.max(0, step - 1))}
+          onClick={() => changeStep(Math.max(0, currentStep - 1))}
         >
           Previous
         </Button>
         <Button
           disabled={currentStep === 3}
-          onClick={() => setCurrentStep((step) => Math.min(3, step + 1))}
+          onClick={() => changeStep(Math.min(3, currentStep + 1))}
         >
           Next
         </Button>

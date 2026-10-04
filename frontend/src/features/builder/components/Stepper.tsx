@@ -13,7 +13,15 @@ interface StepperProps {
 export function Stepper({ currentStep, onStepChange }: StepperProps) {
   return (
     <nav aria-label="CV builder steps">
-      <ol className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+      <div className="flex items-center justify-between lg:hidden">
+        <p className="font-semibold text-slate-900">
+          {BUILDER_STEPS[currentStep]}
+        </p>
+        <p className="text-sm text-slate-600">
+          Step {currentStep + 1} of {BUILDER_STEPS.length}
+        </p>
+      </div>
+      <ol className="hidden grid-cols-4 gap-2 lg:grid">
         {BUILDER_STEPS.map((label, index) => (
           <li key={label}>
             <button

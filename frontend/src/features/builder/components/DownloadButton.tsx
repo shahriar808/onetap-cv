@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Button } from '../../../components/ui/Button'
 import { fetchPdf, downloadBlob } from '../../../lib/api'
 import { useResumeStore } from '../../../store/resumeStore'
@@ -7,6 +7,7 @@ import { validateContact } from '../../../lib/validation'
 interface DownloadButtonProps {
   onValidationRequested: () => void
   onGoToContact: () => void
+  onRegisterDownload?: (download: () => void) => void
 }
 
 const CONTACT_LABELS: Record<string, string> = {
@@ -18,6 +19,7 @@ const CONTACT_LABELS: Record<string, string> = {
 export function DownloadButton({
   onValidationRequested,
   onGoToContact,
+  onRegisterDownload,
 }: DownloadButtonProps) {
   const data = useResumeStore((state) => state.data)
   const template = useResumeStore((state) => state.selectedTemplate)
@@ -25,7 +27,7 @@ export function DownloadButton({
   const [validationMessage, setValidationMessage] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
 
-  async function download() {
+  const download = useCallback(async () => {
     setValidationMessage(null)
     setError(null)
     const validation = validateContact(data.contact)
@@ -51,7 +53,11 @@ export function DownloadButton({
     } finally {
       setLoading(false)
     }
-  }
+  }, [data, onValidationRequested, template])
+
+  useEffect(() => {
+    onRegisterDownload?.(download)
+  }, [download, onRegisterDownload])
 
   return (
     <div className="grid justify-items-start gap-3">
