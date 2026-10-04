@@ -59,3 +59,34 @@ class EducationItem(BaseModel):
     gpa: str = Field(default="", max_length=20)
     gpa_label: Literal["GPA", "CGPA"] = "GPA"
     details: list[Bullet] = Field(default_factory=list, max_length=10)
+
+
+class SkillGroup(BaseModel):
+    id: str
+    group_name: str = Field(default="", max_length=60)
+    items: list[str] = Field(default_factory=list, max_length=40)
+
+
+class ProjectLink(BaseModel):
+    label: str = Field(default="", max_length=40)
+    url: str = Field(default="", max_length=300)
+
+
+class ProjectItem(BaseModel):
+    id: str
+    name: str = Field(default="", max_length=120)
+    description: str = Field(default="", max_length=200)
+    tech_stack: str = Field(default="", max_length=200)
+    start: str = Field(default="", pattern=DATE_PATTERN)
+    end: str = Field(default="", pattern=DATE_PATTERN)
+    links: list[ProjectLink] = Field(default_factory=list, max_length=5)
+    bullets: list[Bullet] = Field(default_factory=list, max_length=10)
+
+
+class CertificationItem(BaseModel):
+    id: str
+    name: str = Field(default="", max_length=160)
+    issuer: str = Field(default="", max_length=120)
+    date: str = Field(default="", pattern=DATE_PATTERN)
+    is_ongoing: bool = False
+    link: str = Field(default="", max_length=300)
