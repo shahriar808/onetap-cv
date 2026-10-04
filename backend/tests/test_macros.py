@@ -2,6 +2,13 @@ from pathlib import Path
 
 from jinja2 import Environment, FileSystemLoader
 
+from app.schemas.resume import (
+    PublicationItem,
+    ReferenceItem,
+    VolunteerItem,
+)
+from app.services.render_service import SECTION_LABELS, build_context
+
 BASE_DIR = Path(__file__).parents[1] / "app" / "templates_engine" / "base"
 environment = Environment(loader=FileSystemLoader(str(BASE_DIR)), autoescape=True)
 
@@ -171,3 +178,56 @@ def test_compact_projects_omit_long_descriptions() -> None:
     compact = macro([item], "inline")
 
     assert "x" * 91 not in compact
+
+
+def test_dispatcher_renders_every_resume_section(sample_resume) -> None:
+    sample_resume.enabled_sections = list(SECTION_LABELS)
+    sample_resume.section_order = list(SECTION_LABELS)
+    sample_resume.publications = [
+        PublicationItem(
+            id="pub1",
+            title="Paper",
+            publisher="Journal",
+            date="2024",
+            link="https://example.com/paper",
+        )
+    ]
+    sample_resume.volunteer = [
+        VolunteerItem(
+            id="v1",
+            organization="Community",
+            role="Mentor",
+            bullets=["Supported students"],
+        )
+    ]
+    sample_resume.references = [
+        ReferenceItem(
+            id="r1",
+            name="Taylor Example",
+            position="Manager",
+            company="Example Inc",
+            email="taylor@example.com",
+            phone="555-0100",
+        )
+    ]
+    sample_resume.interests.items = ["Reading", "Hiking"]
+    section_context = build_context(sample_resume)["sections"]
+    render_section = environment.get_template("sections.html.j2").module.render_section
+
+    rendered = [
+        str(render_section(section, "position_first", "lines"))
+        for section in section_context
+    ]
+
+    assert len(rendered) == len(SECTION_LABELS)
+    assert all('class="section-title"' in html for html in rendered)
+    assert any("github.com/shahriar808" in html for html in rendered)
+    assert any("taylor@example.com" in html for html in rendered)
+
+
+def test_render_text_escapes_html() -> None:
+    macro = environment.get_template("sections.html.j2").module.render_text
+    html = macro({"text": "<script>alert(1)</script>"})
+
+    assert "&lt;script&gt;alert(1)&lt;/script&gt;" in html
+    assert "<script>" not in html

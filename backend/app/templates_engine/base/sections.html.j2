@@ -71,3 +71,58 @@
 </div>
 {% endfor %}
 {%- endmacro %}
+
+{% macro render_simple_list(section, layout) -%}
+{% for item in section['items'] %}
+<div class="entry">
+  {% if section.id == 'certifications' %}
+    {{ entry_head(layout, item.name, item.issuer, item.date_text, '') }}
+    {% if item.link %}<p class="entry-link"><a href="{{ item.link.href }}">{{ item.link.text }}</a></p>{% endif %}
+  {% elif section.id == 'achievements' %}
+    {{ entry_head(layout, item.title, item.description, '', item.date) }}
+  {% elif section.id == 'languages' %}
+    {{ entry_head(layout, item.language, item.proficiency, '', '') }}
+  {% elif section.id == 'publications' %}
+    {{ entry_head(layout, item.title, item.publisher, '', item.date) }}
+    {% if item.link %}<p class="entry-link"><a href="{{ item.link.href }}">{{ item.link.text }}</a></p>{% endif %}
+  {% elif section.id == 'volunteer' %}
+    {% if layout == 'company_first' %}
+      {{ entry_head(layout, item.organization, item.role, '', item.dates) }}
+    {% elif layout == 'inline' %}
+      {% set primary = [item.role, item.organization] | reject('equalto', '') | join(', ') %}
+      {{ entry_head(layout, primary, '', '', item.dates) }}
+    {% else %}
+      {{ entry_head(layout, item.role, item.organization, '', item.dates) }}
+    {% endif %}
+    {% if item.bullets %}<ul>{% for bullet in item.bullets %}<li>{{ bullet }}</li>{% endfor %}</ul>{% endif %}
+  {% elif section.id == 'references' %}
+    {{ entry_head(layout, item.name, item.line, '', '') }}
+    {% set contact = [item.email, item.phone] | reject('equalto', '') | join(' | ') %}
+    {% if contact %}<p class="reference-contact">{{ contact }}</p>{% endif %}
+  {% endif %}
+</div>
+{% endfor %}
+{%- endmacro %}
+
+{% macro render_text(section) -%}
+{% if section.text %}<p class="section-text">{{ section.text }}</p>{% endif %}
+{%- endmacro %}
+
+{% macro render_section(section, layout, skills_style) -%}
+<section class="resume-section section-{{ section.id }}">
+  <h2 class="section-title">{{ section.label }}</h2>
+  {% if section.id == 'summary' or section.id == 'interests' %}
+    {{ render_text(section) }}
+  {% elif section.id == 'experience' %}
+    {{ render_experience(section['items'], layout) }}
+  {% elif section.id == 'education' %}
+    {{ render_education(section['items'], layout) }}
+  {% elif section.id == 'skills' %}
+    {{ render_skills(section['items'], skills_style) }}
+  {% elif section.id == 'projects' %}
+    {{ render_projects(section['items'], layout) }}
+  {% else %}
+    {{ render_simple_list(section, layout) }}
+  {% endif %}
+</section>
+{%- endmacro %}
