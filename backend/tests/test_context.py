@@ -48,3 +48,42 @@ def test_build_context_skips_empty_contact_parts(sample_resume: ResumeData) -> N
     assert context["contact"]["contact_line"] == (  # type: ignore[index]
         "+8801763785508 | shasan5525@gmail.com"
     )
+
+
+def test_build_context_filters_and_orders_enabled_sections(
+    sample_resume: ResumeData,
+) -> None:
+    sample_resume.enabled_sections = ["skills", "summary", "projects"]
+    sample_resume.section_order = ["summary", "skills", "experience"]
+
+    context = build_context(sample_resume)
+
+    assert [section["id"] for section in context["sections"]] == [  # type: ignore[index]
+        "summary",
+        "skills",
+        "projects",
+    ]
+    assert [section["label"] for section in context["sections"]] == [  # type: ignore[index]
+        "Professional Summary",
+        "Skills",
+        "Projects",
+    ]
+    assert [section["kind"] for section in context["sections"]] == [  # type: ignore[index]
+        "text",
+        "list",
+        "list",
+    ]
+
+
+def test_build_context_appends_enabled_sections_missing_from_order(
+    sample_resume: ResumeData,
+) -> None:
+    sample_resume.enabled_sections = ["summary", "skills"]
+    sample_resume.section_order = ["summary"]
+
+    context = build_context(sample_resume)
+
+    assert [section["id"] for section in context["sections"]] == [  # type: ignore[index]
+        "summary",
+        "skills",
+    ]
