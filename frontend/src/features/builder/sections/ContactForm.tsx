@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Input } from '../../../components/ui/Input'
+import { LinksEditor } from '../components/LinksEditor'
 import { useResumeStore } from '../../../store/resumeStore'
 import { validateContact } from '../../../lib/validation'
 
@@ -79,6 +80,12 @@ export function ContactForm() {
         onChange={(event) =>
           updateContact({ job_title: event.currentTarget.value })
         }
+      />
+      <LinksEditor
+        mode="typed"
+        items={contact.links}
+        max={6}
+        onChange={(links) => updateContact({ links })}
       />
       <p role="status" className="text-sm text-slate-600">
         Contact details save automatically in this browser.
