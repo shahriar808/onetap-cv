@@ -1,4 +1,10 @@
-import { useCallback, useRef, useState, type ReactNode } from 'react'
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type ReactNode,
+} from 'react'
 import { Link } from 'react-router-dom'
 import { Button } from '../components/ui/Button'
 import { Card } from '../components/ui/Card'
@@ -9,13 +15,19 @@ import { Stepper } from '../features/builder/components/Stepper'
 import { TemplatePicker } from '../features/builder/components/TemplatePicker'
 import { PreviewPane } from '../features/builder/components/PreviewPane'
 import { DownloadButton } from '../features/builder/components/DownloadButton'
+import { ClearDataButton } from '../features/builder/components/ClearDataButton'
 import { SECTION_REGISTRY } from '../features/builder/sections/registry'
 import { useResumeStore } from '../store/resumeStore'
+import { getHealth } from '../lib/api'
 
 export function BuilderPage() {
   const [currentStep, setCurrentStep] = useState(0)
   const [activeTab, setActiveTab] = useState<'edit' | 'preview'>('edit')
   const [validationRequest, setValidationRequest] = useState(0)
+  const [serverStatus, setServerStatus] = useState<'checking' | 'ok' | 'down'>(
+    'checking',
+  )
+  const [healthRetry, setHealthRetry] = useState(0)
   const downloadAction = useRef<() => void>(() => {})
   const data = useResumeStore((state) => state.data)
   const template = useResumeStore((state) => state.selectedTemplate)
@@ -24,6 +36,28 @@ export function BuilderPage() {
   const registerDownload = useCallback((download: () => void) => {
     downloadAction.current = download
   }, [])
+
+  useEffect(() => {
+    document.title = 'Build your CV — OneTap CV'
+  }, [])
+
+  useEffect(() => {
+    let active = true
+    getHealth()
+      .then(({ status }) => {
+        if (active) {
+          setServerStatus(status === 'ok' ? 'ok' : 'down')
+        }
+      })
+      .catch(() => {
+        if (active) {
+          setServerStatus('down')
+        }
+      })
+    return () => {
+      active = false
+    }
+  }, [healthRetry])
 
   function changeStep(step: number) {
     setCurrentStep(step)
@@ -56,10 +90,12 @@ export function BuilderPage() {
       <section className="grid gap-4" aria-label="Resume section details">
         {detailSections.length === 0 ? (
           <Card>
-            <p className="text-slate-700">
-              No sections selected. Go back to choose the sections you want to
-              include.
-            </p>
+            <div className="grid justify-items-start gap-3">
+              <p className="text-slate-700">No optional sections yet.</p>
+              <Button variant="secondary" onClick={() => changeStep(1)}>
+                Go to Sections to add some
+              </Button>
+            </div>
           </Card>
         ) : (
           detailSections.map((section) => (
@@ -91,7 +127,7 @@ export function BuilderPage() {
   }
 
   return (
-    <main className="mx-auto grid min-h-screen max-w-6xl content-start gap-6 px-4 py-6 pb-40 sm:px-6 lg:pb-6">
+    <main id="main-content" className="mx-auto grid min-h-screen max-w-6xl content-start gap-6 px-4 py-6 pb-40 sm:px-6 lg:pb-6">
       <header className="flex flex-wrap items-center justify-between gap-3">
         <Link
           to="/"
@@ -103,6 +139,25 @@ export function BuilderPage() {
       </header>
 
       <Stepper currentStep={currentStep} onStepChange={changeStep} />
+      {serverStatus === 'down' && (
+        <div
+          role="alert"
+          className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-amber-300 bg-amber-50 p-4 text-amber-950"
+        >
+          <p>
+            Can&apos;t reach the server. Preview and download are unavailable.
+          </p>
+          <Button
+            variant="secondary"
+            onClick={() => {
+              setServerStatus('checking')
+              setHealthRetry((retry) => retry + 1)
+            }}
+          >
+            Retry connection
+          </Button>
+        </div>
+      )}
 
       <BuilderLayout
         editor={editor}
@@ -131,6 +186,18 @@ export function BuilderPage() {
           Next
         </Button>
       </nav>
+      <footer className="grid justify-items-center gap-2 border-t border-slate-200 pt-4 text-center">
+        <p className="max-w-2xl text-sm text-slate-600">
+          Your data is saved only in this browser. It is sent to our server only
+          to generate your preview and PDF, and is never stored.
+        </p>
+        <ClearDataButton
+          onCleared={() => {
+            setValidationRequest(0)
+            changeStep(0)
+          }}
+        />
+      </footer>
     </main>
   )
 }

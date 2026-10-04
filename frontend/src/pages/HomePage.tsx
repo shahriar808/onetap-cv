@@ -29,6 +29,10 @@ export function HomePage() {
   const [templates, setTemplates] = useState(FALLBACK_TEMPLATES)
 
   useEffect(() => {
+    document.title = 'OneTap CV — Build an ATS-friendly CV'
+  }, [])
+
+  useEffect(() => {
     let active = true
     getTemplates()
       .then((result) => {
@@ -48,7 +52,7 @@ export function HomePage() {
   }, [])
 
   return (
-    <main className="mx-auto grid min-h-screen max-w-6xl content-start gap-12 px-5 py-12 sm:px-8">
+    <main id="main-content" className="mx-auto grid min-h-screen max-w-6xl content-start gap-12 px-5 py-12 sm:px-8">
       <header className="grid gap-5 text-center">
         <p className="text-sm font-semibold uppercase tracking-widest text-blue-700">
           OneTap CV
@@ -67,7 +71,8 @@ export function HomePage() {
           {fullName.trim() ? 'Continue where you left off' : 'Build my CV'}
         </Link>
         <p className="text-sm text-slate-600">
-          Your resume stays in this browser. No account required.
+          Your data is saved only in this browser. It is sent to our server
+          only to generate your preview and PDF, and is never stored.
         </p>
       </header>
 
