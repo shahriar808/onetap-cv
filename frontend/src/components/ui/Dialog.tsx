@@ -21,21 +21,49 @@ export function Dialog({
   onCancel,
 }: DialogProps) {
   const confirmButtonRef = useRef<HTMLButtonElement>(null)
+  const dialogRef = useRef<HTMLDivElement>(null)
+  const previousFocusRef = useRef<HTMLElement | null>(null)
+  const onCancelRef = useRef(onCancel)
+  onCancelRef.current = onCancel
 
   useEffect(() => {
     if (!open) {
+      previousFocusRef.current?.focus()
+      previousFocusRef.current = null
       return
     }
 
+    previousFocusRef.current =
+      document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null
     confirmButtonRef.current?.focus()
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
-        onCancel()
+        event.preventDefault()
+        onCancelRef.current()
+      } else if (event.key === 'Tab') {
+        const focusableElements = dialogRef.current?.querySelectorAll<HTMLElement>(
+          'button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), a[href]',
+        )
+        if (!focusableElements?.length) {
+          event.preventDefault()
+          return
+        }
+        const first = focusableElements[0]
+        const last = focusableElements[focusableElements.length - 1]
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault()
+          last.focus()
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault()
+          first.focus()
+        }
       }
     }
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [open, onCancel])
+  }, [open])
 
   if (!open) {
     return null
@@ -44,6 +72,7 @@ export function Dialog({
   return (
     <div className="fixed inset-0 z-50 grid place-items-center bg-slate-950/50 p-4">
       <div
+        ref={dialogRef}
         role="dialog"
         aria-modal="true"
         aria-labelledby="dialog-title"

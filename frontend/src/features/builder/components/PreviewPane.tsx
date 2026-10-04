@@ -72,7 +72,7 @@ export function PreviewPane({ data, template }: PreviewPaneProps) {
           }}
         >
           <iframe
-            title="Resume preview"
+            title="CV preview"
             sandbox="allow-same-origin"
             srcDoc={html}
             onLoad={updateContentHeight}
@@ -83,9 +83,19 @@ export function PreviewPane({ data, template }: PreviewPaneProps) {
         {loading && (
           <div
             role="status"
-            className="absolute inset-0 grid place-items-center bg-white/80 text-sm font-medium text-slate-700"
+            className="absolute inset-0 grid place-items-center bg-white/90 p-6 text-sm font-medium text-slate-700"
           >
-            Updating preview…
+            {html ? (
+              'Updating preview…'
+            ) : (
+              <div className="grid w-full max-w-sm gap-4" aria-label="Loading CV preview">
+                <span>Preparing your CV preview…</span>
+                <span className="h-5 animate-pulse rounded bg-slate-200" />
+                <span className="h-3 animate-pulse rounded bg-slate-200" />
+                <span className="h-3 animate-pulse rounded bg-slate-200" />
+                <span className="h-20 animate-pulse rounded bg-slate-100" />
+              </div>
+            )}
           </div>
         )}
         {error && (
