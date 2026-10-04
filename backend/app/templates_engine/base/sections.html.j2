@@ -57,9 +57,9 @@
 {% for item in items %}
 <div class="entry">
   {% if layout == 'inline' %}
-    {% set primary = [item.name, item.tech_stack] | reject('equalto', '') | join(' - ') %}
-    {{ entry_head(layout, primary, '', '', item.dates) }}
-    {% if item.links %}<p class="project-links">{% for link in item.links %}{% if not loop.first %} | {% endif %}<a href="{{ link.href }}">{{ link.text }}</a>{% endfor %}</p>{% endif %}
+    <div class="entry-head">
+      <div class="line1"><span class="entry-primary">{% if item.name %}<strong>{{ item.name }}</strong>{% endif %}{% if item.tech_stack %}{% if item.name %} - {% endif %}{{ item.tech_stack }}{% endif %}{% if item.links %}{% if item.name or item.tech_stack %} | {% endif %}{% for link in item.links %}{% if not loop.first %}, {% endif %}<a href="{{ link.href }}">{{ link.text }}</a>{% endfor %}{% endif %}</span>{% if item.dates %}<span class="entry-dates">{{ item.dates }}</span>{% endif %}</div>
+    </div>
     {% if item.description and item.description | length <= 90 %}<p class="project-description">{{ item.description }}</p>{% endif %}
   {% else %}
     {{ entry_head(layout, item.name, '', '', item.dates) }}
