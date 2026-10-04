@@ -1,5 +1,17 @@
 import { createElement, type ComponentType } from 'react'
 import type { SectionId } from '../../../types/resume'
+import { AchievementsForm } from './AchievementsForm'
+import { CertificationsForm } from './CertificationsForm'
+import { EducationForm } from './EducationForm'
+import { ExperienceForm } from './ExperienceForm'
+import { InterestsForm } from './InterestsForm'
+import { LanguagesForm } from './LanguagesForm'
+import { PublicationsForm } from './PublicationsForm'
+import { ProjectsForm } from './ProjectsForm'
+import { ReferencesForm } from './ReferencesForm'
+import { SummaryForm } from './SummaryForm'
+import { SkillsForm } from './SkillsForm'
+import { VolunteerForm } from './VolunteerForm'
 
 export interface SectionConfig {
   id: SectionId
@@ -25,7 +37,7 @@ export const SECTION_REGISTRY: SectionConfig[] = [
     description: 'A concise overview of your experience and goals.',
     defaultEnabled: true,
     kind: 'single',
-    Form: ComingSoonForm,
+    Form: SummaryForm,
   },
   {
     id: 'experience',
@@ -33,7 +45,7 @@ export const SECTION_REGISTRY: SectionConfig[] = [
     description: 'Roles, responsibilities, and measurable achievements.',
     defaultEnabled: true,
     kind: 'list',
-    Form: ComingSoonForm,
+    Form: ExperienceForm,
   },
   {
     id: 'education',
@@ -41,7 +53,7 @@ export const SECTION_REGISTRY: SectionConfig[] = [
     description: 'Degrees, institutions, and relevant details.',
     defaultEnabled: true,
     kind: 'list',
-    Form: ComingSoonForm,
+    Form: EducationForm,
   },
   {
     id: 'skills',
@@ -49,7 +61,7 @@ export const SECTION_REGISTRY: SectionConfig[] = [
     description: 'Technical and professional skills, grouped by type.',
     defaultEnabled: true,
     kind: 'list',
-    Form: ComingSoonForm,
+    Form: SkillsForm,
   },
   {
     id: 'projects',
@@ -57,7 +69,7 @@ export const SECTION_REGISTRY: SectionConfig[] = [
     description: 'Selected work, tools, links, and outcomes.',
     defaultEnabled: false,
     kind: 'list',
-    Form: ComingSoonForm,
+    Form: ProjectsForm,
   },
   {
     id: 'certifications',
@@ -65,7 +77,7 @@ export const SECTION_REGISTRY: SectionConfig[] = [
     description: 'Professional certificates and credentials.',
     defaultEnabled: false,
     kind: 'list',
-    Form: ComingSoonForm,
+    Form: CertificationsForm,
   },
   {
     id: 'achievements',
@@ -73,7 +85,7 @@ export const SECTION_REGISTRY: SectionConfig[] = [
     description: 'Awards, recognition, and notable accomplishments.',
     defaultEnabled: false,
     kind: 'list',
-    Form: ComingSoonForm,
+    Form: AchievementsForm,
   },
   {
     id: 'languages',
@@ -81,7 +93,7 @@ export const SECTION_REGISTRY: SectionConfig[] = [
     description: 'Languages you speak and your proficiency.',
     defaultEnabled: false,
     kind: 'list',
-    Form: ComingSoonForm,
+    Form: LanguagesForm,
   },
   {
     id: 'publications',
@@ -89,7 +101,7 @@ export const SECTION_REGISTRY: SectionConfig[] = [
     description: 'Published articles, papers, and other work.',
     defaultEnabled: false,
     kind: 'list',
-    Form: ComingSoonForm,
+    Form: PublicationsForm,
   },
   {
     id: 'volunteer',
@@ -97,7 +109,7 @@ export const SECTION_REGISTRY: SectionConfig[] = [
     description: 'Community service and unpaid professional work.',
     defaultEnabled: false,
     kind: 'list',
-    Form: ComingSoonForm,
+    Form: VolunteerForm,
   },
   {
     id: 'interests',
@@ -105,7 +117,7 @@ export const SECTION_REGISTRY: SectionConfig[] = [
     description: 'A few personal interests relevant to your profile.',
     defaultEnabled: false,
     kind: 'single',
-    Form: ComingSoonForm,
+    Form: InterestsForm,
   },
   {
     id: 'references',
@@ -113,6 +125,6 @@ export const SECTION_REGISTRY: SectionConfig[] = [
     description: 'Professional contacts who can recommend your work.',
     defaultEnabled: false,
     kind: 'list',
-    Form: ComingSoonForm,
+    Form: ReferencesForm,
   },
 ]
