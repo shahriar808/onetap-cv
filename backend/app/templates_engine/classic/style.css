@@ -1,0 +1,13 @@
+@page { size: A4; margin: 0.7in; }
+.tpl-classic { font-family: Georgia, "Times New Roman", serif; font-size: 11pt; }
+.resume-header { border-bottom: 3px double #111; padding-bottom: 8pt; text-align: center; }
+.resume-header h1 { font-size: 22pt; font-variant: small-caps; font-weight: 400; }
+.job-title { font-size: 11pt; margin-top: 2pt; }
+.contact-line, .contact-links { margin-top: 3pt; }
+.tpl-classic h2.section-title { border-bottom: 1px solid #111; font-variant: small-caps; letter-spacing: 1.5pt; margin: 12pt 0 6pt; text-align: center; }
+.tpl-classic .line1 .entry-primary { font-weight: 700; }
+.tpl-classic .line2 .entry-secondary { font-style: italic; }
+.resume-section { margin-bottom: 12pt; }
+.entry { margin-bottom: 5pt; }
+.entry-summary, .project-description, .project-tech-stack, .project-links, .entry-link, .reference-contact { margin-top: 2pt; }
+.skills-line { margin-bottom: 2pt; }

@@ -13,6 +13,12 @@ class TemplateMeta:
 
 
 TEMPLATES: dict[str, TemplateMeta] = {
+    "classic": TemplateMeta(
+        "classic",
+        "Classic",
+        "Centered serif layout with a formal look",
+        "Finance, law, academia, traditional companies",
+    ),
     "modern": TemplateMeta(
         "modern",
         "Modern",

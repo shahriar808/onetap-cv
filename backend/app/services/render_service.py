@@ -1,6 +1,7 @@
 from typing import Any
 
 from jinja2 import Environment, FileSystemLoader
+from markupsafe import Markup
 from weasyprint import HTML
 
 from app.schemas.resume import ResumeData
@@ -228,7 +229,7 @@ def render_html(data: ResumeData, template_id: str) -> str:
         autoescape=True,
     )
     context = build_context(data)
-    context["css"] = (
+    context["css"] = Markup(
         (BASE / "base" / "base.css").read_text(encoding="utf-8")
         + "\n"
         + (template_dir / "style.css").read_text(encoding="utf-8")
