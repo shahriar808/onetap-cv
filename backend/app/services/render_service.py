@@ -1,7 +1,10 @@
 from typing import Any
 
+from jinja2 import Environment, FileSystemLoader
+
 from app.schemas.resume import ResumeData
 from app.services.formatting import date_range, display_url, fmt_date, href_url
+from app.templates_engine.registry import BASE, get_template_dir
 
 SECTION_LABELS = {
     "summary": "Professional Summary",
@@ -215,3 +218,18 @@ def build_context(data: ResumeData) -> dict[str, Any]:
             }
         )
     return context
+
+
+def render_html(data: ResumeData, template_id: str) -> str:
+    template_dir = get_template_dir(template_id)
+    environment = Environment(
+        loader=FileSystemLoader([str(template_dir), str(BASE / "base")]),
+        autoescape=True,
+    )
+    context = build_context(data)
+    context["css"] = (
+        (BASE / "base" / "base.css").read_text(encoding="utf-8")
+        + "\n"
+        + (template_dir / "style.css").read_text(encoding="utf-8")
+    )
+    return environment.get_template("template.html.j2").render(**context)
