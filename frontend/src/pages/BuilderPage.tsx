@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useState, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { Button } from '../components/ui/Button'
 import { Card } from '../components/ui/Card'
 import { ContactForm } from '../features/builder/sections/ContactForm'
+import { BuilderLayout } from '../features/builder/components/BuilderLayout'
 import { SectionPicker } from '../features/builder/components/SectionPicker'
 import { Stepper } from '../features/builder/components/Stepper'
 import { TemplatePicker } from '../features/builder/components/TemplatePicker'
@@ -26,6 +27,49 @@ export function BuilderPage() {
     )
     .filter((section) => section !== undefined)
 
+  let editor: ReactNode
+  if (currentStep === 0) {
+    editor = <ContactForm validationRequest={validationRequest} />
+  } else if (currentStep === 1) {
+    editor = <SectionPicker />
+  } else if (currentStep === 2) {
+    editor = (
+      <section className="grid gap-4" aria-label="Resume section details">
+        {detailSections.length === 0 ? (
+          <Card>
+            <p className="text-slate-700">
+              No sections selected. Go back to choose the sections you want to
+              include.
+            </p>
+          </Card>
+        ) : (
+          detailSections.map((section) => (
+            <Card key={section.id} className="grid gap-4">
+              <h2 className="text-xl font-semibold text-slate-900">
+                {section.label}
+              </h2>
+              <section.Form />
+            </Card>
+          ))
+        )}
+      </section>
+    )
+  } else {
+    editor = (
+      <Card>
+        <TemplatePicker />
+        <div className="mt-5">
+          <DownloadButton
+            onValidationRequested={() =>
+              setValidationRequest((request) => request + 1)
+            }
+            onGoToContact={() => setCurrentStep(0)}
+          />
+        </div>
+      </Card>
+    )
+  }
+
   return (
     <main className="mx-auto grid min-h-screen max-w-6xl content-start gap-6 px-4 py-6 sm:px-6">
       <header className="flex flex-wrap items-center justify-between gap-3">
@@ -40,51 +84,15 @@ export function BuilderPage() {
 
       <Stepper currentStep={currentStep} onStepChange={setCurrentStep} />
 
-      <div className="grid gap-5">
-        {currentStep === 0 && (
-          <ContactForm validationRequest={validationRequest} />
-        )}
-        {currentStep === 1 && <SectionPicker />}
-        {currentStep === 2 && (
-          <section className="grid gap-4" aria-label="Resume section details">
-            {detailSections.length === 0 ? (
-              <Card>
-                <p className="text-slate-700">
-                  No sections selected. Go back to choose the sections you want
-                  to include.
-                </p>
-              </Card>
-            ) : (
-              detailSections.map((section) => (
-                <Card key={section.id} className="grid gap-4">
-                  <h2 className="text-xl font-semibold text-slate-900">
-                    {section.label}
-                  </h2>
-                  <section.Form />
-                </Card>
-              ))
-            )}
-          </section>
-        )}
-        {currentStep === 3 && (
-          <div className="grid gap-5">
-            <Card>
-              <TemplatePicker />
-              <div className="mt-5">
-                <DownloadButton
-                  onValidationRequested={() =>
-                    setValidationRequest((request) => request + 1)
-                  }
-                  onGoToContact={() => setCurrentStep(0)}
-                />
-              </div>
-            </Card>
-            <PreviewPane data={data} template={template} />
-          </div>
-        )}
-      </div>
+      <BuilderLayout
+        editor={editor}
+        preview={<PreviewPane data={data} template={template} />}
+      />
 
-      <nav aria-label="Step navigation" className="flex justify-between gap-3">
+      <nav
+        aria-label="Step navigation"
+        className="hidden justify-between gap-3 lg:flex"
+      >
         <Button
           variant="secondary"
           disabled={currentStep === 0}
