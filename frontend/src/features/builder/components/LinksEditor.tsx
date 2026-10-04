@@ -27,6 +27,10 @@ const LINK_TYPES: LinkItem['type'][] = [
   'Other',
 ]
 
+function isLinkType(value: string): value is LinkItem['type'] {
+  return LINK_TYPES.some((type) => type === value)
+}
+
 export function LinksEditor(props: LinksEditorProps) {
   if (props.mode === 'typed') {
     return (
@@ -47,18 +51,16 @@ export function LinksEditor(props: LinksEditorProps) {
               <select
                 id={`${item.id}-type`}
                 value={item.type}
-                onChange={(event) =>
-                  props.onChange(
-                    props.items.map((link) =>
-                      link.id === item.id
-                        ? {
-                            ...link,
-                            type: event.currentTarget.value as LinkItem['type'],
-                          }
-                        : link,
-                    ),
-                  )
-                }
+                onChange={(event) => {
+                  const type = event.currentTarget.value
+                  if (isLinkType(type)) {
+                    props.onChange(
+                      props.items.map((link) =>
+                        link.id === item.id ? { ...link, type } : link,
+                      ),
+                    )
+                  }
+                }}
                 className="min-h-11 rounded-lg border border-slate-300 px-3 text-base focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-700"
               >
                 {LINK_TYPES.map((type) => (
