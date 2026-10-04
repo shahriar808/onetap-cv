@@ -238,3 +238,12 @@ def render_html(data: ResumeData, template_id: str) -> str:
 
 def render_pdf(data: ResumeData, template_id: str) -> bytes:
     return HTML(string=render_html(data, template_id)).write_pdf()
+
+
+def render_preview_html(data: ResumeData, template_id: str) -> str:
+    html = render_html(data, template_id)
+    preview_styles = (
+        "<style>@media screen{body{width:794px;box-sizing:border-box;"
+        "padding:0.6in;margin:0 auto;background:#fff}}</style>"
+    )
+    return html.replace("</head>", f"{preview_styles}</head>", 1)
