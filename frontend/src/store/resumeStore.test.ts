@@ -50,4 +50,81 @@ describe('resume store', () => {
       'Taylor Example',
     )
   })
+
+  it('keeps section data when toggled off and on', () => {
+    useResumeStore.getState().addItem('experience', {
+      id: 'experience-1',
+      company: 'Example Inc',
+      position: 'Engineer',
+      location: '',
+      start: '',
+      end: '',
+      is_current: false,
+      summary: '',
+      bullets: [],
+    })
+
+    useResumeStore.getState().toggleSection('experience')
+    expect(useResumeStore.getState().data.enabled_sections).not.toContain(
+      'experience',
+    )
+
+    useResumeStore.getState().toggleSection('experience')
+
+    expect(useResumeStore.getState().data.experience[0].company).toBe(
+      'Example Inc',
+    )
+    expect(useResumeStore.getState().data.section_order.at(-1)).toBe(
+      'experience',
+    )
+  })
+
+  it('supports list item add, update, remove and reorder actions', () => {
+    const store = useResumeStore.getState()
+    const firstItem = {
+      id: 'first',
+      company: 'First Inc',
+      position: 'Engineer',
+      location: '',
+      start: '',
+      end: '',
+      is_current: false,
+      summary: '',
+      bullets: [],
+    }
+    const secondItem = { ...firstItem, id: 'second', company: 'Second Inc' }
+
+    store.addItem('experience', firstItem)
+    store.addItem('experience', secondItem)
+    store.updateItem('experience', 'first', { position: 'Senior Engineer' })
+    store.moveItem('experience', 0, 1)
+
+    expect(useResumeStore.getState().data.experience.map((item) => item.id)).toEqual([
+      'second',
+      'first',
+    ])
+    expect(useResumeStore.getState().data.experience[1].position).toBe(
+      'Senior Engineer',
+    )
+
+    store.moveItem('experience', 0, 99)
+    expect(useResumeStore.getState().data.experience.map((item) => item.id)).toEqual([
+      'second',
+      'first',
+    ])
+
+    store.removeItem('experience', 'second')
+    expect(useResumeStore.getState().data.experience).toHaveLength(1)
+    expect(useResumeStore.getState().data.experience[0].id).toBe('first')
+  })
+
+  it('updates single sections', () => {
+    useResumeStore.getState().updateSingle('summary', { text: 'Summary text' })
+    useResumeStore.getState().updateSingle('interests', {
+      items: ['Reading'],
+    })
+
+    expect(useResumeStore.getState().data.summary.text).toBe('Summary text')
+    expect(useResumeStore.getState().data.interests.items).toEqual(['Reading'])
+  })
 })
