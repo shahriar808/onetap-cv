@@ -1,0 +1,9 @@
+fastapi
+uvicorn[standard]
+pydantic[email]
+jinja2
+weasyprint
+slowapi
+pytest
+httpx
+pypdf
