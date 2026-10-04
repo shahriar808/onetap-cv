@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Input } from '../../../components/ui/Input'
 import { LinksEditor } from '../components/LinksEditor'
 import { useResumeStore } from '../../../store/resumeStore'
@@ -6,10 +6,20 @@ import { validateContact } from '../../../lib/validation'
 
 type RequiredContactField = 'full_name' | 'email' | 'phone'
 
-export function ContactForm() {
+interface ContactFormProps {
+  validationRequest?: number
+}
+
+export function ContactForm({ validationRequest = 0 }: ContactFormProps) {
   const contact = useResumeStore((state) => state.data.contact)
   const updateContact = useResumeStore((state) => state.updateContact)
   const [errors, setErrors] = useState<Record<string, string>>({})
+
+  useEffect(() => {
+    if (validationRequest > 0) {
+      setErrors(validateContact(contact).errors)
+    }
+  }, [contact, validationRequest])
 
   function validateField(field: RequiredContactField) {
     const result = validateContact(contact)

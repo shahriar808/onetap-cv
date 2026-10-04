@@ -5,11 +5,17 @@ import { Card } from '../components/ui/Card'
 import { ContactForm } from '../features/builder/sections/ContactForm'
 import { SectionPicker } from '../features/builder/components/SectionPicker'
 import { Stepper } from '../features/builder/components/Stepper'
+import { TemplatePicker } from '../features/builder/components/TemplatePicker'
+import { PreviewPane } from '../features/builder/components/PreviewPane'
+import { DownloadButton } from '../features/builder/components/DownloadButton'
 import { SECTION_REGISTRY } from '../features/builder/sections/registry'
 import { useResumeStore } from '../store/resumeStore'
 
 export function BuilderPage() {
   const [currentStep, setCurrentStep] = useState(0)
+  const [validationRequest, setValidationRequest] = useState(0)
+  const data = useResumeStore((state) => state.data)
+  const template = useResumeStore((state) => state.selectedTemplate)
   const enabledSections = useResumeStore((state) => state.data.enabled_sections)
   const sectionOrder = useResumeStore((state) => state.data.section_order)
 
@@ -35,7 +41,9 @@ export function BuilderPage() {
       <Stepper currentStep={currentStep} onStepChange={setCurrentStep} />
 
       <div className="grid gap-5">
-        {currentStep === 0 && <ContactForm />}
+        {currentStep === 0 && (
+          <ContactForm validationRequest={validationRequest} />
+        )}
         {currentStep === 1 && <SectionPicker />}
         {currentStep === 2 && (
           <section className="grid gap-4" aria-label="Resume section details">
@@ -59,14 +67,20 @@ export function BuilderPage() {
           </section>
         )}
         {currentStep === 3 && (
-          <Card>
-            <h2 className="text-xl font-semibold text-slate-900">
-              Template &amp; Download
-            </h2>
-            <p className="mt-2 text-slate-600">
-              Choose a design and download your finished CV.
-            </p>
-          </Card>
+          <div className="grid gap-5">
+            <Card>
+              <TemplatePicker />
+              <div className="mt-5">
+                <DownloadButton
+                  onValidationRequested={() =>
+                    setValidationRequest((request) => request + 1)
+                  }
+                  onGoToContact={() => setCurrentStep(0)}
+                />
+              </div>
+            </Card>
+            <PreviewPane data={data} template={template} />
+          </div>
         )}
       </div>
 
