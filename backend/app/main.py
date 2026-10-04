@@ -28,6 +28,11 @@ app.include_router(templates_router)
 app.include_router(resume_router)
 
 
+@app.exception_handler(Exception)
+async def handle_unexpected_error(request: Request, exception: Exception) -> JSONResponse:
+    return JSONResponse(status_code=500, content={"detail": "Server error"})
+
+
 @app.middleware("http")
 async def limit_request_body_size(
     request: Request,
