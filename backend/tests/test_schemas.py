@@ -6,10 +6,17 @@ from app.schemas.resume import (
     Contact,
     EducationItem,
     ExperienceItem,
+    AchievementItem,
+    InterestsSection,
+    LanguageItem,
     LinkItem,
+    PublicationItem,
     ProjectItem,
     ProjectLink,
+    ReferenceItem,
     SkillGroup,
+    SummarySection,
+    VolunteerItem,
 )
 
 
@@ -136,3 +143,46 @@ def test_certification_accepts_valid_data() -> None:
 def test_certification_rejects_invalid_date() -> None:
     with pytest.raises(ValidationError):
         CertificationItem(id="c1", date="2024-13")
+
+
+def test_achievement_accepts_valid_data() -> None:
+    assert AchievementItem(id="a1", title="Award", date="2024").title == "Award"
+
+
+def test_achievement_rejects_invalid_date() -> None:
+    with pytest.raises(ValidationError):
+        AchievementItem(id="a1", date="2024-13")
+
+
+def test_language_accepts_valid_data() -> None:
+    assert LanguageItem(id="l1", language="English", proficiency="Fluent").language == "English"
+
+
+def test_publication_accepts_valid_data_and_rejects_invalid_date() -> None:
+    assert PublicationItem(id="pub1", title="Paper").title == "Paper"
+
+    with pytest.raises(ValidationError):
+        PublicationItem(id="pub1", date="2024-13")
+
+
+def test_volunteer_accepts_bounded_bullets() -> None:
+    item = VolunteerItem(id="v1", organization="Example", bullets=["Helped"])
+
+    assert item.bullets == ["Helped"]
+
+
+def test_reference_accepts_optional_contact_fields() -> None:
+    reference = ReferenceItem(id="r1", name="Taylor Example")
+
+    assert reference.email == ""
+    assert reference.phone == ""
+
+
+def test_summary_limits_text_length() -> None:
+    with pytest.raises(ValidationError):
+        SummarySection(text="x" * 601)
+
+
+def test_interests_limits_item_count() -> None:
+    with pytest.raises(ValidationError):
+        InterestsSection(items=["interest"] * 31)

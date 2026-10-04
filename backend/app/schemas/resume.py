@@ -90,3 +90,50 @@ class CertificationItem(BaseModel):
     date: str = Field(default="", pattern=DATE_PATTERN)
     is_ongoing: bool = False
     link: str = Field(default="", max_length=300)
+
+
+class AchievementItem(BaseModel):
+    id: str
+    title: str = Field(default="", max_length=160)
+    description: str = Field(default="", max_length=300)
+    date: str = Field(default="", pattern=DATE_PATTERN)
+
+
+class LanguageItem(BaseModel):
+    id: str
+    language: str = Field(default="", max_length=60)
+    proficiency: str = Field(default="", max_length=40)
+
+
+class PublicationItem(BaseModel):
+    id: str
+    title: str = Field(default="", max_length=200)
+    publisher: str = Field(default="", max_length=120)
+    date: str = Field(default="", pattern=DATE_PATTERN)
+    link: str = Field(default="", max_length=300)
+
+
+class VolunteerItem(BaseModel):
+    id: str
+    organization: str = Field(default="", max_length=120)
+    role: str = Field(default="", max_length=120)
+    start: str = Field(default="", pattern=DATE_PATTERN)
+    end: str = Field(default="", pattern=DATE_PATTERN)
+    bullets: list[Bullet] = Field(default_factory=list, max_length=15)
+
+
+class ReferenceItem(BaseModel):
+    id: str
+    name: str = Field(default="", max_length=100)
+    position: str = Field(default="", max_length=120)
+    company: str = Field(default="", max_length=120)
+    email: str = Field(default="", max_length=254)
+    phone: str = Field(default="", max_length=30)
+
+
+class SummarySection(BaseModel):
+    text: str = Field(default="", max_length=600)
+
+
+class InterestsSection(BaseModel):
+    items: list[str] = Field(default_factory=list, max_length=30)
