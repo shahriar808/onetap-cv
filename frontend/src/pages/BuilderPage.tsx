@@ -11,7 +11,7 @@ import { Card } from '../components/ui/Card'
 import { ContactForm } from '../features/builder/sections/ContactForm'
 import { BuilderLayout } from '../features/builder/components/BuilderLayout'
 import { SectionPicker } from '../features/builder/components/SectionPicker'
-import { Stepper } from '../features/builder/components/Stepper'
+import { Stepper, StepProgress } from '../features/builder/components/Stepper'
 import { TemplatePicker } from '../features/builder/components/TemplatePicker'
 import { PreviewPane } from '../features/builder/components/PreviewPane'
 import { DownloadButton } from '../features/builder/components/DownloadButton'
@@ -126,8 +126,46 @@ export function BuilderPage() {
     )
   }
 
+  const editorFooter = (
+    <footer className="grid justify-items-start gap-3 border-t border-slate-200 pt-4">
+      <p className="max-w-2xl text-sm text-slate-600">
+        Your data is saved only in this browser. It is sent to our server only
+        to generate your preview and PDF, and is never stored.
+      </p>
+      <ClearDataButton
+        onCleared={() => {
+          setValidationRequest(0)
+          changeStep(0)
+        }}
+      />
+    </footer>
+  )
+
+  const serverNotice = serverStatus === 'down' ? (
+    <div
+      role="alert"
+      className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-amber-300 bg-amber-50 p-4 text-amber-950"
+    >
+      <p>
+        Can&apos;t reach the server. Preview and download are unavailable.
+      </p>
+      <Button
+        variant="secondary"
+        onClick={() => {
+          setServerStatus('checking')
+          setHealthRetry((retry) => retry + 1)
+        }}
+      >
+        Retry connection
+      </Button>
+    </div>
+  ) : null
+
   return (
-    <main id="main-content" className="mx-auto grid min-h-screen max-w-6xl content-start gap-6 px-4 py-6 pb-40 sm:px-6 lg:pb-6">
+    <main
+      id="main-content"
+      className="mx-auto grid h-dvh min-h-0 max-w-7xl grid-rows-[auto_auto_minmax(0,1fr)] gap-3 overflow-hidden px-3 py-3 sm:px-5"
+    >
       <header className="flex flex-wrap items-center justify-between gap-3">
         <Link
           to="/"
@@ -138,48 +176,14 @@ export function BuilderPage() {
         <p className="text-sm text-slate-600">Your work saves automatically</p>
       </header>
 
-      <Stepper currentStep={currentStep} onStepChange={changeStep} />
-      <nav
-        aria-label="Step navigation"
-        className="sticky top-0 z-30 hidden justify-between gap-3 border-b border-slate-200 bg-white/95 py-3 backdrop-blur lg:flex"
-      >
-        <Button
-          variant="secondary"
-          disabled={currentStep === 0}
-          onClick={() => changeStep(Math.max(0, currentStep - 1))}
-        >
-          Previous
-        </Button>
-        <Button
-          disabled={currentStep === 3}
-          onClick={() => changeStep(Math.min(3, currentStep + 1))}
-        >
-          Next
-        </Button>
-      </nav>
-      {serverStatus === 'down' && (
-        <div
-          role="alert"
-          className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-amber-300 bg-amber-50 p-4 text-amber-950"
-        >
-          <p>
-            Can&apos;t reach the server. Preview and download are unavailable.
-          </p>
-          <Button
-            variant="secondary"
-            onClick={() => {
-              setServerStatus('checking')
-              setHealthRetry((retry) => retry + 1)
-            }}
-          >
-            Retry connection
-          </Button>
-        </div>
-      )}
+      <StepProgress currentStep={currentStep} />
 
       <BuilderLayout
         editor={editor}
         preview={<PreviewPane data={data} template={template} />}
+        stepper={<Stepper currentStep={currentStep} onStepChange={changeStep} />}
+        notice={serverNotice}
+        editorFooter={editorFooter}
         activeTab={activeTab}
         onTabChange={setActiveTab}
         previousDisabled={currentStep === 0}
@@ -187,19 +191,6 @@ export function BuilderPage() {
         primaryLabel={currentStep === 3 ? 'Download' : 'Next'}
         onPrimaryAction={goNext}
       />
-
-      <footer className="grid justify-items-center gap-2 border-t border-slate-200 pt-4 text-center">
-        <p className="max-w-2xl text-sm text-slate-600">
-          Your data is saved only in this browser. It is sent to our server only
-          to generate your preview and PDF, and is never stored.
-        </p>
-        <ClearDataButton
-          onCleared={() => {
-            setValidationRequest(0)
-            changeStep(0)
-          }}
-        />
-      </footer>
     </main>
   )
 }
