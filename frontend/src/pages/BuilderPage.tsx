@@ -5,7 +5,7 @@ import {
   useState,
   type ReactNode,
 } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { Button } from '../components/ui/Button'
 import { Card } from '../components/ui/Card'
 import { ContactForm } from '../features/builder/sections/ContactForm'
@@ -18,9 +18,17 @@ import { DownloadButton } from '../features/builder/components/DownloadButton'
 import { ClearDataButton } from '../features/builder/components/ClearDataButton'
 import { SECTION_REGISTRY } from '../features/builder/sections/registry'
 import { useResumeStore } from '../store/resumeStore'
+import type { TemplateId } from '../lib/defaults'
 import { getHealth } from '../lib/api'
 
+const TEMPLATE_IDS: readonly TemplateId[] = ['classic', 'modern', 'compact']
+
+function isTemplateId(value: string): value is TemplateId {
+  return TEMPLATE_IDS.some((templateId) => templateId === value)
+}
+
 export function BuilderPage() {
+  const [searchParams, setSearchParams] = useSearchParams()
   const [currentStep, setCurrentStep] = useState(0)
   const [activeTab, setActiveTab] = useState<'edit' | 'preview'>('edit')
   const [validationRequest, setValidationRequest] = useState(0)
@@ -31,6 +39,7 @@ export function BuilderPage() {
   const downloadAction = useRef<() => void>(() => {})
   const data = useResumeStore((state) => state.data)
   const template = useResumeStore((state) => state.selectedTemplate)
+  const setTemplate = useResumeStore((state) => state.setTemplate)
   const enabledSections = useResumeStore((state) => state.data.enabled_sections)
   const sectionOrder = useResumeStore((state) => state.data.section_order)
   const registerDownload = useCallback((download: () => void) => {
@@ -40,6 +49,21 @@ export function BuilderPage() {
   useEffect(() => {
     document.title = 'Build your CV — OneTap CV'
   }, [])
+
+  useEffect(() => {
+    const requestedTemplate = searchParams.get('template')
+    if (requestedTemplate === null) {
+      return
+    }
+
+    if (isTemplateId(requestedTemplate)) {
+      setTemplate(requestedTemplate)
+    }
+
+    const nextParams = new URLSearchParams(searchParams)
+    nextParams.delete('template')
+    setSearchParams(nextParams, { replace: true })
+  }, [searchParams, setSearchParams, setTemplate])
 
   useEffect(() => {
     let active = true
