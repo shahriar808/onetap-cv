@@ -1,9 +1,9 @@
 import { useState } from 'react'
 
 const SHEETS = [
-  { id: 'classic', label: 'Classic', src: '/thumbnails/landing-classic.svg' },
-  { id: 'modern', label: 'Modern', src: '/thumbnails/landing-modern.svg' },
-  { id: 'compact', label: 'Compact', src: '/thumbnails/landing-compact.svg' },
+  { id: 'classic', label: 'Classic', src: '/thumbnails/landing-classic' },
+  { id: 'modern', label: 'Modern', src: '/thumbnails/landing-modern' },
+  { id: 'compact', label: 'Compact', src: '/thumbnails/landing-compact' },
 ] as const
 
 function sheetTransform(
@@ -49,10 +49,12 @@ export function SheetFan() {
             }}
           >
             <img
-              src={sheet.src}
+              src={`${sheet.src}-480.webp`}
+              srcSet={`${sheet.src}-480.webp 480w, ${sheet.src}-900.webp 900w`}
+              sizes="(max-width: 768px) 76vw, 360px"
               alt={`${sheet.label} CV sheet, with Alex Rahman sample details`}
-              width={400}
-              height={520}
+              width={900}
+              height={1272}
               loading={sheet.id === selected ? 'eager' : 'lazy'}
               decoding="async"
               fetchPriority={sheet.id === selected ? 'high' : 'auto'}

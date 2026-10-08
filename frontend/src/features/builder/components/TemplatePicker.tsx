@@ -129,8 +129,12 @@ export function TemplatePicker() {
               </span>
             )}
             <img
-              src={`/thumbnails/${template.id}.png`}
+              src={`/thumbnails/${template.id}-480.webp`}
+              srcSet={`/thumbnails/${template.id}-480.webp 480w, /thumbnails/${template.id}-900.webp 900w`}
+              sizes="(max-width: 420px) 90vw, 300px"
               alt=""
+              width={480}
+              height={679}
               className="aspect-[3/4] w-full bg-paper-2 object-contain p-3"
             />
             <span className="grid content-start gap-2 p-3">

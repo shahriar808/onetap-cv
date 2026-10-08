@@ -3,9 +3,9 @@ import { SectionHeader } from '../../../components/ui/SectionHeader'
 import { LANDING_CONTENT } from '../content'
 
 const SHEETS = {
-  classic: '/thumbnails/landing-classic.svg',
-  modern: '/thumbnails/landing-modern.svg',
-  compact: '/thumbnails/landing-compact.svg',
+  classic: 'landing-classic',
+  modern: 'landing-modern',
+  compact: 'landing-compact',
 } as const
 
 export function Designs() {
@@ -26,10 +26,12 @@ export function Designs() {
           >
             <div className="grid aspect-[4/3] place-items-center overflow-hidden bg-desk p-6 sm:p-8">
               <img
-                src={SHEETS[template.id]}
+                src={`/thumbnails/${SHEETS[template.id]}-480.webp`}
+                srcSet={`/thumbnails/${SHEETS[template.id]}-480.webp 480w, /thumbnails/${SHEETS[template.id]}-900.webp 900w`}
+                sizes="(max-width: 768px) 90vw, 360px"
                 alt={`${template.name} CV design sample for Alex Rahman`}
-                width={400}
-                height={520}
+                width={900}
+                height={1272}
                 loading="lazy"
                 decoding="async"
                 className="h-full max-h-80 w-auto border border-line bg-white object-contain shadow-paper transition-transform duration-200 hover:-translate-y-1"

@@ -1,0 +1,393 @@
+{
+  "version": 1,
+  "contact": {
+    "full_name": "Alex Rahman",
+    "email": "alex@example.com",
+    "phone": "+1 555 010 2000",
+    "location": "Austin, TX",
+    "job_title": "Software Engineer",
+    "links": [
+      {
+        "id": "l1",
+        "type": "LinkedIn",
+        "url": "https://example.com/alex-rahman"
+      },
+      {
+        "id": "l2",
+        "type": "GitHub",
+        "url": "https://github.com/example"
+      }
+    ]
+  },
+  "enabled_sections": [
+    "summary",
+    "experience",
+    "skills",
+    "projects",
+    "education",
+    "certifications",
+    "achievements",
+    "languages"
+  ],
+  "section_order": [
+    "summary",
+    "experience",
+    "skills",
+    "projects",
+    "education",
+    "certifications",
+    "achievements",
+    "languages"
+  ],
+  "summary": {
+    "text": "Full-stack software engineer with experience building production systems using Java (Spring Boot), Python (FastAPI), React, React Native, and Next.js. Delivered notification, payment-adjacent, pricing, and CI/CD features for platforms used in Bangladesh."
+  },
+  "experience": [
+    {
+      "id": "e1",
+      "company": "Ternary Solutions",
+      "position": "Software Engineer",
+      "location": "",
+      "start": "2025-12",
+      "end": "",
+      "is_current": true,
+      "summary": "Full-stack engineer on Turfly, a sports turf booking platform in Bangladesh: FastAPI backend, React Native mobile app, and Next.js admin panel.",
+      "bullets": [
+        "Built multi-channel notifications (push, email, in-app inbox, campaign tooling); implemented MiMSMS SMS and migrated email delivery to AWS SES",
+        "Implemented policy acceptance with versioning, checkout/onboarding gates, and re-acceptance notifications",
+        "Integrated Intercom live chat with auth-aware user identification, custom support screen, and SDK setup",
+        "Developed team management and loyalty/referral APIs: join requests, roles, vouchers, promo preferences, referral stats",
+        "Delivered mobile push deep-links, inbox, notification preferences, and team join-request flows",
+        "Enhanced mobile CI/CD with EAS: platform-specific builds, auto-submit, and production release workflows"
+      ]
+    },
+    {
+      "id": "e2",
+      "company": "TekSoi Software Limited",
+      "position": "Junior Software Engineer",
+      "location": "",
+      "start": "2025-10",
+      "end": "2025-12",
+      "is_current": false,
+      "summary": "",
+      "bullets": [
+        "Developed and maintained Bangladesh Petroleum Corporation's Pricing System using Spring Boot and Angular",
+        "Conducted stakeholder meetings to gather requirements and deliver technical solutions",
+        "Engineered power plant merit order system with dynamic marginal cost calculations for multiple fuel types",
+        "Developed LNG import, indigenous gas, and blended price calculation modules with complex multi-component cost structures",
+        "Implemented automated derived value calculations using JPA lifecycle callbacks for real-time pricing updates"
+      ]
+    },
+    {
+      "id": "e3",
+      "company": "TekSoi Software Limited",
+      "position": "Software Engineer Intern (Java)",
+      "location": "",
+      "start": "2025-07",
+      "end": "2025-09",
+      "is_current": false,
+      "summary": "",
+      "bullets": [
+        "Worked on Bangladesh Petroleum Corporation's Negotiation System, a multi-modular full-stack project using Angular and Spring Boot",
+        "Implemented the selling price calculation engine for Diesel, Octane, Petrol, and Kerosene using multiple cost components and business rules",
+        "Built a price history tracking module with effective dates and cost breakdowns",
+        "Developed margin-based pricing logic and APIs for dynamic price retrieval",
+        "Integrated backend services with Angular UI for price reporting and visualization"
+      ]
+    },
+    {
+      "id": "e4",
+      "company": "iTransition",
+      "position": "Intern Developer",
+      "location": "",
+      "start": "2025-01",
+      "end": "2025-03",
+      "is_current": false,
+      "summary": "",
+      "bullets": []
+    }
+  ],
+  "skills": [
+    {
+      "id": "s1",
+      "group_name": "Programming Languages",
+      "items": [
+        "Java",
+        "Python",
+        "TypeScript",
+        "HTML",
+        "CSS",
+        "JavaScript"
+      ]
+    },
+    {
+      "id": "s2",
+      "group_name": "Frontend Frameworks",
+      "items": [
+        "React JS",
+        "React Native (Expo)",
+        "Next.js",
+        "Bootstrap",
+        "Tailwind CSS"
+      ]
+    },
+    {
+      "id": "s3",
+      "group_name": "Backend Frameworks",
+      "items": [
+        "Spring Boot",
+        "FastAPI",
+        "Node.js",
+        "Express JS"
+      ]
+    },
+    {
+      "id": "s4",
+      "group_name": "Databases",
+      "items": [
+        "MySQL",
+        "MongoDB"
+      ]
+    },
+    {
+      "id": "s5",
+      "group_name": "Development Tools",
+      "items": [
+        "IntelliJ IDEA",
+        "Visual Studio Code",
+        "Cursor",
+        "Postman"
+      ]
+    },
+    {
+      "id": "s6",
+      "group_name": "Version Control",
+      "items": [
+        "Git",
+        "GitHub"
+      ]
+    },
+    {
+      "id": "s7",
+      "group_name": "Core Concepts",
+      "items": [
+        "OOP",
+        "DSA",
+        "Design Patterns",
+        "Microservices"
+      ]
+    },
+    {
+      "id": "s8",
+      "group_name": "Soft Skills",
+      "items": [
+        "Teamwork",
+        "Problem-solving"
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "id": "p1",
+      "name": "ChatPulse",
+      "description": "MERN real-time chat app",
+      "tech_stack": "MongoDB, Express, React, Node.js",
+      "start": "",
+      "end": "",
+      "links": [
+        {
+          "label": "GitHub",
+          "url": "https://github.com/shahriar808/ChatPulse-Real-Time-ChatApp"
+        },
+        {
+          "label": "Demo",
+          "url": "https://chatpulse-real-time-chatapp.onrender.com"
+        }
+      ],
+      "bullets": []
+    },
+    {
+      "id": "p2",
+      "name": "LibroManager",
+      "description": "Library management system",
+      "tech_stack": "Spring Boot, Thymeleaf",
+      "start": "",
+      "end": "",
+      "links": [
+        {
+          "label": "GitHub",
+          "url": "https://github.com/shahriar808/LibroManager"
+        }
+      ],
+      "bullets": []
+    },
+    {
+      "id": "p3",
+      "name": "Online Food Shop",
+      "description": "E-commerce platform",
+      "tech_stack": "Spring Boot, MySQL",
+      "start": "",
+      "end": "",
+      "links": [
+        {
+          "label": "GitHub",
+          "url": "https://github.com/shahriar808/Food-Shop"
+        }
+      ],
+      "bullets": []
+    },
+    {
+      "id": "p4",
+      "name": "Monthly Challenge App",
+      "description": "Full-stack app",
+      "tech_stack": "Spring Boot, React.js",
+      "start": "",
+      "end": "",
+      "links": [
+        {
+          "label": "GitHub",
+          "url": "https://github.com/shahriar808/Monthly-Challenge-App"
+        }
+      ],
+      "bullets": []
+    },
+    {
+      "id": "p5",
+      "name": "Design Pattern ATM",
+      "description": "Java console app demonstrating design patterns",
+      "tech_stack": "Java",
+      "start": "",
+      "end": "",
+      "links": [
+        {
+          "label": "GitHub",
+          "url": "https://github.com/shahriar808/Design-Patterns-Project"
+        }
+      ],
+      "bullets": []
+    },
+    {
+      "id": "p6",
+      "name": "Rock Paper Scissors",
+      "description": "Browser game",
+      "tech_stack": "HTML, CSS, JavaScript",
+      "start": "",
+      "end": "",
+      "links": [
+        {
+          "label": "GitHub",
+          "url": "https://github.com/shahriar808/Rock-Paper-Scissors-Game"
+        },
+        {
+          "label": "Demo",
+          "url": "https://shahriar808.github.io/Rock-Paper-Scissors-Game/"
+        }
+      ],
+      "bullets": []
+    }
+  ],
+  "education": [
+    {
+      "id": "ed1",
+      "institution": "Bangladesh University of Business & Technology",
+      "degree": "BSc in Computer Science and Engineering",
+      "field": "",
+      "location": "",
+      "start": "",
+      "end": "2024",
+      "gpa": "3.41",
+      "gpa_label": "CGPA",
+      "details": []
+    },
+    {
+      "id": "ed2",
+      "institution": "Government Science College, Tejgaon",
+      "degree": "Higher Secondary Certificate (HSC)",
+      "field": "",
+      "location": "",
+      "start": "",
+      "end": "2019",
+      "gpa": "",
+      "gpa_label": "GPA",
+      "details": []
+    },
+    {
+      "id": "ed3",
+      "institution": "Ideal School & College, Motijheel",
+      "degree": "Secondary School Certificate (SSC)",
+      "field": "",
+      "location": "",
+      "start": "",
+      "end": "2017",
+      "gpa": "",
+      "gpa_label": "GPA",
+      "details": []
+    }
+  ],
+  "certifications": [
+    {
+      "id": "c1",
+      "name": "Microservices with Spring Boot, Spring Cloud, Docker, K8s",
+      "issuer": "Shabbir Dawoodi, Udemy",
+      "date": "",
+      "is_ongoing": true,
+      "link": ""
+    },
+    {
+      "id": "c2",
+      "name": "Data Structures & Backend with Java",
+      "issuer": "Board Infinity, Coursera",
+      "date": "",
+      "is_ongoing": false,
+      "link": ""
+    },
+    {
+      "id": "c3",
+      "name": "Master Git and Github",
+      "issuer": "Anisul Islam, Udemy",
+      "date": "",
+      "is_ongoing": false,
+      "link": ""
+    },
+    {
+      "id": "c4",
+      "name": "Data Structures & Algorithms in Java",
+      "issuer": "Great Learning",
+      "date": "",
+      "is_ongoing": false,
+      "link": ""
+    }
+  ],
+  "achievements": [
+    {
+      "id": "a1",
+      "title": "Participated in ICPC 2023",
+      "description": "",
+      "date": "2023"
+    },
+    {
+      "id": "a2",
+      "title": "Attended Therap Java Fest 2022 and successfully cleared the screening test",
+      "description": "",
+      "date": "2022"
+    }
+  ],
+  "languages": [
+    {
+      "id": "lg1",
+      "language": "Bangla",
+      "proficiency": "Native"
+    },
+    {
+      "id": "lg2",
+      "language": "English",
+      "proficiency": "Proficient"
+    }
+  ],
+  "publications": [],
+  "volunteer": [],
+  "interests": {
+    "items": []
+  },
+  "references": []
+}
