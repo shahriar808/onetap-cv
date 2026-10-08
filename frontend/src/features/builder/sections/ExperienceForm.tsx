@@ -47,33 +47,35 @@ export function ExperienceForm() {
               update({ location: event.currentTarget.value })
             }
           />
-          <div className="grid gap-4 md:grid-cols-2">
+          <div className="grid items-start gap-4 md:grid-cols-2">
             <MonthYearInput
               label="Start date"
               value={item.start}
               onChange={(start) => update({ start })}
             />
-            <MonthYearInput
-              label="End date"
-              value={item.end}
-              disabled={item.is_current}
-              onChange={(end) => update({ end })}
-            />
+            <div className="grid content-start gap-2">
+              <MonthYearInput
+                label="End date"
+                value={item.end}
+                disabled={item.is_current}
+                onChange={(end) => update({ end })}
+              />
+              <label className="flex min-h-11 items-center gap-3 text-sm font-medium text-ink">
+                <input
+                  type="checkbox"
+                  checked={item.is_current}
+                  onChange={(event) =>
+                    update({
+                      is_current: event.currentTarget.checked,
+                      ...(event.currentTarget.checked ? { end: '' } : {}),
+                    })
+                  }
+                  className="size-5 rounded border-line accent-ink"
+                />
+                Present
+              </label>
+            </div>
           </div>
-          <label className="flex min-h-11 items-center gap-3 text-sm font-medium text-slate-800">
-            <input
-              type="checkbox"
-              checked={item.is_current}
-              onChange={(event) =>
-                update({
-                  is_current: event.currentTarget.checked,
-                  ...(event.currentTarget.checked ? { end: '' } : {}),
-                })
-              }
-              className="h-5 w-5 rounded border-slate-300 accent-blue-700"
-            />
-            I currently work here
-          </label>
           <Input
             label="Summary"
             value={item.summary}
@@ -89,8 +91,11 @@ export function ExperienceForm() {
             max={15}
             maxLength={300}
           />
-          <p className="-mt-2 text-sm text-slate-600">
-            Add numbers where possible (users, speed, time saved).
+          <p className="flex items-center gap-2 rounded-md bg-paper-2 px-3 py-2 text-sm text-ink-soft">
+            <span className="font-mono text-xs font-semibold tracking-wide text-ink-muted">
+              TIP
+            </span>
+            <span>Add numbers where possible (users, speed, time saved).</span>
           </p>
         </div>
       )}

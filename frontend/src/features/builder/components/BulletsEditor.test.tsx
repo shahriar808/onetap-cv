@@ -23,13 +23,15 @@ describe('BulletsEditor', () => {
     fireEvent.change(screen.getByLabelText('Highlights 1'), {
       target: { value: 'Improved delivery time' },
     })
-    fireEvent.click(screen.getByRole('button', { name: '+ Add bullet' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Add bullet' }))
 
     const firstBullet = screen.getByLabelText('Highlights 1')
     const secondBullet = screen.getByLabelText('Highlights 2')
-    const addButton = screen.getByRole('button', { name: '+ Add bullet' })
+    const addButton = screen.getByRole('button', { name: 'Add bullet' })
     expect(firstBullet).toBeInstanceOf(HTMLTextAreaElement)
     expect(secondBullet).toBeInstanceOf(HTMLTextAreaElement)
+    expect(screen.getByRole('button', { name: 'Remove highlights 1' }).textContent)
+      .toBe('')
     expect((firstBullet as HTMLTextAreaElement).value).toBe(
       'Improved delivery time',
     )

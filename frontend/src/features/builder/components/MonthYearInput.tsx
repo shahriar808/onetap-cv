@@ -42,10 +42,10 @@ export function MonthYearInput({
 
   return (
     <fieldset className="grid gap-1.5">
-      <legend className="text-sm font-medium text-slate-800">{label}</legend>
+      <legend className="text-sm font-medium text-ink">{label}</legend>
       <div className="grid grid-cols-2 gap-3">
         <div className="grid gap-1">
-          <label htmlFor={`${id}-month`} className="text-xs text-slate-600">
+          <label htmlFor={`${id}-month`} className="text-xs text-ink-soft">
             Month
           </label>
           <select
@@ -56,7 +56,7 @@ export function MonthYearInput({
               const selectedMonth = event.currentTarget.value
               onChange(year ? (selectedMonth ? `${year}-${selectedMonth}` : year) : '')
             }}
-            className="min-h-11 rounded-lg border border-slate-300 bg-white px-3 text-base text-slate-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-700 disabled:cursor-not-allowed disabled:bg-slate-100"
+            className="min-h-11 w-full rounded-lg border border-line bg-paper px-3 text-base text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent disabled:cursor-not-allowed disabled:bg-paper-2"
           >
             <option value="">Month</option>
             {MONTHS.map((monthName, index) => {
@@ -70,7 +70,7 @@ export function MonthYearInput({
           </select>
         </div>
         <div className="grid gap-1">
-          <label htmlFor={`${id}-year`} className="text-xs text-slate-600">
+          <label htmlFor={`${id}-year`} className="text-xs text-ink-soft">
             Year
           </label>
           <select
@@ -81,7 +81,7 @@ export function MonthYearInput({
               const selectedYear = event.currentTarget.value
               onChange(selectedYear ? (month ? `${selectedYear}-${month}` : selectedYear) : '')
             }}
-            className="min-h-11 rounded-lg border border-slate-300 bg-white px-3 text-base text-slate-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-700 disabled:cursor-not-allowed disabled:bg-slate-100"
+            className="min-h-11 w-full rounded-lg border border-line bg-paper px-3 text-base text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent disabled:cursor-not-allowed disabled:bg-paper-2"
           >
             <option value="">Year</option>
             {Array.from({ length: currentYear + 2 - 1970 }, (_, index) => {

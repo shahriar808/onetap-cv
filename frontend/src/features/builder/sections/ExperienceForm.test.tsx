@@ -21,12 +21,21 @@ describe('ExperienceForm', () => {
     fireEvent.change(screen.getByLabelText('Company'), {
       target: { value: 'Example Inc' },
     })
-    fireEvent.click(screen.getByLabelText('I currently work here'))
+    fireEvent.click(screen.getByLabelText('Present'))
 
     const endMonth = screen.getAllByLabelText('Month')[1]
     const endYear = screen.getAllByLabelText('Year')[1]
     expect((endMonth as HTMLSelectElement).disabled).toBe(true)
     expect((endYear as HTMLSelectElement).disabled).toBe(true)
+    expect(
+      screen
+        .getByRole('group', { name: 'End date' })
+        .parentElement?.contains(screen.getByLabelText('Present')),
+    ).toBe(true)
+    expect(
+      screen.getByText('Add numbers where possible (users, speed, time saved).')
+        .previousElementSibling?.textContent,
+    ).toBe('TIP')
     expect(useResumeStore.getState().data.experience[0]).toMatchObject({
       company: 'Example Inc',
       is_current: true,

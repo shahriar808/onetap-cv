@@ -42,6 +42,13 @@ describe('MonthYearInput', () => {
     expect(yearSelect).toBeInstanceOf(HTMLSelectElement)
     expect((monthSelect as HTMLSelectElement).value).toBe('03')
     expect((yearSelect as HTMLSelectElement).value).toBe('2024')
+    expect(monthSelect.parentElement?.parentElement?.className).toContain(
+      'grid-cols-2',
+    )
+    for (const select of [monthSelect, yearSelect]) {
+      expect(select.className).toContain('min-h-11')
+      expect(select.className).toContain('text-base')
+    }
 
     fireEvent.change(screen.getByLabelText('Year'), {
       target: { value: '' },
