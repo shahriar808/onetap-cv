@@ -6,7 +6,7 @@ interface HandUnderlineProps {
 
 export function HandUnderline({ children }: HandUnderlineProps) {
   return (
-    <span className="hand-underline relative">
+    <span className="hand-underline relative inline-block max-w-full">
       {children}
       <svg
         aria-hidden="true"

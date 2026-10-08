@@ -6,6 +6,7 @@ interface SectionHeaderProps {
   label: string
   title: string
   lead?: ReactNode
+  labelClassName?: string
 }
 
 export function SectionHeader({
@@ -13,13 +14,14 @@ export function SectionHeader({
   label,
   title,
   lead,
+  labelClassName = 'text-accent',
 }: SectionHeaderProps) {
   const sectionIndex = String(index).padStart(2, '0')
 
   return (
     <header className="grid gap-4">
       <div className="flex items-center gap-3">
-        <Eyebrow className="shrink-0 text-accent">
+        <Eyebrow className={`shrink-0 ${labelClassName}`}>
           {sectionIndex} / {label}
         </Eyebrow>
         <span aria-hidden="true" className="h-px flex-1 bg-line" />

@@ -136,6 +136,7 @@ export function ParserDemo() {
           index={4}
           label="What the software sees"
           title={LANDING_CONTENT.parser.title}
+          labelClassName="text-ink-muted"
         />
         <p className="-mt-4 max-w-[62ch] text-ink-soft">
           {LANDING_CONTENT.parser.sub}
@@ -177,11 +178,11 @@ export function ParserDemo() {
           className="grid min-w-0 gap-5 outline-none focus-visible:outline-accent lg:grid-cols-2"
         >
           <section className="grid min-w-0 content-start gap-3">
-            <h3 className="text-label text-accent">The page</h3>
+            <h3 className="text-label text-ink-muted">The page</h3>
             <PageMock activeTab={selected} />
           </section>
           <section className="grid min-w-0 content-start gap-3">
-            <h3 className="text-label text-accent">Extracted text</h3>
+            <h3 className="text-label text-ink-muted">Extracted text</h3>
             <pre
               key={selected}
               className="parser-demo-panel min-h-64 max-w-full overflow-x-auto rounded-sm border border-line bg-paper p-5 font-mono text-xs leading-6 text-ink sm:p-7"
