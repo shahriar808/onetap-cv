@@ -21,20 +21,29 @@ export class ErrorBoundary extends Component<
   render() {
     if (this.state.hasError) {
       return (
-        <main className="mx-auto grid min-h-screen max-w-xl content-center gap-4 px-6 text-center">
-          <h1 className="text-2xl font-bold text-slate-900">
+        <main
+          id="main-content"
+          className="mx-auto grid min-h-screen max-w-xl content-center justify-items-center gap-4 bg-paper px-6 text-center"
+        >
+          <h1 className="font-display text-display-lg font-semibold text-ink">
             Something went wrong
           </h1>
-          <p className="text-slate-700">
+          <p className="text-ink-soft">
             Your data is safe in this browser.
           </p>
           <button
             type="button"
             onClick={() => window.location.reload()}
-            className="mx-auto min-h-11 rounded-lg bg-blue-700 px-5 py-2 font-semibold text-white hover:bg-blue-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
+            className="min-h-11 rounded-lg bg-ink px-5 py-2 font-semibold text-paper hover:bg-ink/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
           >
             Reload
           </button>
+          <a
+            href="/"
+            className="inline-flex min-h-11 items-center rounded-lg border border-line px-5 py-2 font-semibold text-ink hover:bg-paper-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+          >
+            Home
+          </a>
         </main>
       )
     }

@@ -1,8 +1,9 @@
-import { cleanup, render, screen, waitFor } from '@testing-library/react'
+import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { MemoryRouter, Route, Routes, useLocation } from 'react-router-dom'
 import { defaultResume } from '../lib/defaults'
 import { useResumeStore } from '../store/resumeStore'
+import { getHealth } from '../lib/api'
 import { BuilderPage } from './BuilderPage'
 
 vi.mock('../lib/api', async (importOriginal) => {
@@ -41,6 +42,7 @@ describe('BuilderPage template query', () => {
       data: defaultResume(),
       selectedTemplate: 'modern',
     })
+    vi.mocked(getHealth).mockClear().mockResolvedValue({ status: 'down' })
   })
 
   afterEach(cleanup)
@@ -63,5 +65,23 @@ describe('BuilderPage template query', () => {
       expect(screen.getByTestId('location').textContent).toBe('/build'),
     )
     expect(useResumeStore.getState().selectedTemplate).toBe('modern')
+  })
+
+  it('shows a slim retry banner immediately below the app bar when offline', async () => {
+    renderBuilder('/build')
+
+    const message = await screen.findByText(
+      "Can't reach the server. Preview and download are unavailable.",
+    )
+    const alert = message.closest('[role="alert"]')
+    expect(alert).not.toBeNull()
+    expect(alert?.textContent).toContain(
+      "Can't reach the server. Preview and download are unavailable.",
+    )
+    expect(alert?.className).toContain('py-2')
+    expect(alert?.previousElementSibling?.tagName).toBe('HEADER')
+
+    fireEvent.click(screen.getByRole('button', { name: 'Retry connection' }))
+    await waitFor(() => expect(vi.mocked(getHealth).mock.calls.length).toBeGreaterThan(1))
   })
 })

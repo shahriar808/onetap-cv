@@ -16,6 +16,8 @@ import { Stepper, StepProgress } from '../features/builder/components/Stepper'
 import { TemplatePicker } from '../features/builder/components/TemplatePicker'
 import { PreviewPane } from '../features/builder/components/PreviewPane'
 import { DownloadButton } from '../features/builder/components/DownloadButton'
+import { EmptySectionsState } from '../features/builder/components/EmptySectionsState'
+import { AlertTriangleIcon } from '../components/icons'
 import { SECTION_REGISTRY } from '../features/builder/sections/registry'
 import { useResumeStore } from '../store/resumeStore'
 import type { TemplateId } from '../lib/defaults'
@@ -121,14 +123,7 @@ export function BuilderPage() {
           <p className="text-ink-soft">{step.intro}</p>
         </header>
         {detailSections.length === 0 ? (
-          <Card>
-            <div className="grid justify-items-start gap-3">
-              <p className="text-slate-700">No optional sections yet.</p>
-              <Button variant="secondary" onClick={() => changeStep(1)}>
-                Go to Sections to add some
-              </Button>
-            </div>
-          </Card>
+          <EmptySectionsState onChooseSections={() => changeStep(1)} />
         ) : (
           detailSections.map((section) => (
             <Card key={section.id} className="grid gap-4">
@@ -180,13 +175,15 @@ export function BuilderPage() {
   const serverNotice = serverStatus === 'down' ? (
     <div
       role="alert"
-      className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-amber-300 bg-amber-50 p-4 text-amber-950"
+      className="flex min-h-11 flex-wrap items-center justify-between gap-x-3 gap-y-2 rounded-lg border border-danger/20 bg-danger/5 px-3 py-2 text-sm text-ink"
     >
-      <p>
+      <p className="flex items-center gap-2">
+        <AlertTriangleIcon className="shrink-0 text-danger" size={18} />
         Can&apos;t reach the server. Preview and download are unavailable.
       </p>
       <Button
         variant="secondary"
+        className="min-h-9 px-3 py-1 text-sm"
         onClick={() => {
           setServerStatus('checking')
           setHealthRetry((retry) => retry + 1)
@@ -200,7 +197,7 @@ export function BuilderPage() {
   return (
     <main
       id="main-content"
-      className="mx-auto grid h-dvh min-h-0 max-w-7xl grid-rows-[auto_auto_minmax(0,1fr)] gap-3 overflow-hidden px-3 py-3 sm:px-5"
+      className="mx-auto grid h-dvh min-h-0 max-w-7xl grid-rows-[auto_auto_auto_minmax(0,1fr)] gap-3 overflow-hidden px-3 py-3 sm:px-5"
     >
       <AppBar
         onCleared={() => {
@@ -209,13 +206,13 @@ export function BuilderPage() {
         }}
       />
 
+      {serverNotice}
       <StepProgress currentStep={currentStep} />
 
       <BuilderLayout
         editor={editor}
         preview={<PreviewPane data={data} template={template} />}
         stepper={<Stepper currentStep={currentStep} onStepChange={changeStep} />}
-        notice={serverNotice}
         editorFooter={editorFooter}
         activeTab={activeTab}
         onTabChange={setActiveTab}

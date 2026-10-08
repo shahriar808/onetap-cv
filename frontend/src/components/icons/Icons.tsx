@@ -16,6 +16,15 @@ export function CheckIcon(props: IconProps) {
   )
 }
 
+export function AlertTriangleIcon(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path d="M10.3 4.3 2.8 17.2A2 2 0 0 0 4.5 20h15a2 2 0 0 0 1.7-2.8L13.7 4.3a2 2 0 0 0-3.4 0Z" />
+      <path d="M12 9v4m0 3h.01" />
+    </IconBase>
+  )
+}
+
 export function DownloadIcon(props: IconProps) {
   return (
     <IconBase {...props}>

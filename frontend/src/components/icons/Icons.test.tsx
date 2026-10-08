@@ -16,7 +16,7 @@ describe('inline icon set', () => {
     )
     const svgs = container.querySelectorAll('svg')
 
-    expect(svgs).toHaveLength(17)
+    expect(svgs).toHaveLength(18)
     for (const svg of svgs) {
       expect(svg.getAttribute('aria-hidden')).toBe('true')
       expect(svg.getAttribute('focusable')).toBe('false')

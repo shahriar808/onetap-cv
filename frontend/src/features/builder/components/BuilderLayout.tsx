@@ -6,7 +6,6 @@ interface BuilderLayoutProps {
   editor: ReactNode
   preview: ReactNode
   stepper: ReactNode
-  notice: ReactNode
   editorFooter: ReactNode
   activeTab: 'edit' | 'preview'
   onTabChange: (tab: 'edit' | 'preview') => void
@@ -20,7 +19,6 @@ export function BuilderLayout({
   editor,
   preview,
   stepper,
-  notice,
   editorFooter,
   activeTab,
   onTabChange,
@@ -41,7 +39,6 @@ export function BuilderLayout({
         >
           <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain pb-24 lg:pb-4 lg:pr-2">
             <div className="grid content-start gap-5">
-              {notice}
               {editor}
               {editorFooter}
             </div>

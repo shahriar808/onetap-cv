@@ -25,5 +25,8 @@ describe('ErrorBoundary', () => {
       .not.toBeNull()
     expect(screen.getByText('Your data is safe in this browser.')).not.toBeNull()
     expect(screen.getByRole('button', { name: 'Reload' })).not.toBeNull()
+    expect(screen.getByRole('link', { name: 'Home' }).getAttribute('href')).toBe(
+      '/',
+    )
   })
 })
