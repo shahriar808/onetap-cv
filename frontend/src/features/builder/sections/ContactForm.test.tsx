@@ -43,4 +43,19 @@ describe('ContactForm', () => {
       'Taylor Example',
     )
   })
+
+  it('groups identity fields separately from contact fields', () => {
+    render(<ContactForm />)
+
+    const identityGroup = screen.getByRole('group', { name: 'Who you are' })
+    const contactGroup = screen.getByRole('group', {
+      name: 'How to reach you',
+    })
+
+    expect(identityGroup.contains(screen.getByLabelText(/Full name/))).toBe(true)
+    expect(identityGroup.contains(screen.getByLabelText(/Job title/))).toBe(true)
+    expect(contactGroup.contains(screen.getByLabelText(/Email/))).toBe(true)
+    expect(contactGroup.contains(screen.getByLabelText(/Phone/))).toBe(true)
+    expect(contactGroup.contains(screen.getByLabelText(/Location/))).toBe(true)
+  })
 })

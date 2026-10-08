@@ -1,5 +1,6 @@
 import { Button } from '../../../components/ui/Button'
 import { Input } from '../../../components/ui/Input'
+import { PlusIcon, XIcon } from '../../../components/icons'
 import { normalizeUrl } from '../../../lib/validation'
 import type { LinkItem, ProjectLink } from '../../../types/resume'
 
@@ -39,7 +40,7 @@ export function LinksEditor(props: LinksEditorProps) {
         {props.items.map((item, index) => (
           <div
             key={item.id}
-            className="grid gap-3 rounded-lg border border-slate-200 p-3 sm:grid-cols-[minmax(8rem,0.7fr)_minmax(0,1.3fr)_auto]"
+            className="grid gap-3 rounded-lg border border-slate-200 p-3 md:grid-cols-[minmax(8rem,0.7fr)_minmax(0,1.3fr)_auto]"
           >
             <div className="grid gap-1.5">
               <label
@@ -96,18 +97,21 @@ export function LinksEditor(props: LinksEditorProps) {
             <Button
               variant="ghost"
               aria-label={`Remove link ${index + 1}`}
-              className="self-end"
+              className="size-11 shrink-0 self-end p-0"
               onClick={() =>
                 props.onChange(props.items.filter((link) => link.id !== item.id))
               }
             >
-              Remove
+              <XIcon size={18} />
             </Button>
           </div>
         ))}
+        <p className="text-right text-sm text-ink-muted">
+          {props.items.length} of {props.max} links
+        </p>
         {props.items.length < props.max && (
           <Button
-            variant="secondary"
+            variant="ghost"
             className="w-fit"
             onClick={() =>
               props.onChange([
@@ -116,6 +120,7 @@ export function LinksEditor(props: LinksEditorProps) {
               ])
             }
           >
+            <PlusIcon size={18} />
             Add link
           </Button>
         )}
@@ -129,7 +134,7 @@ export function LinksEditor(props: LinksEditorProps) {
       {props.items.map((item, index) => (
         <div
           key={`${index}-${item.label}`}
-          className="grid gap-3 rounded-lg border border-slate-200 p-3 sm:grid-cols-[minmax(8rem,0.7fr)_minmax(0,1.3fr)_auto]"
+          className="grid gap-3 rounded-lg border border-slate-200 p-3 md:grid-cols-[minmax(8rem,0.7fr)_minmax(0,1.3fr)_auto]"
         >
           <Input
             label={`Link ${index + 1} label`}
@@ -170,23 +175,27 @@ export function LinksEditor(props: LinksEditorProps) {
           <Button
             variant="ghost"
             aria-label={`Remove project link ${index + 1}`}
-            className="self-end"
+            className="size-11 shrink-0 self-end p-0"
             onClick={() =>
               props.onChange(
                 props.items.filter((_, itemIndex) => itemIndex !== index),
               )
             }
           >
-            Remove
+            <XIcon size={18} />
           </Button>
         </div>
       ))}
+      <p className="text-right text-sm text-ink-muted">
+        {props.items.length} of {props.max} links
+      </p>
       {props.items.length < props.max && (
         <Button
-          variant="secondary"
+          variant="ghost"
           className="w-fit"
           onClick={() => props.onChange([...props.items, { label: '', url: '' }])}
         >
+          <PlusIcon size={18} />
           Add link
         </Button>
       )}

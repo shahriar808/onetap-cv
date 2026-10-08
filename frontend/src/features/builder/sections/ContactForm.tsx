@@ -75,25 +75,37 @@ export function ContactForm({ validationRequest = 0 }: ContactFormProps) {
           {LANDING_CONTENT.builder.steps[0].intro}
         </p>
       </div>
-      {contactInput('full_name', 'Full name', 'text')}
-      {contactInput('email', 'Email', 'email')}
-      {contactInput('phone', 'Phone', 'tel')}
-      <div className="grid gap-4 md:grid-cols-2">
-        <Input
-          label="Location"
-          value={contact.location}
-          onChange={(event) =>
-            updateContact({ location: event.currentTarget.value })
-          }
-        />
-        <Input
-          label="Job title"
-          value={contact.job_title}
-          onChange={(event) =>
-            updateContact({ job_title: event.currentTarget.value })
-          }
-        />
-      </div>
+      <fieldset className="grid gap-4">
+        <legend className="font-display text-base font-semibold text-ink">
+          Who you are
+        </legend>
+        <div className="grid gap-4 md:grid-cols-2">
+          {contactInput('full_name', 'Full name', 'text')}
+          <Input
+            label="Job title"
+            value={contact.job_title}
+            onChange={(event) =>
+              updateContact({ job_title: event.currentTarget.value })
+            }
+          />
+        </div>
+      </fieldset>
+      <fieldset className="grid gap-4">
+        <legend className="font-display text-base font-semibold text-ink">
+          How to reach you
+        </legend>
+        <div className="grid gap-4 md:grid-cols-2">
+          {contactInput('email', 'Email', 'email')}
+          {contactInput('phone', 'Phone', 'tel')}
+          <Input
+            label="Location"
+            value={contact.location}
+            onChange={(event) =>
+              updateContact({ location: event.currentTarget.value })
+            }
+          />
+        </div>
+      </fieldset>
       <LinksEditor
         mode="typed"
         items={contact.links}
