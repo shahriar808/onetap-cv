@@ -9,6 +9,7 @@ import { Button } from '../../../components/ui/Button'
 import type { TemplateId } from '../../../lib/defaults'
 import type { ResumeData } from '../../../types/resume'
 import { usePreview } from '../hooks/usePreview'
+import { PreviewToolbar } from './PreviewToolbar'
 
 const PREVIEW_WIDTH = 794
 
@@ -75,64 +76,67 @@ export function PreviewPane({ data, template }: PreviewPaneProps) {
       aria-labelledby="preview-title"
       className="grid min-w-0 gap-3"
     >
-      <h2 id="preview-title" className="text-lg font-semibold text-slate-900">
-        Live preview
-      </h2>
-      <div
-        ref={containerRef}
-        className="relative min-h-64 overflow-hidden rounded-xl border border-slate-200 bg-white"
-      >
-        <div
-          data-testid="preview-document"
-          className="relative w-full"
-          style={{
-            height: contentHeight * scale,
-          }}
+      <div className="grid gap-3">
+        <h2
+          id="preview-title"
+          className="font-display text-lg font-semibold text-ink"
         >
+          Live preview
+        </h2>
+        <PreviewToolbar template={template} loading={loading && Boolean(html)} />
+      </div>
+      <div
+        className="relative min-h-64 overflow-auto rounded-xl border border-line bg-desk p-3 sm:p-4"
+      >
+        <div ref={containerRef} className="mx-auto min-w-0">
           <div
-            data-testid="preview-document-content"
-            className="absolute left-0 top-0 origin-top-left"
-            style={{
-              width: PREVIEW_WIDTH,
-              height: contentHeight,
-              transform: `scale(${scale})`,
-            }}
+            data-testid="preview-document"
+            className="relative mx-auto w-full shadow-paper"
+            style={{ height: contentHeight * scale, maxWidth: PREVIEW_WIDTH }}
           >
-            <iframe
-              title="CV preview"
-              sandbox="allow-same-origin"
-              srcDoc={html}
-              onLoad={updateContentHeight}
-              className="block border-0 bg-white"
-              style={{ width: PREVIEW_WIDTH, height: contentHeight }}
-            />
+            <div
+              data-testid="preview-document-content"
+              className="absolute left-0 top-0 origin-top-left border border-line bg-white"
+              style={{
+                width: PREVIEW_WIDTH,
+                height: contentHeight,
+                transform: `scale(${scale})`,
+              }}
+            >
+              <iframe
+                title="CV preview"
+                sandbox="allow-same-origin"
+                srcDoc={html}
+                onLoad={updateContentHeight}
+                className="block border-0 bg-white"
+                style={{ width: PREVIEW_WIDTH, height: contentHeight }}
+              />
+            </div>
           </div>
         </div>
-        {loading && (
+        {loading && !html && (
           <div
             role="status"
-            className="absolute inset-0 grid place-items-center bg-white/90 p-6 text-sm font-medium text-slate-700"
+            aria-label="Loading CV preview"
+            className="absolute inset-3 grid place-items-start sm:inset-4"
           >
-            {html ? (
-              'Updating preview…'
-            ) : (
-              <div
-                className="grid w-full max-w-sm gap-4"
-                aria-label="Loading CV preview"
-              >
-                <span>Preparing your CV preview…</span>
-                <span className="h-5 animate-pulse rounded bg-slate-200" />
-                <span className="h-3 animate-pulse rounded bg-slate-200" />
-                <span className="h-3 animate-pulse rounded bg-slate-200" />
-                <span className="h-20 animate-pulse rounded bg-slate-100" />
-              </div>
-            )}
+            <div className="mx-auto grid aspect-[794/1123] w-full max-w-[794px] content-start gap-4 border border-line bg-paper p-6 shadow-paper sm:p-8">
+              <span className="h-5 w-2/5 animate-pulse rounded bg-paper-2" />
+              <span className="h-2 w-full animate-pulse rounded bg-paper-2" />
+              <span className="h-2 w-4/5 animate-pulse rounded bg-paper-2" />
+              <span className="h-2 w-11/12 animate-pulse rounded bg-paper-2" />
+              <span className="mt-4 h-4 w-1/3 animate-pulse rounded bg-paper-2" />
+              <span className="h-2 w-full animate-pulse rounded bg-paper-2" />
+              <span className="h-2 w-5/6 animate-pulse rounded bg-paper-2" />
+              <span className="h-2 w-4/5 animate-pulse rounded bg-paper-2" />
+              <span className="h-16 w-full animate-pulse rounded bg-paper-2" />
+            </div>
           </div>
         )}
         {error && (
           <div
             role="alert"
-            className="absolute inset-0 grid content-center justify-items-center gap-3 bg-white/95 p-5 text-center"
+            className="absolute inset-3 grid content-center justify-items-center gap-3 rounded-lg bg-paper/95 p-5 text-center sm:inset-4"
           >
             <p className="text-sm text-red-700">{error}</p>
             <Button variant="secondary" onClick={retry}>
