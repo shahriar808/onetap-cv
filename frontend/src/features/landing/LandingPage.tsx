@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { Hero } from './sections/Hero'
 import { FactsStrip } from './sections/FactsStrip'
 import { HowItWorks } from './sections/HowItWorks'
+import { ParserDemo } from './sections/ParserDemo'
 import { SectionHeader } from '../../components/ui/SectionHeader'
 import { LANDING_CONTENT } from './content'
 
@@ -27,14 +28,15 @@ export function LandingPage() {
       <Hero />
       <FactsStrip />
       <HowItWorks />
-      {SECTIONS.slice(1).map((section, index) => (
+      <ParserDemo />
+      {SECTIONS.slice(2).map((section, index) => (
         <section
           key={section.id}
           id={section.id}
           className="grid gap-5 border-b border-line py-8"
         >
           <SectionHeader
-            index={index + 4}
+            index={index + 5}
             label={section.label}
             title={section.title}
           />

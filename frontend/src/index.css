@@ -147,6 +147,20 @@ select {
   animation: hand-underline-draw 600ms ease-out 250ms forwards;
 }
 
+.parser-demo-panel {
+  animation: parser-demo-in 150ms ease-out;
+}
+
+@keyframes parser-demo-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
 @keyframes dialog-enter {
   from {
     opacity: 0;
