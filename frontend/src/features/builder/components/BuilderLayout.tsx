@@ -37,7 +37,7 @@ export function BuilderLayout({
             activeTab === 'edit' ? '' : 'hidden'
           }`}
         >
-          <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain pb-24 lg:pb-4 lg:pr-2">
+          <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain pb-[calc(6rem+env(safe-area-inset-bottom))] lg:pb-4 lg:pr-2">
             <div className="grid content-start gap-5">
               {editor}
               {editorFooter}
@@ -59,7 +59,7 @@ export function BuilderLayout({
         </section>
         <section
           aria-label="CV preview panel"
-          className={`min-h-0 min-w-0 overflow-y-auto overscroll-contain pb-24 lg:block lg:pb-4 lg:pr-1 ${
+          className={`min-h-0 min-w-0 overflow-y-auto overscroll-contain pb-[calc(6rem+env(safe-area-inset-bottom))] lg:block lg:pb-4 lg:pr-1 ${
             activeTab === 'preview' ? '' : 'hidden'
           }`}
         >

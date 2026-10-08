@@ -40,4 +40,29 @@ describe('MobileBar', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Back' }))
     expect(onPrevious).toHaveBeenCalledOnce()
   })
+
+  it('uses the paper-and-ink mobile bar with accessible touch targets', () => {
+    render(
+      <MobileBar
+        activeTab="edit"
+        onTabChange={vi.fn()}
+        previousDisabled={false}
+        onPrevious={vi.fn()}
+        primaryLabel="Next"
+        onPrimaryAction={vi.fn()}
+      />,
+    )
+
+    const navigation = screen.getByRole('navigation', {
+      name: 'Mobile builder controls',
+    })
+    expect(navigation.className).toContain('bg-paper')
+    expect(navigation.className).toContain('border-line')
+    expect(
+      screen.getByRole('group', { name: 'Builder view' }).className,
+    ).toContain('bg-paper-2')
+    expect(screen.getByRole('button', { name: 'Next' }).className).toContain(
+      '!min-h-12',
+    )
+  })
 })

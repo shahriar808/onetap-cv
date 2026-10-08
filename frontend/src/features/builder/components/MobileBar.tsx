@@ -1,3 +1,5 @@
+import { Button } from '../../../components/ui/Button'
+
 interface MobileBarProps {
   activeTab: 'edit' | 'preview'
   onTabChange: (tab: 'edit' | 'preview') => void
@@ -16,21 +18,24 @@ export function MobileBar({
   onPrimaryAction,
 }: MobileBarProps) {
   return (
-    <div className="fixed inset-x-0 bottom-0 z-40 border-t border-slate-200 bg-white px-3 pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] shadow-[0_-4px_12px_rgba(15,23,42,0.08)] lg:hidden">
+    <nav
+      aria-label="Mobile builder controls"
+      className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-paper px-3 pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] lg:hidden"
+    >
       <div className="mx-auto grid max-w-6xl grid-cols-[minmax(0,1fr)_auto_auto] items-center gap-2">
         <div
           role="group"
           aria-label="Builder view"
-          className="grid min-h-11 grid-cols-2 rounded-lg bg-slate-100 p-1"
+          className="grid min-h-12 grid-cols-2 rounded-lg border border-line bg-paper-2 p-1"
         >
           <button
             type="button"
             aria-pressed={activeTab === 'edit'}
             onClick={() => onTabChange('edit')}
-            className={`min-h-11 rounded-md px-3 text-sm font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-700 ${
+            className={`min-h-12 rounded-md px-3 text-base font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent ${
               activeTab === 'edit'
-                ? 'bg-white text-slate-900 shadow-sm'
-                : 'text-slate-600'
+                ? 'bg-paper text-ink shadow-sm'
+                : 'text-ink-muted'
             }`}
           >
             Edit
@@ -39,31 +44,30 @@ export function MobileBar({
             type="button"
             aria-pressed={activeTab === 'preview'}
             onClick={() => onTabChange('preview')}
-            className={`min-h-11 rounded-md px-3 text-sm font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-700 ${
+            className={`min-h-12 rounded-md px-3 text-base font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent ${
               activeTab === 'preview'
-                ? 'bg-white text-slate-900 shadow-sm'
-                : 'text-slate-600'
+                ? 'bg-paper text-ink shadow-sm'
+                : 'text-ink-muted'
             }`}
           >
             Preview
           </button>
         </div>
-        <button
-          type="button"
+        <Button
+          variant="secondary"
+          className="!min-h-12 px-3"
           onClick={onPrevious}
           disabled={previousDisabled}
-          className="min-h-11 rounded-lg border border-slate-300 px-3 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
         >
           Back
-        </button>
-        <button
-          type="button"
+        </Button>
+        <Button
+          className="!min-h-12 px-3"
           onClick={onPrimaryAction}
-          className="min-h-11 rounded-lg bg-blue-700 px-3 py-2 text-sm font-semibold text-white hover:bg-blue-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
         >
           {primaryLabel}
-        </button>
+        </Button>
       </div>
-    </div>
+    </nav>
   )
 }

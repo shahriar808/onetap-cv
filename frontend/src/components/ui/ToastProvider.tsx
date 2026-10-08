@@ -30,7 +30,7 @@ export function ToastProvider({ children }: ToastProviderProps) {
     <ToastContext.Provider value={{ showToast }}>
       {children}
       {toast && (
-        <div className="fixed inset-x-4 bottom-24 z-[60] mx-auto max-w-sm lg:inset-x-auto lg:bottom-6 lg:right-6">
+        <div className="fixed inset-x-4 bottom-[calc(6rem+env(safe-area-inset-bottom))] z-[60] mx-auto max-w-sm lg:inset-x-auto lg:bottom-6 lg:right-6">
           <Toast message={toast} onDismiss={dismissToast} />
         </div>
       )}
