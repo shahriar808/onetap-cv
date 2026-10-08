@@ -8,6 +8,7 @@ import { SectionsIncluded } from './sections/SectionsIncluded'
 import { PrivacyExplainer } from './sections/PrivacyExplainer'
 import { Faq } from './sections/Faq'
 import { FinalCta } from './sections/FinalCta'
+import { Thanks } from './sections/Thanks'
 import { SectionHeader } from '../../components/ui/SectionHeader'
 import { LANDING_CONTENT } from './content'
 
@@ -37,19 +38,19 @@ export function LandingPage() {
       <SectionsIncluded />
       <PrivacyExplainer />
       <Faq />
-      {SECTIONS.slice(6).map((section, index) => (
+      <Thanks />
+      {SECTIONS.slice(7).map((section, index) => (
         <section
           key={section.id}
           id={section.id}
           className="grid gap-5 border-b border-line py-8"
         >
           <SectionHeader
-            index={index + 9}
+            index={index + 10}
             label={section.label}
             title={section.title}
           />
           <p className="max-w-[62ch] text-ink-soft">
-            {section.id === 'thanks' && LANDING_CONTENT.thanks.body}
             {section.id === 'feedback' && LANDING_CONTENT.feedback.sub}
           </p>
         </section>
