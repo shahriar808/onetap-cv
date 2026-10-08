@@ -1,5 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { ErrorBoundary } from './components/ErrorBoundary'
+import { ToastProvider } from './components/ui/ToastProvider'
 import { BuilderPage } from './pages/BuilderPage'
 import { HomePage } from './pages/HomePage'
 
@@ -13,11 +14,13 @@ function App() {
         >
           Skip to content
         </a>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/build" element={<BuilderPage />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
+        <ToastProvider>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/build" element={<BuilderPage />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </ToastProvider>
       </BrowserRouter>
     </ErrorBoundary>
   )
