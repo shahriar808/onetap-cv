@@ -5,6 +5,7 @@ import { FactsStrip } from './sections/FactsStrip'
 import { HowItWorks } from './sections/HowItWorks'
 import { ParserDemo } from './sections/ParserDemo'
 import { Designs } from './sections/Designs'
+import { SectionsIncluded } from './sections/SectionsIncluded'
 import { SectionHeader } from '../../components/ui/SectionHeader'
 import { LANDING_CONTENT } from './content'
 
@@ -31,19 +32,19 @@ export function LandingPage() {
       <HowItWorks />
       <ParserDemo />
       <Designs />
-      {SECTIONS.slice(3).map((section, index) => (
+      <SectionsIncluded />
+      {SECTIONS.slice(4).map((section, index) => (
         <section
           key={section.id}
           id={section.id}
           className="grid gap-5 border-b border-line py-8"
         >
           <SectionHeader
-            index={index + 6}
+            index={index + 7}
             label={section.label}
             title={section.title}
           />
           <p className="max-w-[62ch] text-ink-soft">
-            {section.id === 'sections' && LANDING_CONTENT.sections.sub}
             {section.id === 'privacy' && LANDING_CONTENT.privacy.footnote}
             {section.id === 'faq' && LANDING_CONTENT.faq.items[0].answer}
             {section.id === 'thanks' && LANDING_CONTENT.thanks.body}
