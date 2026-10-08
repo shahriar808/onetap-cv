@@ -6,16 +6,20 @@ from app.schemas.feedback import FeedbackIn
 
 
 def is_configured() -> bool:
-    return all(
+    if not all(
         (
             config.SMTP_HOST,
             config.SMTP_PORT,
-            config.SMTP_USER,
-            config.SMTP_PASSWORD,
             config.FEEDBACK_TO_EMAIL,
             config.FEEDBACK_FROM_EMAIL,
         )
-    )
+    ):
+        return False
+
+    if config.SMTP_USER:
+        return bool(config.SMTP_PASSWORD)
+
+    return config.SMTP_HOST.lower() in {"localhost", "127.0.0.1", "::1"}
 
 
 def _header_value(value: str) -> str:
@@ -49,8 +53,9 @@ def send_feedback_email(payload: FeedbackIn) -> None:
 
     message = build_message(payload)
     with smtplib.SMTP(config.SMTP_HOST, config.SMTP_PORT, timeout=10) as smtp:
-        smtp.ehlo()
-        smtp.starttls()
-        smtp.ehlo()
-        smtp.login(config.SMTP_USER, config.SMTP_PASSWORD)
+        if config.SMTP_USER:
+            smtp.ehlo()
+            smtp.starttls()
+            smtp.ehlo()
+            smtp.login(config.SMTP_USER, config.SMTP_PASSWORD)
         smtp.send_message(message)

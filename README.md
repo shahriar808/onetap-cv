@@ -3,7 +3,8 @@
 OneTap CV is a free, privacy-conscious resume builder. It stores resume data in
 the browser, renders one of three single-column templates, and exports
 ATS-friendly, searchable PDFs. Resume content is sent to the API only when
-generating a preview or PDF; the server does not persist it.
+generating a preview or PDF; the server does not persist it. Feedback messages
+are emailed to the owner and are not kept on the server.
 
 ## Features
 
@@ -12,7 +13,9 @@ generating a preview or PDF; the server does not persist it.
 - Classic, Modern, and Compact HTML/PDF templates.
 - Live preview and validated PDF download.
 - Accessible responsive builder with a mobile Edit/Preview view.
-- FastAPI endpoints for health, template metadata, preview, and PDF generation.
+- Feedback form that emails the owner without saving messages on the server.
+- FastAPI endpoints for health, template metadata, preview, PDF generation, and
+  feedback.
 
 ## Requirements
 
@@ -64,11 +67,46 @@ frontend uses browser storage and keeps the current route/data across refresh.
 | `ALLOWED_ORIGINS` | Backend | `http://localhost:5173` | Comma-separated allowed browser origins. Set this to the deployed frontend origin. |
 | `MAX_BODY_BYTES` | Backend | `1048576` | Maximum accepted request body size (1 MiB). |
 | `RATE_LIMIT` | Backend | `30/minute` | Per-client request limit for preview and PDF endpoints. |
+| `SMTP_HOST` | Backend | Unset | SMTP server hostname. |
+| `SMTP_PORT` | Backend | `587` | SMTP STARTTLS port. |
+| `SMTP_USER` | Backend | Unset | SMTP login username. |
+| `SMTP_PASSWORD` | Backend | Unset | SMTP login password or app password. Treat as a secret; never commit it. |
+| `FEEDBACK_TO_EMAIL` | Backend | Unset | Inbox that receives feedback. |
+| `FEEDBACK_FROM_EMAIL` | Backend | `SMTP_USER` | Sender address used for feedback mail. |
+| `FEEDBACK_RATE_LIMIT` | Backend | `3/hour` | Per-client feedback request limit. |
 | `VITE_API_URL` | Frontend build | Empty | Backend origin, e.g. `https://api.example.com`. Empty uses the Vite development proxy. |
+| `VITE_FEEDBACK_EMAIL` | Frontend build | Empty | Optional direct-email fallback address shown by the feedback form. |
 
 The backend reads these values from its process environment. Example values are
 in `backend/.env.example` and `frontend/.env.example`; the app does not load
-`.env` files automatically.
+`.env` files automatically. Configure SMTP credentials in the hosting
+environment, not in source control. For Gmail, enable 2-step verification and
+create an App Password; an SMTP free tier from Brevo, Mailgun, or Resend is
+another option. Never commit SMTP passwords or app passwords.
+
+### Testing feedback locally
+
+The local debug SMTP server receives messages without sending real email. In a
+separate terminal, install the optional server and start it:
+
+```powershell
+python -m pip install aiosmtpd
+python -m aiosmtpd -n -l localhost:1025
+```
+
+Set these values in the terminal running the backend, then restart it:
+
+```powershell
+$env:SMTP_HOST = "localhost"
+$env:SMTP_PORT = "1025"
+$env:SMTP_USER = ""
+$env:SMTP_PASSWORD = ""
+$env:FEEDBACK_TO_EMAIL = "owner@example.com"
+$env:FEEDBACK_FROM_EMAIL = "feedback@example.com"
+```
+
+When `SMTP_USER` is empty, the backend skips STARTTLS and login for this local
+debug server. Do not use unauthenticated SMTP for a public mail server.
 
 ## API
 
@@ -76,6 +114,8 @@ in `backend/.env.example` and `frontend/.env.example`; the app does not load
 - `GET /api/templates` — supported template metadata.
 - `POST /api/resume/preview?template={id}` — validated resume JSON to HTML.
 - `POST /api/resume/pdf?template={id}` — validated resume JSON to PDF.
+- `POST /api/feedback` — validated feedback emailed to the configured owner
+  inbox; messages are not saved by the API.
 
 Supported template IDs are `classic`, `modern`, and `compact`. The resume
 contract is defined in `backend/app/schemas/resume.py` and mirrored in

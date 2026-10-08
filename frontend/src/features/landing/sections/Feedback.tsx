@@ -3,6 +3,7 @@ import { Button } from '../../../components/ui/Button'
 import { Input } from '../../../components/ui/Input'
 import { SectionHeader } from '../../../components/ui/SectionHeader'
 import { Textarea } from '../../../components/ui/Textarea'
+import { useToast } from '../../../components/ui/useToast'
 import { FEEDBACK_EMAIL } from '../../../content/links'
 import {
   FEEDBACK_TYPES,
@@ -53,6 +54,7 @@ function mailtoHref(email: string, message: string): string {
 }
 
 export function Feedback() {
+  const { showToast } = useToast()
   const mountedAt = useRef(0)
   const [fields, setFields] = useState<FeedbackFields>({
     type: 'idea',
@@ -103,6 +105,7 @@ export function Feedback() {
     try {
       await sendFeedback(payload)
       setSuccess(true)
+      showToast(LANDING_CONTENT.feedback.success)
     } catch (error) {
       setRequestError(
         error instanceof Error ? error.message : LANDING_CONTENT.feedback.error,

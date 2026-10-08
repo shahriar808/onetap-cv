@@ -133,3 +133,36 @@ def test_smtp_configuration_requires_all_delivery_settings(
     monkeypatch.setattr(config, "SMTP_PASSWORD", "")
 
     assert not email_service.is_configured()
+
+
+def test_local_debug_smtp_skips_tls_and_login_without_user(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    configure_smtp(monkeypatch)
+    monkeypatch.setattr(config, "SMTP_HOST", "localhost")
+    monkeypatch.setattr(config, "SMTP_USER", "")
+    monkeypatch.setattr(config, "SMTP_PASSWORD", "")
+    smtp = MagicMock()
+    smtp_context = MagicMock()
+    smtp_context.__enter__.return_value = smtp
+    smtp_context.__exit__.return_value = False
+    smtp_client = MagicMock(return_value=smtp_context)
+    monkeypatch.setattr(email_service.smtplib, "SMTP", smtp_client)
+
+    assert email_service.is_configured()
+
+    email_service.send_feedback_email(feedback_payload())
+
+    smtp.starttls.assert_not_called()
+    smtp.login.assert_not_called()
+    smtp.send_message.assert_called_once()
+
+
+def test_remote_smtp_without_authentication_is_not_configured(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    configure_smtp(monkeypatch)
+    monkeypatch.setattr(config, "SMTP_USER", "")
+    monkeypatch.setattr(config, "SMTP_PASSWORD", "")
+
+    assert not email_service.is_configured()

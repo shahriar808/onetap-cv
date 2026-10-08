@@ -24,8 +24,9 @@ export function PrivacyPage() {
           Download your PDF once you are happy with it.
         </p>
         <p>
-          If you send feedback, your message is emailed to the owner. The
-          message is not kept on the server.
+          If you send feedback, your message and any name or email you include
+          are emailed to the owner. Feedback is not kept on OneTap CV&apos;s
+          server.
         </p>
       </div>
       <Link

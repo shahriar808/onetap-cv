@@ -1,6 +1,15 @@
 import { cleanup, fireEvent, render, screen } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
+import { ToastProvider } from '../../../components/ui/ToastProvider'
 import { Feedback } from './Feedback'
+
+function renderFeedback() {
+  return render(
+    <ToastProvider>
+      <Feedback />
+    </ToastProvider>,
+  )
+}
 
 afterEach(() => {
   cleanup()
@@ -11,7 +20,7 @@ describe('Feedback', () => {
   it('shows a message error on blur and does not submit invalid content', () => {
     const fetchMock = vi.fn()
     vi.stubGlobal('fetch', fetchMock)
-    render(<Feedback />)
+    renderFeedback()
     const message = screen.getByLabelText(/Message/)
 
     fireEvent.change(message, { target: { value: 'Too short' } })
@@ -30,14 +39,14 @@ describe('Feedback', () => {
       .fn()
       .mockResolvedValue(new Response('{"ok":true}', { status: 200 }))
     vi.stubGlobal('fetch', fetchMock)
-    render(<Feedback />)
+    renderFeedback()
 
     fireEvent.change(screen.getByLabelText(/Message/), {
       target: { value: 'Please add more templates.' },
     })
     fireEvent.click(screen.getByRole('button', { name: 'Send feedback' }))
 
-    expect(await screen.findByText('Thanks, got it.')).not.toBeNull()
+    expect(await screen.findAllByText('Thanks, got it.')).toHaveLength(2)
     const request = fetchMock.mock.calls[0]?.[1]
     const payload = JSON.parse(String(request?.body)) as {
       website: string
@@ -55,7 +64,7 @@ describe('Feedback', () => {
       'fetch',
       vi.fn().mockResolvedValue(new Response('', { status: 503 })),
     )
-    render(<Feedback />)
+    renderFeedback()
     const message = screen.getByLabelText(/Message/)
     const name = screen.getByLabelText('Name')
 

@@ -17,7 +17,11 @@ describe('site pages', () => {
     expect(
       screen.getByRole('heading', { name: 'Your CV stays yours.' }),
     ).not.toBeNull()
-    expect(screen.getByText(/message is emailed to the owner/)).not.toBeNull()
+    expect(
+      screen.getByText(
+        /message and any name or email you include are emailed to the owner/,
+      ),
+    ).not.toBeNull()
   })
 
   it('shows a home link for an unknown page', () => {
