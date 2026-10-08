@@ -1,5 +1,4 @@
 import { useEffect } from 'react'
-import { Link } from 'react-router-dom'
 import { Hero } from './sections/Hero'
 import { FactsStrip } from './sections/FactsStrip'
 import { HowItWorks } from './sections/HowItWorks'
@@ -8,6 +7,7 @@ import { Designs } from './sections/Designs'
 import { SectionsIncluded } from './sections/SectionsIncluded'
 import { PrivacyExplainer } from './sections/PrivacyExplainer'
 import { Faq } from './sections/Faq'
+import { FinalCta } from './sections/FinalCta'
 import { SectionHeader } from '../../components/ui/SectionHeader'
 import { LANDING_CONTENT } from './content'
 
@@ -54,16 +54,7 @@ export function LandingPage() {
           </p>
         </section>
       ))}
-      <section className="grid gap-4 py-8">
-        <SectionHeader index={12} label="Start" title={LANDING_CONTENT.finalCta.title} />
-        <Link
-          to="/build"
-          className="inline-flex min-h-11 w-fit items-center justify-center rounded-lg bg-ink px-5 py-2 font-semibold text-paper hover:bg-ink/90"
-        >
-          {LANDING_CONTENT.finalCta.button}
-        </Link>
-        <p className="text-sm text-ink-muted">{LANDING_CONTENT.finalCta.note}</p>
-      </section>
+      <FinalCta />
     </main>
   )
 }
