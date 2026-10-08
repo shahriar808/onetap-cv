@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="520" viewBox="0 0 400 520">
+  <rect width="400" height="520" fill="#fff"/>
+  <text x="32" y="48" font-family="Arial,sans-serif" font-size="18" font-weight="bold" fill="#17202A">Alex Rahman</text>
+  <text x="32" y="65" font-family="Arial,sans-serif" font-size="8" fill="#4A5260">Software Engineer · Dhaka, Bangladesh</text>
+  <text x="32" y="79" font-family="Arial,sans-serif" font-size="8" fill="#4A5260">alex.rahman@example.com</text>
+  <path d="M32 91h336" stroke="#17202A" stroke-width="1.5"/>
+  <text x="32" y="116" font-family="monospace" font-size="10" font-weight="bold" fill="#17202A">EXPERIENCE</text>
+  <text x="32" y="133" font-family="Arial,sans-serif" font-size="9" font-weight="bold" fill="#17202A">Software Engineer, Northstar Studio</text>
+  <text x="32" y="146" font-family="Arial,sans-serif" font-size="8" fill="#4A5260">2022 — Present</text>
+  <path d="M32 157h325M32 168h312M32 179h333" stroke="#A9A49B" stroke-width="2"/>
+  <text x="32" y="207" font-family="monospace" font-size="10" font-weight="bold" fill="#17202A">EDUCATION</text>
+  <text x="32" y="224" font-family="Arial,sans-serif" font-size="9" font-weight="bold" fill="#17202A">BSc, Computer Science</text>
+  <path d="M32 235h279M32 246h218" stroke="#A9A49B" stroke-width="2"/>
+  <text x="32" y="275" font-family="monospace" font-size="10" font-weight="bold" fill="#17202A">SKILLS</text>
+  <path d="M32 291h336M32 302h314M32 313h300" stroke="#A9A49B" stroke-width="2"/>
+  <text x="32" y="344" font-family="monospace" font-size="10" font-weight="bold" fill="#17202A">PROJECTS</text>
+  <text x="32" y="361" font-family="Arial,sans-serif" font-size="9" font-weight="bold" fill="#17202A">Open-source scheduling tool</text>
+  <path d="M32 372h329M32 383h298M32 394h320M32 405h275" stroke="#A9A49B" stroke-width="2"/>
+</svg>

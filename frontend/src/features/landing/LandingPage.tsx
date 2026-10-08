@@ -1,11 +1,10 @@
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { Hero } from './sections/Hero'
 import { SectionHeader } from '../../components/ui/SectionHeader'
 import { LANDING_CONTENT } from './content'
-import { useResumeStore } from '../../store/resumeStore'
 
 const SECTIONS = [
-  { id: 'top', label: 'Introduction', title: LANDING_CONTENT.hero.headline },
   { id: 'how', label: 'How it works', title: LANDING_CONTENT.how.title },
   { id: 'see', label: 'What the software sees', title: LANDING_CONTENT.parser.title },
   { id: 'designs', label: 'Designs', title: LANDING_CONTENT.designs.title },
@@ -17,45 +16,17 @@ const SECTIONS = [
 ] as const
 
 export function LandingPage() {
-  const fullName = useResumeStore((state) => state.data.contact.full_name)
-
   useEffect(() => {
     document.title = 'OneTap CV — Build an ATS-friendly CV'
   }, [])
 
   return (
-    <main id="main-content" className="container-page grid gap-12 py-12 sm:gap-16">
-      <section id="top" className="grid gap-6 py-8">
-        <SectionHeader
-          index={1}
-          label="Introduction"
-          title={LANDING_CONTENT.hero.headline}
-          lead={LANDING_CONTENT.hero.sub}
-        />
-        <div className="flex flex-wrap items-center gap-4">
-          <Link
-            to="/build"
-            className="inline-flex min-h-11 items-center justify-center rounded-lg bg-ink px-5 py-2 font-semibold text-paper hover:bg-ink/90"
-          >
-            {fullName.trim()
-              ? LANDING_CONTENT.hero.returningPrimary
-              : LANDING_CONTENT.hero.primary}
-          </Link>
-          <Link
-            to="#designs"
-            className="inline-flex min-h-11 items-center text-ink underline-offset-4 hover:underline"
-          >
-            {LANDING_CONTENT.hero.secondary}
-          </Link>
-        </div>
-        {fullName.trim() && (
-          <p className="text-sm text-ink-muted">
-            {LANDING_CONTENT.hero.returningMessage}
-          </p>
-        )}
-      </section>
-      <section className="grid gap-5 border-y border-line py-8">
-        <SectionHeader index={2} label="At a glance" title="Plain text. Clear layout." />
+    <main id="main-content" className="grid gap-12 sm:gap-16">
+      <Hero />
+      <section
+        aria-label="CV facts"
+        className="container-page grid gap-4 border-y border-line py-8"
+      >
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {LANDING_CONTENT.facts.map((fact) => (
             <div key={fact.label} className="grid content-start gap-2">
@@ -65,7 +36,7 @@ export function LandingPage() {
           ))}
         </div>
       </section>
-      {SECTIONS.slice(1).map((section, index) => (
+      {SECTIONS.map((section, index) => (
         <section
           key={section.id}
           id={section.id}

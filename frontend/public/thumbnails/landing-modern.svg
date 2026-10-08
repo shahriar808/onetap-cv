@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="520" viewBox="0 0 400 520">
+  <rect width="400" height="520" fill="#fff"/>
+  <rect x="0" y="0" width="400" height="112" fill="#17202A"/>
+  <text x="34" y="48" font-family="Arial,sans-serif" font-size="22" font-weight="bold" fill="#F6F1E7">Alex Rahman</text>
+  <text x="34" y="68" font-family="Arial,sans-serif" font-size="10" fill="#F6F1E7">Software Engineer</text>
+  <text x="34" y="88" font-family="Arial,sans-serif" font-size="8" fill="#E4DCCB">Dhaka, Bangladesh · alex.rahman@example.com</text>
+  <text x="34" y="143" font-family="Arial,sans-serif" font-size="11" font-weight="bold" fill="#17202A">PROFESSIONAL SUMMARY</text>
+  <path d="M34 153h320M34 164h302M34 175h315" stroke="#A9A49B" stroke-width="2"/>
+  <text x="34" y="207" font-family="Arial,sans-serif" font-size="11" font-weight="bold" fill="#17202A">WORK EXPERIENCE</text>
+  <text x="34" y="225" font-family="Arial,sans-serif" font-size="9" font-weight="bold" fill="#17202A">Software Engineer · Northstar Studio</text>
+  <text x="34" y="239" font-family="Arial,sans-serif" font-size="8" fill="#4A5260">2022 — Present</text>
+  <path d="M34 252h322M45 264h300M45 275h309M45 286h278" stroke="#A9A49B" stroke-width="2"/>
+  <text x="34" y="317" font-family="Arial,sans-serif" font-size="11" font-weight="bold" fill="#17202A">EDUCATION</text>
+  <text x="34" y="335" font-family="Arial,sans-serif" font-size="9" font-weight="bold" fill="#17202A">BSc, Computer Science</text>
+  <path d="M34 346h262M34 357h194" stroke="#A9A49B" stroke-width="2"/>
+  <text x="34" y="389" font-family="Arial,sans-serif" font-size="11" font-weight="bold" fill="#17202A">SKILLS</text>
+  <path d="M34 400h315M34 411h287M34 422h303" stroke="#A9A49B" stroke-width="2"/>
+</svg>
