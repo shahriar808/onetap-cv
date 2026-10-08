@@ -5,17 +5,17 @@ import {
   useState,
   type ReactNode,
 } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 import { Button } from '../components/ui/Button'
 import { Card } from '../components/ui/Card'
 import { ContactForm } from '../features/builder/sections/ContactForm'
+import { AppBar } from '../features/builder/components/AppBar'
 import { BuilderLayout } from '../features/builder/components/BuilderLayout'
 import { SectionPicker } from '../features/builder/components/SectionPicker'
 import { Stepper, StepProgress } from '../features/builder/components/Stepper'
 import { TemplatePicker } from '../features/builder/components/TemplatePicker'
 import { PreviewPane } from '../features/builder/components/PreviewPane'
 import { DownloadButton } from '../features/builder/components/DownloadButton'
-import { ClearDataButton } from '../features/builder/components/ClearDataButton'
 import { SECTION_REGISTRY } from '../features/builder/sections/registry'
 import { useResumeStore } from '../store/resumeStore'
 import type { TemplateId } from '../lib/defaults'
@@ -156,12 +156,6 @@ export function BuilderPage() {
         Your data is saved only in this browser. It is sent to our server only
         to generate your preview and PDF, and is never stored.
       </p>
-      <ClearDataButton
-        onCleared={() => {
-          setValidationRequest(0)
-          changeStep(0)
-        }}
-      />
     </footer>
   )
 
@@ -190,15 +184,12 @@ export function BuilderPage() {
       id="main-content"
       className="mx-auto grid h-dvh min-h-0 max-w-7xl grid-rows-[auto_auto_minmax(0,1fr)] gap-3 overflow-hidden px-3 py-3 sm:px-5"
     >
-      <header className="flex flex-wrap items-center justify-between gap-3">
-        <Link
-          to="/"
-          className="text-lg font-bold text-slate-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-700"
-        >
-          OneTap CV
-        </Link>
-        <p className="text-sm text-slate-600">Your work saves automatically</p>
-      </header>
+      <AppBar
+        onCleared={() => {
+          setValidationRequest(0)
+          changeStep(0)
+        }}
+      />
 
       <StepProgress currentStep={currentStep} />
 
