@@ -14,6 +14,7 @@ are emailed to the owner and are not kept on the server.
 - Live preview and validated PDF download.
 - Accessible responsive builder with a mobile Edit/Preview view.
 - Feedback form that emails the owner without saving messages on the server.
+- Editorial, mobile-first landing page with an ATS text preview, privacy details, and creator links.
 - FastAPI endpoints for health, template metadata, preview, PDF generation, and
   feedback.
 
@@ -76,6 +77,7 @@ frontend uses browser storage and keeps the current route/data across refresh.
 | `FEEDBACK_RATE_LIMIT` | Backend | `3/hour` | Per-client feedback request limit. |
 | `VITE_API_URL` | Frontend build | Empty | Backend origin, e.g. `https://api.example.com`. Empty uses the Vite development proxy. |
 | `VITE_FEEDBACK_EMAIL` | Frontend build | Empty | Optional direct-email fallback address shown by the feedback form. |
+| `VITE_SITE_URL` | Frontend build | Empty | Canonical HTTPS frontend origin; also generates production sitemap and robots files after the build. |
 
 The backend reads these values from its process environment. Example values are
 in `backend/.env.example` and `frontend/.env.example`; the app does not load
@@ -145,6 +147,9 @@ python scripts/make_thumbnails.py
 ```
 
 It renders the sample resume and updates `frontend/public/thumbnails/`.
+For neutral landing previews, install `backend/requirements-thumbnails.txt`,
+then run `python -m scripts.make_thumbnails --landing` from `backend` and
+`python scripts/optimize-thumbnails.py` from `frontend`.
 
 ## Deployment
 
@@ -252,3 +257,7 @@ Netlify-style redirects, so refreshing `/build` serves the app. Set backend
 - PDFs are designed as single-column, searchable documents with A4 page size.
 - The sample resume and its template thumbnails are demonstration content, not
   endorsements or a guarantee of ATS results.
+- `VITE_SITE_URL` must be set to the final HTTPS frontend domain at deployment.
+  It is unset in this repository because the domain has not been provided;
+  without it, canonical URLs and generated sitemap/robots files are omitted.
+- Dark mode is future work and is not included in this design pass.
