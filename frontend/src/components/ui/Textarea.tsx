@@ -22,7 +22,7 @@ export function Textarea({
 
   return (
     <div className="grid gap-1.5">
-      <label htmlFor={textareaId} className="text-sm font-medium text-slate-800">
+      <label htmlFor={textareaId} className="text-sm font-medium text-ink">
         {label}
         {required && <span aria-hidden="true"> *</span>}
       </label>
@@ -32,14 +32,32 @@ export function Textarea({
         required={required}
         aria-invalid={error ? true : undefined}
         aria-describedby={description ? descriptionId : undefined}
-        className={`min-h-28 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-base text-slate-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-700 ${className}`}
+        className={`min-h-28 w-full rounded-lg border bg-paper px-3 py-2 text-base text-ink placeholder:text-ink-muted hover:border-ink-soft focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent ${
+          error ? 'border-danger' : 'border-line'
+        } ${className}`}
       />
       {description && (
         <p
           id={descriptionId}
           role={error ? 'alert' : undefined}
-          className={error ? 'text-sm text-red-700' : 'text-sm text-slate-600'}
+          className={`flex items-start gap-1.5 text-sm ${
+            error ? 'text-danger' : 'text-ink-muted'
+          }`}
         >
+          {error && (
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 20 20"
+              className="mt-0.5 size-4 shrink-0"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.75"
+            >
+              <circle cx="10" cy="10" r="7.5" />
+              <path d="M10 6.5v4.25m0 2.75h.01" strokeLinecap="round" />
+            </svg>
+          )}
           {description}
         </p>
       )}
