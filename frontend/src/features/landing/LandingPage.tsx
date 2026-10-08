@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Hero } from './sections/Hero'
 import { FactsStrip } from './sections/FactsStrip'
+import { HowItWorks } from './sections/HowItWorks'
 import { SectionHeader } from '../../components/ui/SectionHeader'
 import { LANDING_CONTENT } from './content'
 
@@ -25,14 +26,15 @@ export function LandingPage() {
     <main id="main-content" className="grid gap-12 sm:gap-16">
       <Hero />
       <FactsStrip />
-      {SECTIONS.map((section, index) => (
+      <HowItWorks />
+      {SECTIONS.slice(1).map((section, index) => (
         <section
           key={section.id}
           id={section.id}
           className="grid gap-5 border-b border-line py-8"
         >
           <SectionHeader
-            index={index + 3}
+            index={index + 4}
             label={section.label}
             title={section.title}
           />
