@@ -25,14 +25,15 @@ describe('SectionPicker', () => {
       'education',
       'skills',
     ])
-    expect(screen.getAllByRole('switch')).toHaveLength(12)
+    expect(screen.getAllByRole('button')).toHaveLength(12)
+    expect(screen.getAllByText('Core')).toHaveLength(4)
     expect(
-      (screen.getByRole('switch', { name: 'Professional Summary' }) as HTMLButtonElement)
-        .getAttribute('aria-checked'),
+      screen
+        .getByRole('button', { name: 'Professional Summary' })
+        .getAttribute('aria-pressed'),
     ).toBe('true')
     expect(
-      (screen.getByRole('switch', { name: 'Projects' }) as HTMLButtonElement)
-        .getAttribute('aria-checked'),
+      screen.getByRole('button', { name: 'Projects' }).getAttribute('aria-pressed'),
     ).toBe('false')
   })
 
@@ -49,11 +50,36 @@ describe('SectionPicker', () => {
     })
     render(<SectionPicker />)
 
-    fireEvent.click(screen.getByRole('switch', { name: 'Projects' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Projects' }))
     expect(useResumeStore.getState().data.enabled_sections).toContain('projects')
-    fireEvent.click(screen.getByRole('switch', { name: 'Projects' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Projects' }))
 
     expect(useResumeStore.getState().data.enabled_sections).not.toContain('projects')
     expect(useResumeStore.getState().data.projects[0].name).toBe('Portfolio')
+  })
+
+  it('shows contact as a locked, always-included tile', () => {
+    render(<SectionPicker />)
+
+    const contactTile = screen.getByRole('group', {
+      name: 'Contact details, always included',
+    })
+    fireEvent.click(contactTile)
+
+    expect(contactTile.tagName).toBe('DIV')
+    expect(screen.getByText('Always included')).not.toBeNull()
+    expect(screen.queryByRole('button', { name: 'Contact details' })).toBeNull()
+    expect(useResumeStore.getState().data.enabled_sections).toHaveLength(4)
+  })
+
+  it('keeps section tiles keyboard focusable native buttons', () => {
+    render(<SectionPicker />)
+    const projectsTile = screen.getByRole('button', { name: 'Projects' })
+
+    projectsTile.focus()
+
+    expect(document.activeElement).toBe(projectsTile)
+    expect(projectsTile.getAttribute('type')).toBe('button')
+    expect(projectsTile.getAttribute('aria-pressed')).toBe('false')
   })
 })
