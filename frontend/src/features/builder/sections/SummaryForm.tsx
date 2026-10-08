@@ -6,12 +6,11 @@ export function SummaryForm() {
   const updateSingle = useResumeStore((state) => state.updateSingle)
 
   return (
-    <section className="grid gap-3">
+    <section className="grid gap-4">
       <Textarea
         label="Professional summary"
         value={summary.text}
         maxLength={600}
-        hint={`${summary.text.length} / 600 characters`}
         onChange={(event) =>
           updateSingle('summary', { text: event.currentTarget.value })
         }

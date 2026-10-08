@@ -18,24 +18,57 @@ export function Input({
   const generatedId = useId()
   const inputId = id ?? generatedId
   const descriptionId = `${inputId}-description`
+  const counterId = `${inputId}-counter`
   const description = error || hint
+  const value = props.value ?? props.defaultValue
+  const characterCount =
+    props.maxLength !== undefined &&
+    (typeof value === 'string' || typeof value === 'number')
+      ? String(value).length
+      : undefined
+  const describedBy = [
+    description ? descriptionId : undefined,
+    characterCount !== undefined ? counterId : undefined,
+  ]
+    .filter(Boolean)
+    .join(' ')
 
   return (
     <div className="grid gap-1.5">
-      <label htmlFor={inputId} className="text-sm font-medium text-ink">
-        {label}
-        {required && <span aria-hidden="true"> *</span>}
-      </label>
+      <div className="flex items-center justify-between gap-2">
+        <label htmlFor={inputId} className="text-sm font-medium text-ink">
+          {label}
+        </label>
+        {required && (
+          <span className="font-mono text-[10px] font-medium uppercase tracking-wide text-ink-muted">
+            Required
+          </span>
+        )}
+      </div>
       <input
         {...props}
         id={inputId}
         required={required}
         aria-invalid={error ? true : undefined}
-        aria-describedby={description ? descriptionId : undefined}
+        aria-describedby={describedBy || undefined}
         className={`min-h-11 w-full rounded-lg border bg-paper px-3 text-base text-ink placeholder:text-ink-muted hover:border-ink-soft focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent ${
           error ? 'border-danger' : 'border-line'
         } ${className}`}
       />
+      {characterCount !== undefined && props.maxLength !== undefined && (
+        <p
+          id={counterId}
+          aria-live="polite"
+          className={`text-right text-xs ${
+            characterCount >= props.maxLength
+              ? 'text-danger'
+              : 'text-ink-muted'
+          }`}
+        >
+          {characterCount} / {props.maxLength} characters
+          {characterCount >= props.maxLength ? ' — limit reached' : ''}
+        </p>
+      )}
       {description && (
         <p
           id={descriptionId}

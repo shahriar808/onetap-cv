@@ -49,7 +49,7 @@ export function EducationForm() {
             value={item.location}
             onChange={(event) => update({ location: event.currentTarget.value })}
           />
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid gap-4 md:grid-cols-2">
             <MonthYearInput
               label="Start date"
               value={item.start}
@@ -61,7 +61,7 @@ export function EducationForm() {
               onChange={(end) => update({ end })}
             />
           </div>
-          <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_9rem]">
+          <div className="grid gap-3 md:grid-cols-[minmax(0,1fr)_9rem]">
             <Input
               label="GPA"
               value={item.gpa}

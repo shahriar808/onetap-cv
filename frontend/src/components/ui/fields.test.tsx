@@ -21,4 +21,23 @@ describe('form fields', () => {
     ).not.toBeNull()
     expect(screen.getByText('Keep it brief').textContent).toBe('Keep it brief')
   })
+
+  it('shows the required tag and a descriptive counter at the limit', () => {
+    render(
+      <Input
+        label="Full name"
+        required
+        maxLength={4}
+        value="Alex"
+        onChange={() => {}}
+      />,
+    )
+
+    const input = screen.getByLabelText('Full name')
+    const counter = screen.getByText('4 / 4 characters — limit reached')
+    expect(input.getAttribute('required')).not.toBeNull()
+    expect(screen.getByText('Required')).not.toBeNull()
+    expect(counter.className).toContain('text-danger')
+    expect(input.getAttribute('aria-describedby')).toContain(counter.id)
+  })
 })

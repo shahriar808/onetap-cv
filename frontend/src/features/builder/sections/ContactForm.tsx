@@ -3,6 +3,7 @@ import { Input } from '../../../components/ui/Input'
 import { LinksEditor } from '../components/LinksEditor'
 import { useResumeStore } from '../../../store/resumeStore'
 import { validateContact } from '../../../lib/validation'
+import { LANDING_CONTENT } from '../../landing/content'
 
 type RequiredContactField = 'full_name' | 'email' | 'phone'
 
@@ -64,30 +65,35 @@ export function ContactForm({ validationRequest = 0 }: ContactFormProps) {
   return (
     <section aria-labelledby="contact-form-title" className="grid gap-4">
       <div>
-        <h2 id="contact-form-title" className="text-xl font-semibold">
-          Contact information
+        <h2
+          id="contact-form-title"
+          className="font-display text-display-md font-semibold text-ink"
+        >
+          {LANDING_CONTENT.builder.steps[0].title}
         </h2>
-        <p className="mt-1 text-sm text-slate-600">
-          These required details appear at the top of your CV.
+        <p className="mt-2 text-ink-soft">
+          {LANDING_CONTENT.builder.steps[0].intro}
         </p>
       </div>
       {contactInput('full_name', 'Full name', 'text')}
       {contactInput('email', 'Email', 'email')}
       {contactInput('phone', 'Phone', 'tel')}
-      <Input
-        label="Location"
-        value={contact.location}
-        onChange={(event) =>
-          updateContact({ location: event.currentTarget.value })
-        }
-      />
-      <Input
-        label="Job title"
-        value={contact.job_title}
-        onChange={(event) =>
-          updateContact({ job_title: event.currentTarget.value })
-        }
-      />
+      <div className="grid gap-4 md:grid-cols-2">
+        <Input
+          label="Location"
+          value={contact.location}
+          onChange={(event) =>
+            updateContact({ location: event.currentTarget.value })
+          }
+        />
+        <Input
+          label="Job title"
+          value={contact.job_title}
+          onChange={(event) =>
+            updateContact({ job_title: event.currentTarget.value })
+          }
+        />
+      </div>
       <LinksEditor
         mode="typed"
         items={contact.links}

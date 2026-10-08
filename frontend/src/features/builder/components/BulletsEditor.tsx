@@ -54,11 +54,15 @@ export function BulletsEditor({
             }
             className="min-h-20 w-full resize-none overflow-hidden rounded-lg border border-slate-300 bg-white px-3 py-2 text-base text-slate-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-700"
           />
-          {bullet.length >= 250 && (
-            <p className="text-right text-xs text-slate-600" aria-live="polite">
-              {bullet.length} / {maxLength} characters
-            </p>
-          )}
+          <p
+            className={`text-right text-xs ${
+              bullet.length >= maxLength ? 'text-danger' : 'text-ink-muted'
+            }`}
+            aria-live="polite"
+          >
+            {bullet.length} / {maxLength} characters
+            {bullet.length >= maxLength ? ' — limit reached' : ''}
+          </p>
           <Button
             variant="ghost"
             className="w-fit"

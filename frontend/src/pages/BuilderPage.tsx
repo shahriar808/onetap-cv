@@ -20,6 +20,7 @@ import { SECTION_REGISTRY } from '../features/builder/sections/registry'
 import { useResumeStore } from '../store/resumeStore'
 import type { TemplateId } from '../lib/defaults'
 import { getHealth } from '../lib/api'
+import { LANDING_CONTENT } from '../features/landing/content'
 
 const TEMPLATE_IDS: readonly TemplateId[] = ['classic', 'modern', 'compact']
 
@@ -110,8 +111,15 @@ export function BuilderPage() {
   } else if (currentStep === 1) {
     editor = <SectionPicker />
   } else if (currentStep === 2) {
+    const step = LANDING_CONTENT.builder.steps[2]
     editor = (
-      <section className="grid gap-4" aria-label="Resume section details">
+      <section className="grid gap-6" aria-label="Resume section details">
+        <header className="grid gap-2">
+          <h2 className="font-display text-display-md font-semibold text-ink">
+            {step.title}
+          </h2>
+          <p className="text-ink-soft">{step.intro}</p>
+        </header>
         {detailSections.length === 0 ? (
           <Card>
             <div className="grid justify-items-start gap-3">
@@ -124,9 +132,12 @@ export function BuilderPage() {
         ) : (
           detailSections.map((section) => (
             <Card key={section.id} className="grid gap-4">
-              <h2 className="text-xl font-semibold text-slate-900">
-                {section.label}
-              </h2>
+              <div className="grid gap-1">
+                <h3 className="font-display text-display-sm font-semibold text-ink">
+                  {section.label}
+                </h3>
+                <p className="text-sm text-ink-soft">{section.description}</p>
+              </div>
               <section.Form />
             </Card>
           ))
@@ -134,10 +145,17 @@ export function BuilderPage() {
       </section>
     )
   } else {
+    const step = LANDING_CONTENT.builder.steps[3]
     editor = (
-      <Card>
-        <TemplatePicker />
-        <div className="mt-5">
+      <div className="grid content-start gap-6">
+        <header className="grid gap-2">
+          <h2 className="font-display text-display-md font-semibold text-ink">
+            {step.title}
+          </h2>
+          <p className="text-ink-soft">{step.intro}</p>
+        </header>
+        <Card className="grid gap-5">
+          <TemplatePicker />
           <DownloadButton
             onValidationRequested={() =>
               setValidationRequest((request) => request + 1)
@@ -145,8 +163,8 @@ export function BuilderPage() {
             onGoToContact={() => changeStep(0)}
             onRegisterDownload={registerDownload}
           />
-        </div>
-      </Card>
+        </Card>
+      </div>
     )
   }
 

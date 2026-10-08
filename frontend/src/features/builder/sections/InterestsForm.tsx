@@ -14,7 +14,7 @@ export function InterestsForm() {
   const value = interests.items.join(', ')
 
   return (
-    <section className="grid gap-3">
+    <section className="grid gap-4">
       <Input
         label="Interests"
         value={value}

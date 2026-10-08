@@ -41,8 +41,16 @@ describe('BulletsEditor', () => {
     expect((remainingBullet as HTMLTextAreaElement).value).toBe('')
   })
 
-  it('shows a character counter from 250 characters', () => {
+  it('shows a muted counter that becomes explicit at the limit', () => {
     render(<Harness initial={['a'.repeat(250)]} />)
-    expect(screen.queryByText('250 / 300 characters')).not.toBeNull()
+    const counter = screen.getByText('250 / 300 characters')
+    expect(counter.className).toContain('text-ink-muted')
+
+    cleanup()
+    render(<Harness initial={['a'.repeat(300)]} />)
+    const limitCounter = screen.getByText(
+      '300 / 300 characters — limit reached',
+    )
+    expect(limitCounter.className).toContain('text-danger')
   })
 })
