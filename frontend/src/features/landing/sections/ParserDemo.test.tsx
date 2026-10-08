@@ -10,6 +10,10 @@ describe('ParserDemo', () => {
     const panel = screen.getByRole('tabpanel')
 
     expect(panel.textContent).toContain('SKILLS  EXPERIENCE')
+    expect(panel.querySelector('pre')?.className).toContain('max-h-80')
+    expect(
+      screen.getByRole('tab', { name: 'Two-column layout' }).className,
+    ).toContain('min-h-11')
     fireEvent.click(screen.getByRole('tab', { name: 'OneTap CV' }))
     expect(panel.textContent).toContain('alex@example.com')
     expect(panel.textContent).toContain('EXPERIENCE')

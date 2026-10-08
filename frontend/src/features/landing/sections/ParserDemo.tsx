@@ -160,7 +160,7 @@ export function ParserDemo() {
               tabIndex={selected === tab.id ? 0 : -1}
               onClick={() => setSelected(tab.id)}
               onKeyDown={(event) => onTabKeyDown(event, index)}
-              className={`min-h-10 rounded-md px-3 text-sm font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent sm:px-4 ${
+              className={`min-h-11 rounded-md px-3 text-sm font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent sm:px-4 ${
                 selected === tab.id
                   ? 'bg-white text-ink shadow-sm'
                   : 'text-ink-soft hover:text-ink'
@@ -185,7 +185,7 @@ export function ParserDemo() {
             <h3 className="text-label text-ink-muted">Extracted text</h3>
             <pre
               key={selected}
-              className="parser-demo-panel min-h-64 max-w-full overflow-x-auto rounded-sm border border-line bg-paper p-5 font-mono text-xs leading-6 text-ink sm:p-7"
+              className="parser-demo-panel max-h-80 min-h-64 max-w-full overflow-auto rounded-sm border border-line bg-paper p-5 font-mono text-xs leading-6 text-ink sm:p-7"
             >
               {extractedText.join('\n')}
             </pre>

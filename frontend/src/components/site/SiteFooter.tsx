@@ -7,11 +7,11 @@ const COPYRIGHT_YEAR = new Date().getFullYear()
 export function SiteFooter() {
   return (
     <footer className="border-t border-line bg-paper py-10">
-      <div className="container-page grid gap-8 sm:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1fr]">
-        <div className="grid content-start gap-3">
+      <div className="container-page grid grid-cols-2 gap-8 lg:grid-cols-[1.3fr_1fr_1fr_1fr]">
+        <div className="col-span-2 grid content-start gap-3 sm:col-span-1">
           <Link
             to="/"
-            className="font-display text-lg font-semibold text-ink underline-offset-4 hover:underline"
+            className="inline-flex min-h-11 items-center font-display text-lg font-semibold text-ink underline-offset-4 hover:underline"
           >
             OneTap CV
           </Link>

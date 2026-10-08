@@ -14,6 +14,11 @@ describe('SiteFooter', () => {
       </MemoryRouter>,
     )
 
+    const footer = screen.getByRole('contentinfo')
+    expect(footer.firstElementChild?.className).toContain('grid-cols-2')
+    expect(screen.getByRole('link', { name: 'OneTap CV' }).className).toContain(
+      'min-h-11',
+    )
     expect(screen.getByRole('navigation', { name: 'Product' })).not.toBeNull()
     expect(screen.getByRole('navigation', { name: 'Project' })).not.toBeNull()
     expect(screen.getByRole('navigation', { name: 'Maker' })).not.toBeNull()
