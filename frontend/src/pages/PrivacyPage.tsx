@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom'
 import { SectionHeader } from '../components/ui/SectionHeader'
+import { useDocumentMeta } from '../hooks/useDocumentMeta'
 
 export function PrivacyPage() {
+  useDocumentMeta({ title: 'Privacy | OneTap CV', description: 'Learn how OneTap CV handles your CV draft and feedback.', path: '/privacy' })
   return (
     <main id="main-content" className="container-page grid gap-10 py-12 sm:py-16">
       <SectionHeader

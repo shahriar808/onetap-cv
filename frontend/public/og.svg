@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#F6F1E7"/>
+  <path d="M0 500H1200" stroke="#17202A" stroke-opacity=".14"/>
+  <circle cx="100" cy="94" r="17" fill="none" stroke="#17202A" stroke-width="3"/>
+  <circle cx="100" cy="94" r="5" fill="#C23B1E"/>
+  <text x="132" y="103" fill="#17202A" font-family="Georgia,serif" font-size="32" font-weight="bold">OneTap CV</text>
+  <text x="90" y="240" fill="#17202A" font-family="Georgia,serif" font-size="72" font-weight="bold">A CV software can read,</text>
+  <text x="90" y="330" fill="#17202A" font-family="Georgia,serif" font-size="72" font-weight="bold">and people want to.</text>
+  <path d="M92 351c135 8 282 8 432 0" fill="none" stroke="#C23B1E" stroke-width="6"/>
+  <text x="94" y="410" fill="#4A5260" font-family="Arial,sans-serif" font-size="27">Free ATS-friendly CV builder · no sign-up · searchable PDF</text>
+  <g transform="translate(805 112) rotate(8 130 185)"><rect width="245" height="320" rx="4" fill="#fff" stroke="#17202A" stroke-opacity=".2"/><path d="M35 42h120M35 54h170M35 100h170M35 112h130M35 158h170M35 170h145M35 216h170M35 228h110" stroke="#17202A" stroke-opacity=".22" stroke-width="5"/></g>
+  <g transform="translate(890 140) rotate(-4 130 185)"><rect width="245" height="320" rx="4" fill="#fff" stroke="#17202A" stroke-opacity=".25"/><circle cx="42" cy="44" r="12" fill="#C23B1E"/><path d="M68 38h125M28 88h185M28 100h160M28 142h185M28 154h140M28 196h185M28 208h155M28 250h185M28 262h120" stroke="#17202A" stroke-opacity=".25" stroke-width="5"/></g>
+  <text x="90" y="570" fill="#5F6773" font-family="monospace" font-size="16" letter-spacing="2">PAPER &amp; INK · ONE PAGE AT A TIME</text>
+</svg>
