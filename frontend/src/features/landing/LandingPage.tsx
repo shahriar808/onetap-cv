@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Hero } from './sections/Hero'
+import { FactsStrip } from './sections/FactsStrip'
 import { SectionHeader } from '../../components/ui/SectionHeader'
 import { LANDING_CONTENT } from './content'
 
@@ -23,19 +24,7 @@ export function LandingPage() {
   return (
     <main id="main-content" className="grid gap-12 sm:gap-16">
       <Hero />
-      <section
-        aria-label="CV facts"
-        className="container-page grid gap-4 border-y border-line py-8"
-      >
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {LANDING_CONTENT.facts.map((fact) => (
-            <div key={fact.label} className="grid content-start gap-2">
-              <p className="text-label text-accent">{fact.label}</p>
-              <p className="text-sm text-ink-soft">{fact.text}</p>
-            </div>
-          ))}
-        </div>
-      </section>
+      <FactsStrip />
       {SECTIONS.map((section, index) => (
         <section
           key={section.id}
@@ -48,8 +37,6 @@ export function LandingPage() {
             title={section.title}
           />
           <p className="max-w-[62ch] text-ink-soft">
-            {section.id === 'how' && LANDING_CONTENT.how.steps[0].text}
-            {section.id === 'see' && LANDING_CONTENT.parser.sub}
             {section.id === 'designs' && LANDING_CONTENT.designs.templates[0].description}
             {section.id === 'sections' && LANDING_CONTENT.sections.sub}
             {section.id === 'privacy' && LANDING_CONTENT.privacy.footnote}
