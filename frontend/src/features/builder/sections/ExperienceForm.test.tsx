@@ -17,7 +17,7 @@ describe('ExperienceForm', () => {
 
   it('saves an added experience and disables the end date for current roles', () => {
     render(<ExperienceForm />)
-    fireEvent.click(screen.getByRole('button', { name: '+ experience' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Add experience' }))
     fireEvent.change(screen.getByLabelText('Company'), {
       target: { value: 'Example Inc' },
     })

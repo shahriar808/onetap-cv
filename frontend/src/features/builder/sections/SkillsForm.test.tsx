@@ -17,7 +17,7 @@ describe('SkillsForm', () => {
 
   it('splits skills and quick-adds a named group', () => {
     render(<SkillsForm />)
-    fireEvent.click(screen.getByRole('button', { name: '+ skill group' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Add skill group' }))
     fireEvent.change(screen.getByLabelText('Skills'), {
       target: { value: 'Java, Python' },
     })

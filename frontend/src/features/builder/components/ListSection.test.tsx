@@ -50,11 +50,16 @@ describe('ListSection', () => {
 
   it('adds items and reorders them', () => {
     renderExperienceList()
-    fireEvent.click(screen.getByRole('button', { name: '+ experience' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Add experience' }))
+    expect(
+      screen.getByRole('button', { name: 'Collapse New experience' }).getAttribute(
+        'aria-expanded',
+      ),
+    ).toBe('true')
     fireEvent.change(screen.getByLabelText('Company'), {
       target: { value: 'First Inc' },
     })
-    fireEvent.click(screen.getByRole('button', { name: '+ experience' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Add experience' }))
     fireEvent.change(screen.getAllByLabelText('Company')[1], {
       target: { value: 'Second Inc' },
     })
@@ -67,9 +72,43 @@ describe('ListSection', () => {
       .toEqual(['Second Inc', 'First Inc'])
   })
 
+  it('collapses and expands cards with a summary and keeps new items open', () => {
+    renderExperienceList()
+    fireEvent.click(screen.getByRole('button', { name: 'Add experience' }))
+    fireEvent.change(screen.getByLabelText('Company'), {
+      target: { value: 'Example Inc' },
+    })
+    const collapse = screen.getByRole('button', {
+      name: 'Collapse Example Inc',
+    })
+
+    expect(collapse.getAttribute('aria-expanded')).toBe('true')
+    expect(screen.getByLabelText('Company')).not.toBeNull()
+
+    fireEvent.click(collapse)
+
+    expect(
+      screen
+        .getByRole('button', { name: 'Expand Example Inc' })
+        .getAttribute('aria-expanded'),
+    ).toBe('false')
+    expect(screen.queryByLabelText('Company')).toBeNull()
+    expect(screen.getByText('Add dates or highlights')).not.toBeNull()
+
+    fireEvent.click(screen.getByRole('button', { name: 'Expand Example Inc' }))
+    expect(screen.getByLabelText('Company')).not.toBeNull()
+
+    fireEvent.click(screen.getByRole('button', { name: 'Add experience' }))
+    expect(
+      screen.getByRole('button', { name: 'Collapse New experience' }).getAttribute(
+        'aria-expanded',
+      ),
+    ).toBe('true')
+  })
+
   it('confirms deleting a filled item but immediately deletes an empty one', () => {
     renderExperienceList()
-    fireEvent.click(screen.getByRole('button', { name: '+ experience' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Add experience' }))
     fireEvent.change(screen.getByLabelText('Company'), {
       target: { value: 'Filled Inc' },
     })
@@ -80,7 +119,7 @@ describe('ListSection', () => {
     fireEvent.click(screen.getByRole('button', { name: /^Delete$/ }))
     expect(useResumeStore.getState().data.experience).toHaveLength(0)
 
-    fireEvent.click(screen.getByRole('button', { name: '+ experience' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Add experience' }))
     fireEvent.click(screen.getByRole('button', { name: 'Delete New experience' }))
     expect(screen.queryByRole('dialog')).toBeNull()
     expect(useResumeStore.getState().data.experience).toHaveLength(0)

@@ -18,7 +18,7 @@ describe('certifications and achievements forms', () => {
 
   it('saves an ongoing certification', () => {
     render(<CertificationsForm />)
-    fireEvent.click(screen.getByRole('button', { name: '+ certification' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Add certification' }))
     fireEvent.change(screen.getByLabelText('Certification name'), {
       target: { value: 'Cloud Professional' },
     })
@@ -32,7 +32,7 @@ describe('certifications and achievements forms', () => {
 
   it('allows an achievement without a date', () => {
     render(<AchievementsForm />)
-    fireEvent.click(screen.getByRole('button', { name: '+ achievement' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Add achievement' }))
     fireEvent.change(screen.getByLabelText('Achievement title'), {
       target: { value: 'Hackathon winner' },
     })

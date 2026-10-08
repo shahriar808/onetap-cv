@@ -21,14 +21,14 @@ describe('remaining section forms', () => {
 
   it('saves data from languages, publications, volunteer and references', () => {
     const { rerender } = render(<LanguagesForm />)
-    fireEvent.click(screen.getByRole('button', { name: '+ language' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Add language' }))
     fireEvent.change(screen.getByLabelText('Language'), {
       target: { value: 'English' },
     })
     expect(useResumeStore.getState().data.languages[0].language).toBe('English')
 
     rerender(<PublicationsForm />)
-    fireEvent.click(screen.getByRole('button', { name: '+ publication' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Add publication' }))
     fireEvent.change(screen.getByLabelText('Title'), {
       target: { value: 'Research paper' },
     })
@@ -38,7 +38,7 @@ describe('remaining section forms', () => {
 
     rerender(<VolunteerForm />)
     fireEvent.click(
-      screen.getByRole('button', { name: '+ volunteer experience' }),
+      screen.getByRole('button', { name: 'Add volunteer experience' }),
     )
     fireEvent.change(screen.getByLabelText('Organization'), {
       target: { value: 'Community Group' },
@@ -48,7 +48,7 @@ describe('remaining section forms', () => {
     )
 
     rerender(<ReferencesForm />)
-    fireEvent.click(screen.getByRole('button', { name: '+ reference' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Add reference' }))
     fireEvent.change(screen.getByLabelText('Name'), {
       target: { value: 'Taylor Example' },
     })

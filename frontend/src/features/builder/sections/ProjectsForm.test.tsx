@@ -17,7 +17,7 @@ describe('ProjectsForm', () => {
 
   it('adds a labeled project link and normalizes its URL', () => {
     render(<ProjectsForm />)
-    fireEvent.click(screen.getByRole('button', { name: '+ project' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Add project' }))
     fireEvent.click(screen.getByRole('button', { name: 'Add link' }))
     fireEvent.change(screen.getByLabelText('Link 1 label'), {
       target: { value: 'Repository' },

@@ -17,7 +17,7 @@ describe('EducationForm', () => {
 
   it('saves GPA value and label', () => {
     render(<EducationForm />)
-    fireEvent.click(screen.getByRole('button', { name: '+ education' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Add education' }))
     fireEvent.change(screen.getByLabelText('GPA'), {
       target: { value: '3.8' },
     })
