@@ -1,8 +1,8 @@
 const BUILDER_STEPS = [
-  'Contact',
-  'Sections',
-  'Details',
-  'Template & Download',
+  'Contact details',
+  'Choose your sections',
+  'Add your details',
+  'Pick a design and download',
 ] as const
 
 interface StepProgressProps {
@@ -10,14 +10,31 @@ interface StepProgressProps {
 }
 
 export function StepProgress({ currentStep }: StepProgressProps) {
+  const progress = ((currentStep + 1) / BUILDER_STEPS.length) * 100
+
   return (
-    <div className="flex items-center justify-between lg:hidden">
-      <p className="font-semibold text-slate-900">
+    <div className="grid gap-2 lg:hidden">
+      <p className="text-sm font-medium text-ink">
+        <span className="font-mono text-ink-muted">
+          Step {currentStep + 1} of {BUILDER_STEPS.length}
+        </span>
+        <span aria-hidden="true"> · </span>
         {BUILDER_STEPS[currentStep]}
       </p>
-      <p className="text-sm text-slate-600">
-        Step {currentStep + 1} of {BUILDER_STEPS.length}
-      </p>
+      <div
+        role="progressbar"
+        aria-label="Builder progress"
+        aria-valuemin={1}
+        aria-valuemax={BUILDER_STEPS.length}
+        aria-valuenow={currentStep + 1}
+        className="h-1 overflow-hidden rounded-full bg-line"
+      >
+        <span
+          aria-hidden="true"
+          className="block h-full rounded-full bg-accent transition-[width] duration-300 motion-reduce:transition-none"
+          style={{ width: `${progress}%` }}
+        />
+      </div>
     </div>
   )
 }
@@ -28,34 +45,48 @@ interface StepperProps {
 }
 
 export function Stepper({ currentStep, onStepChange }: StepperProps) {
+  const completedLineWidth =
+    (currentStep / (BUILDER_STEPS.length - 1)) * 75
+
   return (
-    <nav aria-label="CV builder steps" className="h-full">
-      <p className="mb-4 hidden text-xs font-semibold uppercase tracking-wide text-slate-500 lg:block">
-        Build your CV
-      </p>
-      <ol className="grid gap-2">
+    <nav aria-label="CV builder steps" className="hidden lg:block">
+      <ol className="relative grid grid-cols-4">
+        <span
+          aria-hidden="true"
+          className="absolute left-[12.5%] right-[12.5%] top-4 h-px bg-line"
+        />
+        <span
+          aria-hidden="true"
+          className="absolute left-[12.5%] top-4 h-0.5 bg-accent transition-[width] duration-300 motion-reduce:transition-none"
+          style={{ width: `${completedLineWidth}%` }}
+        />
         {BUILDER_STEPS.map((label, index) => (
-          <li key={label}>
+          <li key={label} className="relative z-10">
             <button
               type="button"
               aria-current={index === currentStep ? 'step' : undefined}
               onClick={() => onStepChange(index)}
-              className={`flex min-h-12 w-full items-center gap-3 rounded-lg border px-3 py-2 text-left text-sm font-medium transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-700 ${
-                index === currentStep
-                  ? 'border-blue-200 bg-blue-50 text-blue-900'
-                  : 'border-transparent bg-transparent text-slate-700 hover:border-slate-200 hover:bg-white'
-              }`}
+              className="grid min-h-16 w-full justify-items-center gap-2 rounded-lg px-2 py-1 text-center text-sm text-ink-soft focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
             >
               <span
-                className={`grid size-7 shrink-0 place-items-center rounded-full text-xs ${
+                aria-hidden="true"
+                className={`grid size-8 place-items-center rounded-full border bg-paper text-xs ${
                   index === currentStep
-                    ? 'bg-blue-700 font-semibold text-white'
-                    : 'bg-slate-200 text-slate-600'
+                    ? 'border-accent font-semibold text-ink ring-4 ring-accent/10'
+                    : index < currentStep
+                      ? 'border-moss bg-moss font-semibold text-white'
+                      : 'border-line text-ink-muted'
                 }`}
               >
-                {index + 1}
+                {index < currentStep ? '✓' : index + 1}
               </span>
-              <span>{label}</span>
+              <span
+                className={
+                  index === currentStep ? 'font-semibold text-ink' : ''
+                }
+              >
+                {label}
+              </span>
             </button>
           </li>
         ))}
