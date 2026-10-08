@@ -7,6 +7,7 @@ import { ParserDemo } from './sections/ParserDemo'
 import { Designs } from './sections/Designs'
 import { SectionsIncluded } from './sections/SectionsIncluded'
 import { PrivacyExplainer } from './sections/PrivacyExplainer'
+import { Faq } from './sections/Faq'
 import { SectionHeader } from '../../components/ui/SectionHeader'
 import { LANDING_CONTENT } from './content'
 
@@ -35,19 +36,19 @@ export function LandingPage() {
       <Designs />
       <SectionsIncluded />
       <PrivacyExplainer />
-      {SECTIONS.slice(5).map((section, index) => (
+      <Faq />
+      {SECTIONS.slice(6).map((section, index) => (
         <section
           key={section.id}
           id={section.id}
           className="grid gap-5 border-b border-line py-8"
         >
           <SectionHeader
-            index={index + 8}
+            index={index + 9}
             label={section.label}
             title={section.title}
           />
           <p className="max-w-[62ch] text-ink-soft">
-            {section.id === 'faq' && LANDING_CONTENT.faq.items[0].answer}
             {section.id === 'thanks' && LANDING_CONTENT.thanks.body}
             {section.id === 'feedback' && LANDING_CONTENT.feedback.sub}
           </p>
