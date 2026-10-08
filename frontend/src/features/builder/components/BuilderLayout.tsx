@@ -4,6 +4,7 @@ import { MobileBar } from './MobileBar'
 
 interface BuilderLayoutProps {
   editor: ReactNode
+  stepIndex: number
   preview: ReactNode
   stepper: ReactNode
   editorFooter: ReactNode
@@ -17,6 +18,7 @@ interface BuilderLayoutProps {
 
 export function BuilderLayout({
   editor,
+  stepIndex,
   preview,
   stepper,
   editorFooter,
@@ -39,7 +41,9 @@ export function BuilderLayout({
         >
           <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain pb-[calc(6rem+env(safe-area-inset-bottom))] lg:pb-4 lg:pr-2">
             <div className="grid content-start gap-5">
-              {editor}
+              <div key={stepIndex} className="builder-step-enter">
+                {editor}
+              </div>
               {editorFooter}
             </div>
           </div>

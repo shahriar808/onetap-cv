@@ -23,6 +23,7 @@ import { useResumeStore } from '../store/resumeStore'
 import type { TemplateId } from '../lib/defaults'
 import { getHealth } from '../lib/api'
 import { LANDING_CONTENT } from '../features/landing/content'
+import { useDocumentMeta } from '../hooks/useDocumentMeta'
 
 const TEMPLATE_IDS: readonly TemplateId[] = ['classic', 'modern', 'compact']
 
@@ -31,6 +32,7 @@ function isTemplateId(value: string): value is TemplateId {
 }
 
 export function BuilderPage() {
+  useDocumentMeta({ title: 'Build your CV | OneTap CV', description: 'Build and download your ATS-friendly CV with OneTap CV.', path: '/build' })
   const [searchParams, setSearchParams] = useSearchParams()
   const [currentStep, setCurrentStep] = useState(0)
   const [activeTab, setActiveTab] = useState<'edit' | 'preview'>('edit')
@@ -211,6 +213,7 @@ export function BuilderPage() {
 
       <BuilderLayout
         editor={editor}
+        stepIndex={currentStep}
         preview={<PreviewPane data={data} template={template} />}
         stepper={<Stepper currentStep={currentStep} onStepChange={changeStep} />}
         editorFooter={editorFooter}
