@@ -1,9 +1,11 @@
-import { fireEvent, render, screen } from '@testing-library/react'
-import { describe, expect, it, vi } from 'vitest'
+import { cleanup, fireEvent, render, screen } from '@testing-library/react'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import { Dialog } from './Dialog'
 import { Toggle } from './Toggle'
 
 describe('UI controls', () => {
+  afterEach(cleanup)
+
   it('updates a labeled switch', () => {
     const onChange = vi.fn()
     render(
@@ -19,6 +21,16 @@ describe('UI controls', () => {
     fireEvent.click(toggle)
 
     expect(onChange).toHaveBeenCalledWith(true)
+  })
+
+  it('shows a visible check mark when the switch is on', () => {
+    const { container } = render(
+      <Toggle label="Show education" checked onChange={vi.fn()} />,
+    )
+    const toggle = screen.getByRole('switch', { name: 'Show education' })
+
+    expect(toggle.className).toContain('h-11')
+    expect(container.querySelector('svg[aria-hidden="true"]')).not.toBeNull()
   })
 
   it('closes the dialog on Escape', () => {

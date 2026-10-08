@@ -1,6 +1,6 @@
 import { cleanup, fireEvent, render, screen } from '@testing-library/react'
 import { useState } from 'react'
-import { afterEach, describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import { Dialog } from './Dialog'
 
 function DialogHarness() {
@@ -35,5 +35,26 @@ describe('Dialog keyboard focus', () => {
     expect(document.activeElement).toBe(cancel)
     fireEvent.click(cancel)
     expect(document.activeElement).toBe(trigger)
+  })
+
+  it('closes when the backdrop is clicked', () => {
+    const onCancel = vi.fn()
+    render(
+      <Dialog
+        open
+        title="Confirm action"
+        message="Continue?"
+        onConfirm={vi.fn()}
+        onCancel={onCancel}
+      />,
+    )
+
+    const backdrop = screen.getByRole('dialog').parentElement
+    if (!backdrop) {
+      throw new Error('Dialog backdrop was not rendered')
+    }
+    fireEvent.click(backdrop)
+
+    expect(onCancel).toHaveBeenCalledOnce()
   })
 })

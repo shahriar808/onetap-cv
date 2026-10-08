@@ -26,12 +26,33 @@ export function Toggle({
         aria-label={label}
         disabled={disabled}
         onClick={() => onChange(!checked)}
-        className={`relative inline-flex h-7 w-12 shrink-0 items-center rounded-full p-1 transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 disabled:opacity-60 ${checked ? 'bg-blue-700' : 'bg-slate-300'}`}
+        className="flex h-11 w-12 shrink-0 items-center justify-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-not-allowed disabled:opacity-60"
       >
         <span
-          aria-hidden="true"
-          className={`h-5 w-5 rounded-full bg-white transition-transform ${checked ? 'translate-x-5' : 'translate-x-0'}`}
-        />
+          className={`relative inline-flex h-7 w-12 items-center rounded-full p-1 transition ${
+            checked ? 'bg-ink' : 'bg-line'
+          }`}
+        >
+          {checked && (
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              viewBox="0 0 16 16"
+              className="absolute left-1.5 size-3 text-paper"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <path d="m3 8 3 3 7-7" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          )}
+          <span
+            aria-hidden="true"
+            className={`z-10 h-5 w-5 rounded-full bg-paper transition-transform ${
+              checked ? 'translate-x-5' : 'translate-x-0'
+            }`}
+          />
+        </span>
       </button>
     </div>
   )

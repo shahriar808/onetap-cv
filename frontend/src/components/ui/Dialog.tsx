@@ -72,18 +72,25 @@ export function Dialog({
   }
 
   return (
-    <div className="fixed inset-0 z-50 grid place-items-center bg-slate-950/50 p-4">
+    <div
+      className="fixed inset-0 z-50 grid items-end bg-ink/50 p-0 sm:place-items-center sm:p-4"
+      onClick={(event) => {
+        if (event.target === event.currentTarget) {
+          onCancel()
+        }
+      }}
+    >
       <div
         ref={dialogRef}
         role="dialog"
         aria-modal="true"
         aria-labelledby="dialog-title"
-        className="w-full max-w-md rounded-xl bg-white p-6 shadow-xl"
+        className="dialog-enter w-full max-w-md rounded-t-lg bg-paper p-6 shadow-paper sm:rounded-lg"
       >
-        <h2 id="dialog-title" className="text-xl font-bold text-slate-900">
+        <h2 id="dialog-title" className="font-display text-display-md text-ink">
           {title}
         </h2>
-        <p className="mt-3 text-slate-700">{message}</p>
+        <p className="mt-3 text-ink-soft">{message}</p>
         <div className="mt-6 flex flex-wrap justify-end gap-3">
           <Button variant="secondary" onClick={onCancel}>
             {cancelLabel}
