@@ -9,19 +9,7 @@ import { PrivacyExplainer } from './sections/PrivacyExplainer'
 import { Faq } from './sections/Faq'
 import { FinalCta } from './sections/FinalCta'
 import { Thanks } from './sections/Thanks'
-import { SectionHeader } from '../../components/ui/SectionHeader'
-import { LANDING_CONTENT } from './content'
-
-const SECTIONS = [
-  { id: 'how', label: 'How it works', title: LANDING_CONTENT.how.title },
-  { id: 'see', label: 'What the software sees', title: LANDING_CONTENT.parser.title },
-  { id: 'designs', label: 'Designs', title: LANDING_CONTENT.designs.title },
-  { id: 'sections', label: 'Sections included', title: LANDING_CONTENT.sections.title },
-  { id: 'privacy', label: 'Privacy', title: LANDING_CONTENT.privacy.title },
-  { id: 'faq', label: 'FAQ', title: LANDING_CONTENT.faq.title },
-  { id: 'thanks', label: 'Thanks', title: LANDING_CONTENT.thanks.title },
-  { id: 'feedback', label: 'Feedback', title: LANDING_CONTENT.feedback.title },
-] as const
+import { Feedback } from './sections/Feedback'
 
 export function LandingPage() {
   useEffect(() => {
@@ -39,22 +27,7 @@ export function LandingPage() {
       <PrivacyExplainer />
       <Faq />
       <Thanks />
-      {SECTIONS.slice(7).map((section, index) => (
-        <section
-          key={section.id}
-          id={section.id}
-          className="grid gap-5 border-b border-line py-8"
-        >
-          <SectionHeader
-            index={index + 10}
-            label={section.label}
-            title={section.title}
-          />
-          <p className="max-w-[62ch] text-ink-soft">
-            {section.id === 'feedback' && LANDING_CONTENT.feedback.sub}
-          </p>
-        </section>
-      ))}
+      <Feedback />
       <FinalCta />
     </main>
   )
