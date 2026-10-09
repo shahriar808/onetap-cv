@@ -39,7 +39,7 @@ export function BuilderLayout({
             activeTab === 'edit' ? '' : 'hidden'
           }`}
         >
-          <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain pb-[calc(6rem+env(safe-area-inset-bottom))] lg:pb-4 lg:pr-2">
+          <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-2 pb-[calc(6rem+env(safe-area-inset-bottom))] lg:pb-4 lg:pr-3">
             <div className="grid content-start gap-5">
               <div key={stepIndex} className="builder-step-enter">
                 {editor}
@@ -49,7 +49,7 @@ export function BuilderLayout({
           </div>
           <nav
             aria-label="Step navigation"
-            className="hidden shrink-0 items-center justify-between border-t border-slate-200 bg-white py-3 lg:flex"
+            className="hidden shrink-0 items-center justify-between border-t border-line bg-paper px-2 py-3 lg:flex"
           >
             <Button
               variant="secondary"

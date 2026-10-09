@@ -20,9 +20,9 @@ export function MobileBar({
   return (
     <nav
       aria-label="Mobile builder controls"
-      className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-paper px-3 pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] lg:hidden"
+      className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-paper px-4 pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] lg:hidden"
     >
-      <div className="mx-auto grid max-w-6xl grid-cols-[minmax(0,1fr)_auto_auto] items-center gap-2">
+        <div className="mx-auto grid max-w-6xl grid-cols-[minmax(0,1fr)_auto_auto] items-center gap-3">
         <div
           role="group"
           aria-label="Builder view"

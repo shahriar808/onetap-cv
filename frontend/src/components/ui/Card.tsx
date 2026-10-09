@@ -1,4 +1,5 @@
 import type { HTMLAttributes, ReactNode } from 'react'
+import { cn } from '../../lib/cn'
 
 interface CardProps extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode
@@ -14,9 +15,7 @@ export function Card({
   return (
     <div
       {...props}
-      className={`rounded-md border border-line bg-paper-2 p-4 ${
-        elevated ? 'shadow-paper' : ''
-      } ${className}`}
+      className={cn('rounded-md border border-line bg-paper-2 p-4', elevated && 'shadow-paper', className)}
     >
       {children}
     </div>

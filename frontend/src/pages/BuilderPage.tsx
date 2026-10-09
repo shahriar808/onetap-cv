@@ -111,9 +111,9 @@ export function BuilderPage() {
 
   let editor: ReactNode
   if (currentStep === 0) {
-    editor = <ContactForm validationRequest={validationRequest} />
+    editor = <Card className="p-4 sm:p-5"><ContactForm validationRequest={validationRequest} /></Card>
   } else if (currentStep === 1) {
-    editor = <SectionPicker />
+    editor = <Card className="p-4 sm:p-5"><SectionPicker /></Card>
   } else if (currentStep === 2) {
     const step = LANDING_CONTENT.builder.steps[2]
     editor = (
@@ -166,8 +166,8 @@ export function BuilderPage() {
   }
 
   const editorFooter = (
-    <footer className="grid justify-items-start gap-3 border-t border-slate-200 pt-4">
-      <p className="max-w-2xl text-sm text-slate-600">
+    <footer className="grid justify-items-start gap-3 border-t border-line pt-4">
+      <p className="max-w-2xl text-sm text-ink-soft">
         Your data is saved only in this browser. It is sent to our server only
         to generate your preview and PDF, and is never stored.
       </p>
