@@ -33,15 +33,14 @@ describe('API client', () => {
   it('parses the PDF filename from response headers', async () => {
     vi.stubGlobal(
       'fetch',
-      vi.fn().mockResolvedValue(
-        new Response(new Blob(['%PDF']), {
-          status: 200,
-          headers: {
-            'Content-Disposition':
-              'attachment; filename="Taylor_Example_Resume.pdf"',
-          },
+      vi.fn().mockResolvedValue({
+        ok: true,
+        status: 200,
+        headers: new Headers({
+          'Content-Disposition': 'attachment; filename="Taylor_Example_Resume.pdf"',
         }),
-      ),
+        blob: async () => new Blob(['%PDF']),
+      } as Response),
     )
 
     const result = await fetchPdf(defaultResume(), 'modern')
