@@ -20,28 +20,28 @@ def entry_head(**kwargs: str) -> str:
 def test_company_first_macro_preserves_dom_order() -> None:
     html = entry_head(
         layout="company_first",
-        primary="Ternary Solutions",
+        primary="Example Labs",
         secondary="Software Engineer",
         meta="Dhaka",
         dates="Dec 2025 – Present",
     )
 
-    assert html.index("Ternary Solutions") < html.index("Software Engineer")
-    assert html.index("Ternary Solutions") < html.index("Dec 2025")
+    assert html.index("Example Labs") < html.index("Software Engineer")
+    assert html.index("Example Labs") < html.index("Dec 2025")
     assert html.index("Software Engineer") < html.index("Dhaka")
 
 
 def test_inline_macro_has_no_second_line() -> None:
     html = entry_head(
         layout="inline",
-        primary="Software Engineer, Ternary Solutions, Dhaka",
+        primary="Software Engineer, Example Labs, Dhaka",
         secondary="",
         meta="",
         dates="2025",
     )
 
     assert 'class="line2"' not in html
-    assert "Software Engineer, Ternary Solutions, Dhaka" in html
+    assert "Software Engineer, Example Labs, Dhaka" in html
 
 
 def test_entry_head_skips_empty_values_and_escapes_html() -> None:
@@ -157,13 +157,13 @@ def test_projects_macro_renders_visible_links_and_compact_layout() -> None:
     standard = macro([item], "position_first")
     compact = macro([item], "inline")
 
-    assert '<a href="https://github.com/example">GitHub</a>' in standard
+    assert '<a href="https://github.com/example">GitHub: github.com/example</a>' in standard
     assert "<li>Built a feature</li>" in standard
     assert "<strong>Project</strong> - Python" in compact
     assert "Short description" in compact
-    assert '<a href="https://github.com/example">GitHub</a>' in compact
+    assert '<a href="https://github.com/example">GitHub: github.com/example</a>' in compact
     compact_line = compact.split('class="line1"', 1)[1].split("</div>", 1)[0]
-    assert ">GitHub</a>" in compact_line
+    assert ">GitHub: github.com/example</a>" in compact_line
 
 
 def test_compact_projects_omit_long_descriptions() -> None:
@@ -223,7 +223,7 @@ def test_dispatcher_renders_every_resume_section(sample_resume) -> None:
 
     assert len(rendered) == len(SECTION_LABELS)
     assert all('class="section-title"' in html for html in rendered)
-    assert any("github.com/shahriar808" in html for html in rendered)
+    assert any("github.com/shahriar-hasan-example" in html for html in rendered)
     assert any("taylor@example.com" in html for html in rendered)
 
 

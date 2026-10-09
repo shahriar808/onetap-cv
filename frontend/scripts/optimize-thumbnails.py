@@ -18,7 +18,6 @@ def save_responsive(source: Path, name: str) -> None:
 def main() -> None:
     for template in ("classic", "modern", "compact"):
         save_responsive(PUBLIC / f"landing-{template}.png", f"landing-{template}")
-        save_responsive(PUBLIC / f"{template}.png", template)
 
 
 if __name__ == "__main__":

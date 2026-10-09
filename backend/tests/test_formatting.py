@@ -50,7 +50,7 @@ def test_href_url_adds_missing_scheme() -> None:
 @pytest.mark.parametrize(
     ("full_name", "expected"),
     [
-        ("MD Shahriar Hasan", "MD_Shahriar_Hasan_Resume.pdf"),
+        ("Shahriar Hasan", "Shahriar_Hasan_Resume.pdf"),
         ("", "Resume.pdf"),
         ("A/B<script>", "A_B_script_Resume.pdf"),
         ("!!!", "Resume.pdf"),

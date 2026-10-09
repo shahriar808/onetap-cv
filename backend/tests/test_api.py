@@ -22,7 +22,7 @@ def test_preview_endpoint_returns_html(sample_data: dict[str, object]) -> None:
 
     assert response.status_code == 200
     assert response.headers["content-type"].startswith("text/html")
-    assert "MD Shahriar Hasan" in response.text
+    assert "Shahriar Hasan" in response.text
     assert "@media screen" in response.text
 
 
@@ -50,7 +50,7 @@ def test_pdf_endpoint_returns_sanitized_attachment(sample_data: dict[str, object
     assert response.status_code == 200
     assert response.headers["content-type"] == "application/pdf"
     assert response.headers["content-disposition"] == (
-        'attachment; filename="MD_Shahriar_Hasan_Resume.pdf"'
+        'attachment; filename="Shahriar_Hasan_Resume.pdf"'
     )
     assert response.content.startswith(b"%PDF")
 

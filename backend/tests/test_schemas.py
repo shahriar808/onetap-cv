@@ -191,7 +191,7 @@ def test_interests_limits_item_count() -> None:
 
 
 def test_sample_resume_fixture_validates(sample_resume: ResumeData) -> None:
-    assert sample_resume.contact.full_name == "MD Shahriar Hasan"
+    assert sample_resume.contact.full_name == "Shahriar Hasan"
 
 
 def test_resume_data_requires_contact_email(sample_data: dict[str, object]) -> None:

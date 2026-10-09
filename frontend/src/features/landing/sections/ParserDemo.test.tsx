@@ -15,7 +15,7 @@ describe('ParserDemo', () => {
       screen.getByRole('tab', { name: 'Two-column layout' }).className,
     ).toContain('min-h-11')
     fireEvent.click(screen.getByRole('tab', { name: 'OneTap CV' }))
-    expect(panel.textContent).toContain('alex@example.com')
+    expect(panel.textContent).toContain('shahriar@example.com')
     expect(panel.textContent).toContain('EXPERIENCE')
     expect(panel.textContent).not.toContain('SKILLS  EXPERIENCE')
   })

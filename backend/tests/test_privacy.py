@@ -15,8 +15,8 @@ def test_resume_content_is_not_written_to_logs(
     response = TestClient(app).post("/api/resume/preview", json=sample_data)
 
     assert response.status_code == 200
-    assert "MD Shahriar Hasan" not in caplog.text
-    assert "shasan5525@gmail.com" not in caplog.text
+    assert "Shahriar Hasan" not in caplog.text
+    assert "shahriar@example.com" not in caplog.text
 
 
 def test_unexpected_error_returns_clean_server_message(
@@ -24,7 +24,7 @@ def test_unexpected_error_returns_clean_server_message(
     monkeypatch,
 ) -> None:
     def fail_render(data, template_id):
-        raise RuntimeError("private user content: MD Shahriar Hasan")
+        raise RuntimeError("private user content: Shahriar Hasan")
 
     monkeypatch.setattr(api.resume, "render_pdf", fail_render)
     client = TestClient(app, raise_server_exceptions=False)
@@ -33,4 +33,4 @@ def test_unexpected_error_returns_clean_server_message(
 
     assert response.status_code == 500
     assert response.json() == {"detail": "Server error"}
-    assert "MD Shahriar Hasan" not in response.text
+    assert "Shahriar Hasan" not in response.text

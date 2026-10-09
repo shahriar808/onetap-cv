@@ -20,10 +20,10 @@ function PageMock({ activeTab }: { activeTab: DemoTab }) {
       className="relative min-h-64 overflow-hidden rounded-sm border border-line bg-white p-5 shadow-paper sm:p-7"
     >
       <p className="border-b border-line pb-3 font-display text-lg font-semibold text-ink">
-        Alex Rahman
+        Shahriar Hasan
       </p>
       <p className="mt-2 border-b border-line pb-3 text-xs text-ink-muted">
-        Software Engineer · alex@example.com
+        Software Engineer · shahriar@example.com
       </p>
       {isTwoColumn ? (
         <div className="mt-5 grid grid-cols-2 gap-4">

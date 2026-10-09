@@ -10,7 +10,7 @@ export const PARSER_DEMO_DATA = {
   oneTap: [
     'ALEX RAHMAN',
     'Software Engineer',
-    'alex@example.com · +880 1700 000000',
+    'shahriar@example.com · +1 555 010 2000',
     '',
     'EXPERIENCE',
     'Software Engineer — Ternary Solutions',

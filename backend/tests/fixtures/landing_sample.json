@@ -1,8 +1,8 @@
 {
   "version": 1,
   "contact": {
-    "full_name": "Alex Rahman",
-    "email": "alex@example.com",
+    "full_name": "Shahriar Hasan",
+    "email": "shahriar@example.com",
     "phone": "+1 555 010 2000",
     "location": "Austin, TX",
     "job_title": "Software Engineer",
@@ -10,7 +10,7 @@
       {
         "id": "l1",
         "type": "LinkedIn",
-        "url": "https://example.com/alex-rahman"
+        "url": "https://example.com/shahriar-hasan"
       },
       {
         "id": "l2",
@@ -45,7 +45,7 @@
   "experience": [
     {
       "id": "e1",
-      "company": "Ternary Solutions",
+      "company": "Example Labs",
       "position": "Software Engineer",
       "location": "",
       "start": "2025-12",
@@ -63,7 +63,7 @@
     },
     {
       "id": "e2",
-      "company": "TekSoi Software Limited",
+      "company": "Sample Technology",
       "position": "Junior Software Engineer",
       "location": "",
       "start": "2025-10",
@@ -80,7 +80,7 @@
     },
     {
       "id": "e3",
-      "company": "TekSoi Software Limited",
+      "company": "Sample Technology",
       "position": "Software Engineer Intern (Java)",
       "location": "",
       "start": "2025-07",
@@ -197,7 +197,7 @@
       "links": [
         {
           "label": "GitHub",
-          "url": "https://github.com/shahriar808/ChatPulse-Real-Time-ChatApp"
+          "url": "https://github.com/shahriar-hasan-example/ChatPulse-Real-Time-ChatApp"
         },
         {
           "label": "Demo",
@@ -216,7 +216,7 @@
       "links": [
         {
           "label": "GitHub",
-          "url": "https://github.com/shahriar808/LibroManager"
+          "url": "https://github.com/shahriar-hasan-example/LibroManager"
         }
       ],
       "bullets": []
@@ -231,7 +231,7 @@
       "links": [
         {
           "label": "GitHub",
-          "url": "https://github.com/shahriar808/Food-Shop"
+          "url": "https://github.com/shahriar-hasan-example/Food-Shop"
         }
       ],
       "bullets": []
@@ -246,7 +246,7 @@
       "links": [
         {
           "label": "GitHub",
-          "url": "https://github.com/shahriar808/Monthly-Challenge-App"
+          "url": "https://github.com/shahriar-hasan-example/Monthly-Challenge-App"
         }
       ],
       "bullets": []
@@ -261,7 +261,7 @@
       "links": [
         {
           "label": "GitHub",
-          "url": "https://github.com/shahriar808/Design-Patterns-Project"
+          "url": "https://github.com/shahriar-hasan-example/Design-Patterns-Project"
         }
       ],
       "bullets": []
@@ -276,11 +276,11 @@
       "links": [
         {
           "label": "GitHub",
-          "url": "https://github.com/shahriar808/Rock-Paper-Scissors-Game"
+          "url": "https://github.com/shahriar-hasan-example/Rock-Paper-Scissors-Game"
         },
         {
           "label": "Demo",
-          "url": "https://shahriar808.github.io/Rock-Paper-Scissors-Game/"
+          "url": "https://example.com/Rock-Paper-Scissors-Game/"
         }
       ],
       "bullets": []
@@ -289,7 +289,7 @@
   "education": [
     {
       "id": "ed1",
-      "institution": "Bangladesh University of Business & Technology",
+      "institution": "Example University",
       "degree": "BSc in Computer Science and Engineering",
       "field": "",
       "location": "",

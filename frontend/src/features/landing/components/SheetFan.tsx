@@ -52,7 +52,7 @@ export function SheetFan() {
               src={`${sheet.src}-480.webp`}
               srcSet={`${sheet.src}-480.webp 480w, ${sheet.src}-900.webp 900w`}
               sizes="(max-width: 768px) 76vw, 360px"
-              alt={`${sheet.label} CV sheet, with Alex Rahman sample details`}
+              alt={`${sheet.label} CV sheet, with Shahriar Hasan sample details`}
               width={900}
               height={1272}
               loading={sheet.id === selected ? 'eager' : 'lazy'}

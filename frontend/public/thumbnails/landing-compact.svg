@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="400" height="520" viewBox="0 0 400 520">
   <rect width="400" height="520" fill="#fff"/>
-  <text x="32" y="48" font-family="Arial,sans-serif" font-size="18" font-weight="bold" fill="#17202A">Alex Rahman</text>
+  <text x="32" y="48" font-family="Arial,sans-serif" font-size="18" font-weight="bold" fill="#17202A">Shahriar Hasan</text>
   <text x="32" y="65" font-family="Arial,sans-serif" font-size="8" fill="#4A5260">Software Engineer · Dhaka, Bangladesh</text>
-  <text x="32" y="79" font-family="Arial,sans-serif" font-size="8" fill="#4A5260">alex.rahman@example.com</text>
+  <text x="32" y="79" font-family="Arial,sans-serif" font-size="8" fill="#4A5260">shahriar@example.com</text>
   <path d="M32 91h336" stroke="#17202A" stroke-width="1.5"/>
   <text x="32" y="116" font-family="monospace" font-size="10" font-weight="bold" fill="#17202A">EXPERIENCE</text>
   <text x="32" y="133" font-family="Arial,sans-serif" font-size="9" font-weight="bold" fill="#17202A">Software Engineer, Northstar Studio</text>

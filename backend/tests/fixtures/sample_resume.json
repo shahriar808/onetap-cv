@@ -1,15 +1,15 @@
 {
   "version": 1,
   "contact": {
-    "full_name": "MD Shahriar Hasan",
-    "email": "shasan5525@gmail.com",
-    "phone": "+8801763785508",
-    "location": "Banasree, Rampura, Dhaka-1219, Bangladesh",
+    "full_name": "Shahriar Hasan",
+    "email": "shahriar@example.com",
+    "phone": "+1 555 010 2000",
+    "location": "Dhaka, Bangladesh",
     "job_title": "Software Engineer",
     "links": [
-      { "id": "l1", "type": "LinkedIn", "url": "https://www.linkedin.com/in/shahriarhasan808/" },
-      { "id": "l2", "type": "GitHub", "url": "https://github.com/shahriar808" },
-      { "id": "l3", "type": "LeetCode", "url": "https://leetcode.com/u/MD_Shahriar_Hasan" }
+      { "id": "l1", "type": "LinkedIn", "url": "https://www.linkedin.com/in/shahriar-hasan-example/" },
+      { "id": "l2", "type": "GitHub", "url": "https://github.com/shahriar-hasan-example" },
+      { "id": "l3", "type": "LeetCode", "url": "https://leetcode.com/u/shahriar_hasan_example" }
     ]
   },
   "enabled_sections": ["summary", "experience", "skills", "projects", "education", "certifications", "achievements", "languages"],
@@ -20,7 +20,7 @@
   "experience": [
     {
       "id": "e1",
-      "company": "Ternary Solutions",
+      "company": "Example Labs",
       "position": "Software Engineer",
       "location": "",
       "start": "2025-12",
@@ -38,7 +38,7 @@
     },
     {
       "id": "e2",
-      "company": "TekSoi Software Limited",
+      "company": "Sample Technology",
       "position": "Junior Software Engineer",
       "location": "",
       "start": "2025-10",
@@ -55,7 +55,7 @@
     },
     {
       "id": "e3",
-      "company": "TekSoi Software Limited",
+      "company": "Sample Technology",
       "position": "Software Engineer Intern (Java)",
       "location": "",
       "start": "2025-07",
@@ -101,7 +101,7 @@
       "start": "",
       "end": "",
       "links": [
-        { "label": "GitHub", "url": "https://github.com/shahriar808/ChatPulse-Real-Time-ChatApp" },
+        { "label": "GitHub", "url": "https://github.com/shahriar-hasan-example/ChatPulse-Real-Time-ChatApp" },
         { "label": "Demo", "url": "https://chatpulse-real-time-chatapp.onrender.com" }
       ],
       "bullets": []
@@ -113,7 +113,7 @@
       "tech_stack": "Spring Boot, Thymeleaf",
       "start": "",
       "end": "",
-      "links": [{ "label": "GitHub", "url": "https://github.com/shahriar808/LibroManager" }],
+      "links": [{ "label": "GitHub", "url": "https://github.com/shahriar-hasan-example/LibroManager" }],
       "bullets": []
     },
     {
@@ -123,7 +123,7 @@
       "tech_stack": "Spring Boot, MySQL",
       "start": "",
       "end": "",
-      "links": [{ "label": "GitHub", "url": "https://github.com/shahriar808/Food-Shop" }],
+      "links": [{ "label": "GitHub", "url": "https://github.com/shahriar-hasan-example/Food-Shop" }],
       "bullets": []
     },
     {
@@ -133,7 +133,7 @@
       "tech_stack": "Spring Boot, React.js",
       "start": "",
       "end": "",
-      "links": [{ "label": "GitHub", "url": "https://github.com/shahriar808/Monthly-Challenge-App" }],
+      "links": [{ "label": "GitHub", "url": "https://github.com/shahriar-hasan-example/Monthly-Challenge-App" }],
       "bullets": []
     },
     {
@@ -143,7 +143,7 @@
       "tech_stack": "Java",
       "start": "",
       "end": "",
-      "links": [{ "label": "GitHub", "url": "https://github.com/shahriar808/Design-Patterns-Project" }],
+      "links": [{ "label": "GitHub", "url": "https://github.com/shahriar-hasan-example/Design-Patterns-Project" }],
       "bullets": []
     },
     {
@@ -154,8 +154,8 @@
       "start": "",
       "end": "",
       "links": [
-        { "label": "GitHub", "url": "https://github.com/shahriar808/Rock-Paper-Scissors-Game" },
-        { "label": "Demo", "url": "https://shahriar808.github.io/Rock-Paper-Scissors-Game/" }
+        { "label": "GitHub", "url": "https://github.com/shahriar-hasan-example/Rock-Paper-Scissors-Game" },
+        { "label": "Demo", "url": "https://example.com/Rock-Paper-Scissors-Game/" }
       ],
       "bullets": []
     }
@@ -163,7 +163,7 @@
   "education": [
     {
       "id": "ed1",
-      "institution": "Bangladesh University of Business & Technology",
+      "institution": "Example University",
       "degree": "BSc in Computer Science and Engineering",
       "field": "",
       "location": "",

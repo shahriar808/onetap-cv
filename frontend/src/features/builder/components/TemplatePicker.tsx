@@ -60,7 +60,7 @@ export function TemplatePicker() {
         <button
           type="button"
           onClick={() => setReloadCount((count) => count + 1)}
-          className="min-h-11 rounded-lg border border-slate-300 px-4 py-2 font-semibold text-slate-800 hover:bg-slate-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-700"
+          className="min-h-11 rounded-lg border border-line px-4 py-2 font-semibold text-ink hover:bg-paper-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
         >
           Retry templates
         </button>
@@ -129,8 +129,8 @@ export function TemplatePicker() {
               </span>
             )}
             <img
-              src={`/thumbnails/${template.id}-480.webp`}
-              srcSet={`/thumbnails/${template.id}-480.webp 480w, /thumbnails/${template.id}-900.webp 900w`}
+              src={`/thumbnails/landing-${template.id}-480.webp`}
+              srcSet={`/thumbnails/landing-${template.id}-480.webp 480w, /thumbnails/landing-${template.id}-900.webp 900w`}
               sizes="(max-width: 420px) 90vw, 300px"
               alt=""
               width={480}

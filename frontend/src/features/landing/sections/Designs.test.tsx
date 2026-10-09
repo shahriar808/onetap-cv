@@ -18,7 +18,7 @@ describe('Designs', () => {
       expect(link.getAttribute('href')).toBe(`/build?template=${template}`)
       expect(
         screen.getByRole('img', {
-          name: new RegExp(`${template} CV design sample for Alex Rahman`, 'i'),
+          name: new RegExp(`${template} CV design sample for Shahriar Hasan`, 'i'),
         }),
       ).not.toBeNull()
     }

@@ -11,27 +11,25 @@ from app.templates_engine.registry import TEMPLATES
 
 BACKEND_DIR = Path(__file__).parents[1]
 REPOSITORY_ROOT = BACKEND_DIR.parent
-SAMPLE_PATH = BACKEND_DIR / "tests" / "fixtures" / "sample_resume.json"
 LANDING_SAMPLE_PATH = BACKEND_DIR / "tests" / "fixtures" / "landing_sample.json"
 OUTPUT_DIR = REPOSITORY_ROOT / "frontend" / "public" / "thumbnails"
 
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--landing", action="store_true", help="Generate neutral landing page samples")
-    args = parser.parse_args()
+    parser = argparse.ArgumentParser(description="Generate neutral public template thumbnails.")
+    parser.parse_args()
     pdftoppm = shutil.which("pdftoppm")
     if pdftoppm is None:
         raise RuntimeError("pdftoppm is required to generate template thumbnails")
 
-    sample_path = LANDING_SAMPLE_PATH if args.landing else SAMPLE_PATH
-    data = ResumeData.model_validate_json(sample_path.read_text(encoding="utf-8"))
+    data = ResumeData.model_validate_json(LANDING_SAMPLE_PATH.read_text(encoding="utf-8"))
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
     with tempfile.TemporaryDirectory() as temporary_directory:
         temporary_path = Path(temporary_directory)
         for template_id in TEMPLATES:
-            filename = f"landing-{template_id}" if args.landing else template_id
+            filename = f"landing-{template_id}"
             pdf_path = temporary_path / f"{filename}.pdf"
             prefix = temporary_path / filename
             pdf_path.write_bytes(render_pdf(data, template_id))
@@ -40,7 +38,7 @@ def main() -> None:
                     pdftoppm,
                     "-png",
                     "-r",
-                    "150" if args.landing else "60",
+                    "150",
                     "-f",
                     "1",
                     "-l",

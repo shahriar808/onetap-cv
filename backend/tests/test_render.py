@@ -14,29 +14,29 @@ def test_template_html_contains_contact_and_resume_content(
 ) -> None:
     html = render_html(sample_resume, template_id)
 
-    assert "MD Shahriar Hasan" in html
-    assert "shasan5525@gmail.com" in html
+    assert "Shahriar Hasan" in html
+    assert "shahriar@example.com" in html
     assert f'class="tpl-{template_id}"' in html
-    assert 'href="https://github.com/shahriar808"' in html
+    assert 'href="https://github.com/shahriar-hasan-example"' in html
     assert "GitHub" in html
     header = html.split("</header>", 1)[0]
-    assert header.index("MD Shahriar Hasan") < header.index(
-        "Banasree, Rampura, Dhaka-1219, Bangladesh"
+    assert header.index("Shahriar Hasan") < header.index(
+        "Dhaka, Bangladesh"
     )
-    assert header.index("Banasree, Rampura, Dhaka-1219, Bangladesh") < header.index(
-        "+8801763785508"
+    assert header.index("Dhaka, Bangladesh") < header.index(
+        "+1 555 010 2000"
     )
-    assert header.index("+8801763785508") < header.index("LinkedIn")
-    assert ">github.com/shahriar808<" not in header
+    assert header.index("+1 555 010 2000") < header.index("LinkedIn")
+    assert ">github.com/shahriar-hasan-example<" not in header
     experience_start = html.index("Work Experience")
-    company = html.index("Ternary Solutions", experience_start)
+    company = html.index("Example Labs", experience_start)
     position = html.index("Software Engineer", experience_start)
     if template_id == "classic":
         assert company < position
     elif template_id == "modern":
         assert position < company
     else:
-        assert "Software Engineer, Ternary Solutions" in html
+        assert "Software Engineer, Example Labs" in html
 
 
 def test_render_html_escapes_user_content(sample_resume: ResumeData) -> None:
@@ -73,11 +73,11 @@ def test_render_pdf_contains_selectable_text_in_reading_order(
 
     assert pdf.startswith(b"%PDF")
     text = pdf_text(pdf)
-    name_position = text.index("MD Shahriar Hasan")
-    email_position = text.index("shasan5525@gmail.com")
-    experience_heading = "Work Experience" if template_id == "classic" else "WORK EXPERIENCE"
+    name_position = text.index("Shahriar Hasan")
+    email_position = text.index("shahriar@example.com")
+    experience_heading = "WORK EXPERIENCE"
     experience_start = text.index(experience_heading)
-    company_position = text.index("Ternary Solutions", experience_start)
+    company_position = text.index("Example Labs", experience_start)
     position_position = text.index("Software Engineer", experience_start)
     if template_id == "classic":
         assert name_position < email_position < company_position < position_position
@@ -86,7 +86,8 @@ def test_render_pdf_contains_selectable_text_in_reading_order(
     else:
         assert name_position < email_position < company_position
     assert "GitHub" in text
-    assert "github.com/shahriar808" not in text
+    assert "linkedin.com/in/shahriar-hasan-example" in text
+    assert "github.com/shahriar-hasan-example" in text
     assert text.index("Programming Languages") < text.index("Frontend Frameworks")
 
 
@@ -100,7 +101,7 @@ def test_render_pdf_omits_disabled_sections(
 
     text = pdf_text(render_pdf(sample_resume, template_id))
 
-    assert "Ternary Solutions" in text
+    assert "Example Labs" in text
     assert "Professional Summary" not in text
     assert "Programming Languages" not in text
 

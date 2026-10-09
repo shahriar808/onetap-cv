@@ -29,7 +29,7 @@ export function Designs() {
                 src={`/thumbnails/${SHEETS[template.id]}-480.webp`}
                 srcSet={`/thumbnails/${SHEETS[template.id]}-480.webp 480w, /thumbnails/${SHEETS[template.id]}-900.webp 900w`}
                 sizes="(max-width: 768px) 90vw, 360px"
-                alt={`${template.name} CV design sample for Alex Rahman`}
+                alt={`${template.name} CV design sample for Shahriar Hasan`}
                 width={900}
                 height={1272}
                 loading="lazy"

@@ -6,25 +6,25 @@ def test_build_context_formats_contact_and_links(sample_resume: ResumeData) -> N
     context = build_context(sample_resume)
 
     assert context["contact"] == {
-        "full_name": "MD Shahriar Hasan",
+        "full_name": "Shahriar Hasan",
         "job_title": "Software Engineer",
-        "address_line": "Banasree, Rampura, Dhaka-1219, Bangladesh",
-        "contact_line": "+8801763785508 | shasan5525@gmail.com",
+        "address_line": "Dhaka, Bangladesh",
+        "contact_line": "+1 555 010 2000 | shahriar@example.com",
         "links": [
             {
                 "label": "LinkedIn",
-                "text": "LinkedIn",
-                "href": "https://www.linkedin.com/in/shahriarhasan808/",
+                "text": "linkedin.com/in/shahriar-hasan-example",
+                "href": "https://www.linkedin.com/in/shahriar-hasan-example/",
             },
             {
                 "label": "GitHub",
-                "text": "GitHub",
-                "href": "https://github.com/shahriar808",
+                "text": "github.com/shahriar-hasan-example",
+                "href": "https://github.com/shahriar-hasan-example",
             },
             {
                 "label": "LeetCode",
-                "text": "LeetCode",
-                "href": "https://leetcode.com/u/MD_Shahriar_Hasan",
+                "text": "leetcode.com/u/shahriar_hasan_example",
+                "href": "https://leetcode.com/u/shahriar_hasan_example",
             },
         ],
     }
@@ -45,7 +45,7 @@ def test_build_context_skips_empty_contact_parts(sample_resume: ResumeData) -> N
 
     assert context["contact"]["address_line"] == ""  # type: ignore[index]
     assert context["contact"]["contact_line"] == (  # type: ignore[index]
-        "+8801763785508 | shasan5525@gmail.com"
+        "+1 555 010 2000 | shahriar@example.com"
     )
 
 
@@ -153,7 +153,7 @@ def test_build_context_formats_project_links_and_interests(
     assert sections["projects"]["items"][0]["links"] == [
         {
             "label": "GitHub",
-            "text": "GitHub",
+            "text": "github.com/example",
             "href": "https://github.com/example/",
         }
     ]
