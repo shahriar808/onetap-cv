@@ -41,6 +41,22 @@ async function getEditorViewportWidth(page: import('@playwright/test').Page) {
   return page.locator('section[aria-label="Resume editor"] .builder-editor-scroll').evaluate((node) => node.clientWidth)
 }
 
+async function getBuilderPageGeometry(page: import('@playwright/test').Page) {
+  return page.evaluate(() => {
+    const rect = (selector: string) => {
+      const bounds = document.querySelector(selector)!.getBoundingClientRect()
+      return [Math.round(bounds.left), Math.round(bounds.width)]
+    }
+    return {
+      viewport: [window.innerWidth, document.documentElement.clientWidth],
+      root: rect('#root'),
+      page: rect('#main-content'),
+      editor: rect('section[aria-label="Resume editor"]'),
+      preview: rect('section[aria-label="CV preview panel"]'),
+    }
+  })
+}
+
 test.beforeEach(async ({ page }) => {
   await page.route('**/api/**', async (route) => {
     const url = new URL(route.request().url())
@@ -105,12 +121,14 @@ for (const width of widths) {
         await page.getByLabel('Phone').fill('+1 555 010 2000')
         const stepOneHeadingLeft = await getEditorHeadingLeft(page)
         const stepOneEditorWidth = await getEditorViewportWidth(page)
+        const stepOnePageGeometry = await getBuilderPageGeometry(page)
         await scrollEditorToBottom(page)
         await page.getByRole('button', { name: 'Next' }).click()
         await expect(page.getByRole('heading', { name: 'On your CV (in this order)' })).toBeVisible()
         await expect.poll(() => page.locator('section[aria-label="Resume editor"] div.overflow-y-auto').evaluate((node) => node.scrollTop)).toBe(0)
         expect(await getEditorHeadingLeft(page)).toBe(stepOneHeadingLeft)
         expect(await getEditorViewportWidth(page)).toBe(stepOneEditorWidth)
+        expect(await getBuilderPageGeometry(page)).toEqual(stepOnePageGeometry)
         const enabled = page.locator('[data-section-id]')
         const orderBefore = await enabled.evaluateAll((nodes) => nodes.map((node) => node.getAttribute('data-section-id')))
         await page.getByRole('button', { name: 'Drag Work Experience to reorder' }).dragTo(page.locator('[data-section-id="summary"]'))
