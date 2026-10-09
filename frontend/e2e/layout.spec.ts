@@ -10,6 +10,29 @@ async function scrollEditorToTop(page: import('@playwright/test').Page) {
   })
 }
 
+async function scrollEditorToBottom(page: import('@playwright/test').Page) {
+  await page.locator('section[aria-label="Resume editor"] div.overflow-y-auto').evaluate((node) => {
+    node.scrollTop = node.scrollHeight
+  })
+}
+
+async function waitForPageScrollToSettle(page: import('@playwright/test').Page) {
+  await page.evaluate(() => new Promise<void>((resolve) => {
+    let previous = window.scrollY
+    let stableFrames = 0
+    let frames = 0
+    function check() {
+      const current = window.scrollY
+      stableFrames = Math.abs(current - previous) < 1 ? stableFrames + 1 : 0
+      previous = current
+      frames += 1
+      if (stableFrames >= 3 || frames >= 120) resolve()
+      else requestAnimationFrame(check)
+    }
+    requestAnimationFrame(check)
+  }))
+}
+
 test.beforeEach(async ({ page }) => {
   await page.route('**/api/**', async (route) => {
     const url = new URL(route.request().url())
@@ -45,6 +68,9 @@ for (const width of widths) {
       if (path === '/') {
         const timelineLine = await page.locator('#how > ol').evaluate((node) => getComputedStyle(node, '::before').display)
         expect(timelineLine).toBe(width >= 1024 ? 'block' : 'none')
+        await expect(page.getByText('10 / Feedback', { exact: true })).toBeVisible()
+        await expect(page.getByText('11 / Start', { exact: true })).toBeVisible()
+        await expect(page.getByText('12 / Start', { exact: true })).toHaveCount(0)
       }
       await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true)
       if (path === '/privacy') {
@@ -69,8 +95,10 @@ for (const width of widths) {
         await page.getByLabel('Full name').fill('Shahriar Hasan')
         await page.getByLabel('Email').fill('shahriar@example.com')
         await page.getByLabel('Phone').fill('+1 555 010 2000')
+        await scrollEditorToBottom(page)
         await page.getByRole('button', { name: 'Next' }).click()
         await expect(page.getByRole('heading', { name: 'On your CV (in this order)' })).toBeVisible()
+        await expect.poll(() => page.locator('section[aria-label="Resume editor"] div.overflow-y-auto').evaluate((node) => node.scrollTop)).toBe(0)
         const enabled = page.locator('[data-section-id]')
         const orderBefore = await enabled.evaluateAll((nodes) => nodes.map((node) => node.getAttribute('data-section-id')))
         await page.getByRole('button', { name: 'Drag Work Experience to reorder' }).dragTo(page.locator('[data-section-id="summary"]'))
@@ -84,8 +112,10 @@ for (const width of widths) {
         }
         await scrollEditorToTop(page)
         await page.screenshot({ path: resolve(shotDir, `build-step-2-${width}.png`), fullPage: true })
+        await scrollEditorToBottom(page)
         await page.getByRole('button', { name: 'Next' }).click()
         await expect(page.getByRole('region', { name: 'Resume section details' })).toBeVisible()
+        await expect.poll(() => page.locator('section[aria-label="Resume editor"] div.overflow-y-auto').evaluate((node) => node.scrollTop)).toBe(0)
         await scrollEditorToTop(page)
         await page.screenshot({ path: resolve(shotDir, `build-step-3-${width}.png`), fullPage: true })
         await page.getByRole('button', { name: 'Next' }).click()
@@ -105,6 +135,7 @@ for (const width of widths) {
 
     if (width >= 768) {
       await page.goto('/#feedback')
+      await waitForPageScrollToSettle(page)
       const name = page.getByLabel('Name')
       const email = page.getByLabel('Email')
       await expect(name).toBeVisible()

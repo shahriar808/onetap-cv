@@ -111,9 +111,9 @@ export function BuilderPage() {
 
   let editor: ReactNode
   if (currentStep === 0) {
-    editor = <Card className="p-4 sm:p-5"><ContactForm validationRequest={validationRequest} /></Card>
+    editor = <ContactForm validationRequest={validationRequest} />
   } else if (currentStep === 1) {
-    editor = <Card className="p-4 sm:p-5"><SectionPicker /></Card>
+    editor = <SectionPicker />
   } else if (currentStep === 2) {
     const step = LANDING_CONTENT.builder.steps[2]
     editor = (

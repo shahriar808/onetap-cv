@@ -21,6 +21,15 @@ by pytest. Screenshots are in `docs/design/qa-shots/`.
   at desktop widths; Playwright checks both breakpoint behaviors.
 - [x] Refreshed the home screenshots at 360, 390, 768, and 1280px.
 
+## Numbering and builder transition follow-up — 2026-10-09
+
+- [x] Browser checks confirm the home page ends with `10 / Feedback` followed
+  by `11 / Start`.
+- [x] Playwright confirms the builder editor scrolls to the top when entering
+  step 2 and when leaving it, after scrolling the prior step to the bottom.
+- [x] Frontend build and Oxlint passed; the full Vitest and Playwright suites
+  are recorded below.
+
 ## Automated
 
 - [x] Frontend Vitest: 129 tests passed across 58 files.

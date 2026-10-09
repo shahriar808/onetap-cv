@@ -13,6 +13,17 @@
   section with the six-dot handle, checks the resulting order, and changes its
   position with the selector.
 
+## Numbering and builder transition follow-up — 2026-10-09
+
+- Corrected the final home page call to action to `11 / Start`, following
+  `10 / Feedback` in page order.
+- Removed the extra outer cards from builder steps 1 and 2 so their headings
+  align with the later steps. The section selection instructions now describe
+  reordering without referring to the removed arrow buttons.
+- Reset the editor's scroll position to the top whenever the builder step
+  changes. Playwright now scrolls to the bottom before changing steps and checks
+  that both transitions reset to the top.
+
 Date: 2026-10-09. Browser checks ran in Chromium at viewport widths 360, 390,
 768, and 1280px. Final screenshots are in `docs/design/qa-shots/`.
 

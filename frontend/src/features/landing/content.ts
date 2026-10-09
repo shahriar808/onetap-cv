@@ -167,7 +167,7 @@ export const LANDING_CONTENT = {
       },
       {
         title: 'Choose your sections',
-        intro: "Turn on what's relevant, then use the arrows to put your sections in the order you want. Anything you remove is kept, in case you add it back.",
+        intro: "Choose the sections you need and arrange them in the order you want. Anything you remove is kept, in case you add it back.",
       },
       { title: 'Add your details', intro: 'Use the fields that fit your experience.' },
       { title: 'Pick a design and download', intro: 'Choose a clear layout and check your PDF.' },

@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import { useLayoutEffect, useRef, type ReactNode } from 'react'
 import { Button } from '../../../components/ui/Button'
 import { MobileBar } from './MobileBar'
 
@@ -29,6 +29,12 @@ export function BuilderLayout({
   primaryLabel,
   onPrimaryAction,
 }: BuilderLayoutProps) {
+  const editorScrollRef = useRef<HTMLDivElement>(null)
+
+  useLayoutEffect(() => {
+    if (editorScrollRef.current) editorScrollRef.current.scrollTop = 0
+  }, [stepIndex])
+
   return (
     <div className="grid h-full min-h-0 min-w-0 grid-rows-[auto_minmax(0,1fr)] gap-4">
       <div>{stepper}</div>
@@ -39,7 +45,7 @@ export function BuilderLayout({
             activeTab === 'edit' ? '' : 'hidden'
           }`}
         >
-          <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-2 pb-[calc(6rem+env(safe-area-inset-bottom))] lg:pb-4 lg:pr-3">
+          <div ref={editorScrollRef} className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-2 pb-[calc(6rem+env(safe-area-inset-bottom))] lg:pb-4 lg:pr-3">
             <div className="grid content-start gap-5">
               <div key={stepIndex} className="builder-step-enter">
                 {editor}

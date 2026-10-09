@@ -5,7 +5,7 @@ export function FinalCta() {
   return (
     <section className="bg-ink py-12 sm:py-16">
       <div className="container-page grid justify-items-start gap-5">
-        <p className="text-label text-paper/70">12 / Start</p>
+        <p className="text-label text-paper/70">11 / Start</p>
         <h2 className="max-w-3xl font-display text-display-xl font-semibold tracking-tight text-paper">
           {LANDING_CONTENT.finalCta.title}
         </h2>
