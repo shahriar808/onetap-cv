@@ -64,5 +64,8 @@ describe('MobileBar', () => {
     expect(screen.getByRole('button', { name: 'Next' }).className).toContain(
       '!min-h-12',
     )
+    const backButton = screen.getByRole('button', { name: 'Back' })
+    expect(backButton.className).toContain('bg-paper-2')
+    expect(backButton.className).toContain('border-line')
   })
 })
