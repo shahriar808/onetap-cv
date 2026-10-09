@@ -27,6 +27,8 @@ by pytest. Screenshots are in `docs/design/qa-shots/`.
   by `11 / Start`.
 - [x] Playwright confirms the builder editor scrolls to the top when entering
   step 2 and when leaving it, after scrolling the prior step to the bottom.
+- [x] Playwright confirms editor viewport width and heading alignment remain
+  unchanged across steps 1, 2, and 3 at 360px, 390px, 768px, and 1280px.
 - [x] Frontend build and Oxlint passed; the full Vitest and Playwright suites
   are recorded below.
 

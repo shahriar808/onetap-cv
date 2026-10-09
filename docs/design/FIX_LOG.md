@@ -23,6 +23,10 @@
 - Reset the editor's scroll position to the top whenever the builder step
   changes. Playwright now scrolls to the bottom before changing steps and checks
   that both transitions reset to the top.
+- A follow-up browser review found the editor content width could still vary
+  when the scrollbar appeared for the longer section-selection step. The editor
+  now reserves a stable scrollbar gutter, and Playwright checks equal viewport
+  width and heading alignment across steps 1, 2, and 3.
 
 Date: 2026-10-09. Browser checks ran in Chromium at viewport widths 360, 390,
 768, and 1280px. Final screenshots are in `docs/design/qa-shots/`.

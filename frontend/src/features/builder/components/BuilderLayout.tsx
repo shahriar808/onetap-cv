@@ -45,7 +45,7 @@ export function BuilderLayout({
             activeTab === 'edit' ? '' : 'hidden'
           }`}
         >
-          <div ref={editorScrollRef} className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-2 pb-[calc(6rem+env(safe-area-inset-bottom))] lg:pb-4 lg:pr-3">
+          <div ref={editorScrollRef} className="builder-editor-scroll min-h-0 flex-1 overflow-y-auto overscroll-contain px-2 pb-[calc(6rem+env(safe-area-inset-bottom))] lg:pb-4 lg:pr-3">
             <div className="grid content-start gap-5">
               <div key={stepIndex} className="builder-step-enter">
                 {editor}

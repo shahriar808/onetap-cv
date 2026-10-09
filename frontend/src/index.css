@@ -240,3 +240,7 @@ button.cursor-grab:not(:disabled) {
 button.cursor-grab:active:not(:disabled) {
   cursor: grabbing;
 }
+
+.builder-editor-scroll {
+  scrollbar-gutter: stable;
+}

@@ -33,6 +33,14 @@ async function waitForPageScrollToSettle(page: import('@playwright/test').Page) 
   }))
 }
 
+async function getEditorHeadingLeft(page: import('@playwright/test').Page) {
+  return page.locator('section[aria-label="Resume editor"] h2').first().evaluate((node) => Math.round(node.getBoundingClientRect().left))
+}
+
+async function getEditorViewportWidth(page: import('@playwright/test').Page) {
+  return page.locator('section[aria-label="Resume editor"] .builder-editor-scroll').evaluate((node) => node.clientWidth)
+}
+
 test.beforeEach(async ({ page }) => {
   await page.route('**/api/**', async (route) => {
     const url = new URL(route.request().url())
@@ -95,10 +103,14 @@ for (const width of widths) {
         await page.getByLabel('Full name').fill('Shahriar Hasan')
         await page.getByLabel('Email').fill('shahriar@example.com')
         await page.getByLabel('Phone').fill('+1 555 010 2000')
+        const stepOneHeadingLeft = await getEditorHeadingLeft(page)
+        const stepOneEditorWidth = await getEditorViewportWidth(page)
         await scrollEditorToBottom(page)
         await page.getByRole('button', { name: 'Next' }).click()
         await expect(page.getByRole('heading', { name: 'On your CV (in this order)' })).toBeVisible()
         await expect.poll(() => page.locator('section[aria-label="Resume editor"] div.overflow-y-auto').evaluate((node) => node.scrollTop)).toBe(0)
+        expect(await getEditorHeadingLeft(page)).toBe(stepOneHeadingLeft)
+        expect(await getEditorViewportWidth(page)).toBe(stepOneEditorWidth)
         const enabled = page.locator('[data-section-id]')
         const orderBefore = await enabled.evaluateAll((nodes) => nodes.map((node) => node.getAttribute('data-section-id')))
         await page.getByRole('button', { name: 'Drag Work Experience to reorder' }).dragTo(page.locator('[data-section-id="summary"]'))
@@ -116,6 +128,8 @@ for (const width of widths) {
         await page.getByRole('button', { name: 'Next' }).click()
         await expect(page.getByRole('region', { name: 'Resume section details' })).toBeVisible()
         await expect.poll(() => page.locator('section[aria-label="Resume editor"] div.overflow-y-auto').evaluate((node) => node.scrollTop)).toBe(0)
+        expect(await getEditorHeadingLeft(page)).toBe(stepOneHeadingLeft)
+        expect(await getEditorViewportWidth(page)).toBe(stepOneEditorWidth)
         await scrollEditorToTop(page)
         await page.screenshot({ path: resolve(shotDir, `build-step-3-${width}.png`), fullPage: true })
         await page.getByRole('button', { name: 'Next' }).click()
