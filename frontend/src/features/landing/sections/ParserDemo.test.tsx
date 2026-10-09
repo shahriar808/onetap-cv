@@ -15,9 +15,10 @@ describe('ParserDemo', () => {
       screen.getByRole('tab', { name: 'Two-column layout' }).className,
     ).toContain('min-h-11')
     fireEvent.click(screen.getByRole('tab', { name: 'OneTap CV' }))
-    expect(panel.textContent).toContain('shahriar@example.com')
+    expect(panel.textContent).toContain('SHAHRIAR HASAN')
     expect(panel.textContent).toContain('EXPERIENCE')
     expect(panel.textContent).not.toContain('SKILLS  EXPERIENCE')
+    expect(panel.textContent).not.toMatch(/@|555|Ternary|Rahman|Software Engineer|Java|Python/)
   })
 
   it('supports arrow-key navigation between tabs', () => {

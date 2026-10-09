@@ -69,10 +69,12 @@ for (const width of widths) {
         await expect(page.getByRole('heading', { name: 'On your CV (in this order)' })).toBeVisible()
         const enabled = page.locator('[data-section-id]')
         const orderBefore = await enabled.evaluateAll((nodes) => nodes.map((node) => node.getAttribute('data-section-id')))
-        await page.getByRole('button', { name: 'Move Work Experience down' }).click()
-        await expect(page.getByText(/Work Experience moved to position/)).toBeVisible()
+        await page.getByRole('button', { name: 'Drag Work Experience to reorder' }).dragTo(page.locator('[data-section-id="summary"]'))
         const orderAfter = await enabled.evaluateAll((nodes) => nodes.map((node) => node.getAttribute('data-section-id')))
         expect(orderAfter).not.toEqual(orderBefore)
+        expect(orderAfter[0]).toBe('experience')
+        await page.getByLabel('Position for Work Experience').selectOption('1')
+        await expect(page.getByText('Work Experience moved to position 2 of 4')).toBeVisible()
         for (const description of await page.locator('[data-section-id] p.text-sm').all()) {
           expect(await description.evaluate((node) => node.scrollWidth <= node.clientWidth)).toBe(true)
         }

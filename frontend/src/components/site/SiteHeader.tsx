@@ -76,6 +76,13 @@ export function SiteHeader() {
             <Link
               key={label}
               to={to}
+              onClick={(event) => {
+                const targetId = to.split('#')[1]
+                if (pathname === '/' && targetId && window.location.hash === `#${targetId}`) {
+                  event.preventDefault()
+                  document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth' })
+                }
+              }}
               aria-current={isActive(to) ? (to === '/privacy' ? 'page' : 'location') : undefined}
               className={cn('min-h-11 content-center text-sm font-medium text-ink-soft underline-offset-4 hover:text-ink hover:underline', isActive(to) && 'font-semibold text-ink decoration-accent decoration-2 underline underline-offset-8')}
             >
@@ -113,7 +120,14 @@ export function SiteHeader() {
               <Link
                 key={label}
                 to={to}
-                onClick={closeMenu}
+                onClick={(event) => {
+                  closeMenu()
+                  const targetId = to.split('#')[1]
+                  if (pathname === '/' && targetId && window.location.hash === `#${targetId}`) {
+                    event.preventDefault()
+                    document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth' })
+                  }
+                }}
                 aria-current={isActive(to) ? (to === '/privacy' ? 'page' : 'location') : undefined}
                 className={cn('flex min-h-12 items-center border-b border-line py-2 text-base font-medium text-ink', isActive(to) && 'border-l-4 border-accent bg-paper-2 pl-3')}
               >

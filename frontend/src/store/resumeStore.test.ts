@@ -79,7 +79,7 @@ describe('resume store', () => {
     )
   })
 
-  it('moves enabled sections and skips disabled entries', () => {
+  it('moves enabled sections to any position and skips disabled entries', () => {
     useResumeStore.setState((state) => ({
       data: {
         ...state.data,
@@ -87,11 +87,12 @@ describe('resume store', () => {
         section_order: ['summary', 'projects', 'experience', 'skills'],
       },
     }))
-    useResumeStore.getState().moveSection('skills', 'up')
-    expect(useResumeStore.getState().data.section_order).toEqual(['summary', 'projects', 'skills', 'experience'])
-    useResumeStore.getState().moveSection('summary', 'up')
-    useResumeStore.getState().moveSection('experience', 'down')
-    expect(useResumeStore.getState().data.section_order).toEqual(['summary', 'projects', 'skills', 'experience'])
+    useResumeStore.getState().moveSection('skills', 0)
+    expect(useResumeStore.getState().data.section_order).toEqual(['skills', 'projects', 'summary', 'experience'])
+    useResumeStore.getState().moveSection('experience', 1)
+    expect(useResumeStore.getState().data.section_order).toEqual(['skills', 'projects', 'experience', 'summary'])
+    useResumeStore.getState().moveSection('experience', 99)
+    expect(useResumeStore.getState().data.section_order).toEqual(['skills', 'projects', 'experience', 'summary'])
     expect(new Set(useResumeStore.getState().data.section_order).size).toBe(4)
   })
 

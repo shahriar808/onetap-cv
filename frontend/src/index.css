@@ -224,3 +224,19 @@ select {
     transform: none;
   }
 }
+
+button:not(:disabled) {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+button.cursor-grab:not(:disabled) {
+  cursor: grab;
+}
+
+button.cursor-grab:active:not(:disabled) {
+  cursor: grabbing;
+}

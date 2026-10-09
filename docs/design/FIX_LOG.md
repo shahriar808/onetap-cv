@@ -1,5 +1,18 @@
 # V1 fix measurements
 
+## V1.1 follow-up — 2026-10-09
+
+- Replaced the native HTML drag operation in the section picker with pointer
+  capture and a single reorder on pointer release. The position selector remains
+  available for keyboard and touch input.
+- Removed the `Core` badges from the section picker.
+- Masked the timeline rule behind the section chips at mobile widths while
+  preserving the desktop timeline.
+- Verified with 129 frontend tests, Oxlint, a production frontend build, and
+  Playwright at 360, 390, 768, and 1280px. The Playwright flow now drags a
+  section with the six-dot handle, checks the resulting order, and changes its
+  position with the selector.
+
 Date: 2026-10-09. Browser checks ran in Chromium at viewport widths 360, 390,
 768, and 1280px. Final screenshots are in `docs/design/qa-shots/`.
 

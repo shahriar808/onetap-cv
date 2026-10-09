@@ -26,7 +26,7 @@ export interface ResumeState {
   setTemplate: (template: TemplateId) => void
   resetAll: () => void
   toggleSection: (sectionId: SectionId) => void
-  moveSection: (sectionId: SectionId, direction: 'up' | 'down') => void
+  moveSection: (sectionId: SectionId, targetPosition: number) => void
   updateSingle: <Id extends SingleSectionId>(
     sectionId: Id,
     patch: Partial<ResumeData[Id]>,
@@ -76,19 +76,19 @@ export const useResumeStore = create<ResumeState>()(
             },
           }
         }),
-      moveSection: (sectionId, direction) =>
+      moveSection: (sectionId, targetPosition) =>
         set((state) => {
           if (!state.data.enabled_sections.includes(sectionId)) return state
           const order = [...state.data.section_order]
           const enabledOrder = order.filter((id) => state.data.enabled_sections.includes(id))
           const position = enabledOrder.indexOf(sectionId)
-          const neighbor = enabledOrder[position + (direction === 'up' ? -1 : 1)]
-          if (position < 0 || !neighbor) return state
-          const currentIndex = order.indexOf(sectionId)
-          const neighborIndex = order.indexOf(neighbor)
-          const current = order[currentIndex]
-          order[currentIndex] = order[neighborIndex]
-          order[neighborIndex] = current
+          if (position < 0 || targetPosition < 0 || targetPosition >= enabledOrder.length || position === targetPosition) return state
+          enabledOrder.splice(position, 1)
+          enabledOrder.splice(targetPosition, 0, sectionId)
+          let nextIndex = 0
+          for (let index = 0; index < order.length; index += 1) {
+            if (state.data.enabled_sections.includes(order[index])) order[index] = enabledOrder[nextIndex++]
+          }
           return { data: { ...state.data, section_order: order } }
         }),
       updateSingle: (sectionId, patch) =>

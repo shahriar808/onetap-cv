@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 interface WordmarkProps {
   size?: number
@@ -6,9 +6,16 @@ interface WordmarkProps {
 }
 
 export function Wordmark({ size = 24, showText = true }: WordmarkProps) {
+  const { pathname, hash } = useLocation()
   return (
     <Link
       to="/"
+      onClick={(event) => {
+        if (pathname === '/' && !hash) {
+          event.preventDefault()
+          window.scrollTo({ top: 0, behavior: 'smooth' })
+        }
+      }}
       aria-label="OneTap CV home"
       className="inline-flex min-h-11 items-center gap-2 text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
     >

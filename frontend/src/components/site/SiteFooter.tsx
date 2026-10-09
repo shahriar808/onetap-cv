@@ -1,4 +1,4 @@
-﻿import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { FacebookIcon, GitHubIcon, InstagramIcon, LinkedInIcon } from '../icons'
 import { LINKS } from '../../content/links'
 import { Wordmark } from './Wordmark'
@@ -19,10 +19,10 @@ export function SiteFooter() {
         <nav aria-label="Explore" className="grid content-start gap-1">
           <p className="text-label text-ink-muted">Explore</p>
           <ul className="flex flex-wrap gap-x-5 gap-y-0 lg:grid lg:gap-0">
-            <li><Link to="/#how" className={footerLinkClass}>How it works</Link></li>
-            <li><Link to="/#designs" className={footerLinkClass}>Designs</Link></li>
+            <li><Link to="/#how" onClick={(event) => { if (pathname === '/' && window.location.hash === '#how') { event.preventDefault(); document.getElementById('how')?.scrollIntoView({ behavior: 'smooth' }) } }} className={footerLinkClass}>How it works</Link></li>
+            <li><Link to="/#designs" onClick={(event) => { if (pathname === '/' && window.location.hash === '#designs') { event.preventDefault(); document.getElementById('designs')?.scrollIntoView({ behavior: 'smooth' }) } }} className={footerLinkClass}>Designs</Link></li>
             <li><Link to="/privacy" aria-current={pathname === '/privacy' ? 'page' : undefined} className={footerLinkClass}>Privacy</Link></li>
-            <li><Link to="/#feedback" className={footerLinkClass}>Feedback</Link></li>
+            <li><Link to="/#feedback" onClick={(event) => { if (pathname === '/' && window.location.hash === '#feedback') { event.preventDefault(); document.getElementById('feedback')?.scrollIntoView({ behavior: 'smooth' }) } }} className={footerLinkClass}>Feedback</Link></li>
           </ul>
         </nav>
         <nav aria-label="Follow" className="grid content-start gap-1">

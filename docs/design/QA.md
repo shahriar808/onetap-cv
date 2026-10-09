@@ -4,6 +4,18 @@ Checks recorded for the V1 fix pass on 2026-10-09. Automated browser checks use
 Chromium and mock `/api/**`; backend integration behavior is covered separately
 by pytest. Screenshots are in `docs/design/qa-shots/`.
 
+## V1.1 follow-up — 2026-10-09
+
+- [x] Frontend Vitest: 129 tests passed across 58 files.
+- [x] Frontend Oxlint and production build passed.
+- [x] Playwright: 5 tests passed at 360, 390, 768, and 1280px. The builder
+  flow verified pointer based drag reordering with the six-dot handle, then
+  changed the position with the accessible selector.
+- [x] Reviewed the 360px full page screenshot: the How it works timeline is
+  interrupted behind the section chips, and the desktop timeline remains in
+  place at wider viewports.
+- [x] The section picker no longer displays `Core` badges.
+
 ## Automated
 
 - [x] Frontend Vitest: 129 tests passed across 58 files.

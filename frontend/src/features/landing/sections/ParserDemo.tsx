@@ -12,84 +12,26 @@ type DemoTab = (typeof TABS)[number]['id']
 
 function PageMock({ activeTab }: { activeTab: DemoTab }) {
   const isTwoColumn = activeTab === 'two-column'
+  const sections = isTwoColumn
+    ? [['Skills', 'Example skill · Another skill'], ['Languages', 'Example language'], ['Experience', 'Example role', 'Example project'], ['Education', 'Example qualification']]
+    : [['Skills', 'Example skill · Another skill'], ['Experience', 'Example role · Example project'], ['Education', 'Example qualification']]
 
   return (
-    <div
-      role="img"
-      aria-label="Illustration of a sample CV page"
-      className="relative min-h-64 overflow-hidden rounded-sm border border-line bg-white p-5 shadow-paper sm:p-7"
-    >
-      <p className="border-b border-line pb-3 font-display text-lg font-semibold text-ink">
-        Shahriar Hasan
-      </p>
-      <p className="mt-2 border-b border-line pb-3 text-xs text-ink-muted">
-        Software Engineer · shahriar@example.com
-      </p>
-      {isTwoColumn ? (
-        <div className="mt-5 grid grid-cols-2 gap-4">
-          <div className="space-y-4">
-            <div>
-              <p className="text-label text-ink">Skills</p>
-              <p className="mt-2 text-xs text-ink-soft">Java · Python</p>
-            </div>
-            <div>
-              <p className="text-label text-ink">Languages</p>
-              <p className="mt-2 text-xs text-ink-soft">English</p>
-            </div>
+    <div role="img" aria-label="Illustration of a sample CV page" className="relative min-h-64 overflow-hidden rounded-sm border border-line bg-white p-5 shadow-paper sm:p-7">
+      <p className="border-b border-line pb-3 font-display text-lg font-semibold text-ink">Shahriar Hasan</p>
+      <p className="mt-2 border-b border-line pb-3 text-xs text-ink-muted">Sample CV</p>
+      <div className={`relative mt-5 ${isTwoColumn ? 'grid grid-cols-2 gap-4' : 'space-y-3 border-l-2 border-accent pl-4'}`}>
+        {sections.map(([heading, ...details], index) => (
+          <div key={heading} className={`space-y-1 ${isTwoColumn && index % 2 === 1 ? 'border-l border-line pl-4' : ''}`}>
+            <p className="text-label text-ink">{heading}</p>
+            {details.map((detail) => <p key={detail} className="text-xs text-ink-soft">{detail}</p>)}
           </div>
-          <div className="space-y-4 border-l border-line pl-4">
-            <div>
-              <p className="text-label text-ink">Experience</p>
-              <p className="mt-2 text-xs text-ink-soft">Software Engineer</p>
-              <p className="text-xs text-ink-soft">Ternary Solutions</p>
-            </div>
-            <div>
-              <p className="text-label text-ink">Education</p>
-              <p className="mt-2 text-xs text-ink-soft">BSc Computer Science</p>
-            </div>
-          </div>
-          <span
-            aria-hidden="true"
-            className="absolute right-1/2 top-[42%] translate-x-1/2 rounded-full bg-accent px-1.5 py-0.5 text-[10px] font-semibold text-white"
-          >
-            1 → 2
-          </span>
-          <span
-            aria-hidden="true"
-            className="absolute bottom-[15%] right-1/2 translate-x-1/2 rounded-full bg-accent px-1.5 py-0.5 text-[10px] font-semibold text-white"
-          >
-            3 → 4
-          </span>
-        </div>
-      ) : (
-        <div className="relative mt-5 space-y-3 border-l-2 border-accent pl-4">
-          {['Experience', 'Software Engineer', 'Ternary Solutions', 'Education', 'BSc Computer Science', 'Skills', 'Java · Python'].map(
-            (line, index) => (
-              <div key={`${line}-${index}`} className="relative">
-                <span
-                  aria-hidden="true"
-                  className="absolute -left-[1.6rem] top-0.5 grid h-4 w-4 place-items-center rounded-full bg-accent text-[9px] font-semibold text-white"
-                >
-                  {index + 1}
-                </span>
-                <p
-                  className={`text-xs ${
-                    ['Experience', 'Education', 'Skills'].includes(line)
-                      ? 'font-semibold uppercase tracking-wide text-ink'
-                      : 'text-ink-soft'
-                  }`}
-                >
-                  {line}
-                </p>
-              </div>
-            ),
-          )}
-        </div>
-      )}
+        ))}
+        {isTwoColumn && <span aria-hidden="true" className="absolute right-1/2 top-1/2 -translate-y-1/2 translate-x-1/2 rounded-full bg-accent px-1.5 py-0.5 text-[10px] font-semibold text-white">1 → 2</span>}
+      </div>
     </div>
   )
 }
-
 export function ParserDemo() {
   const [selected, setSelected] = useState<DemoTab>('two-column')
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([])
