@@ -6,8 +6,8 @@
   capture and a single reorder on pointer release. The position selector remains
   available for keyboard and touch input.
 - Removed the `Core` badges from the section picker.
-- Masked the timeline rule behind the section chips at mobile widths while
-  preserving the desktop timeline.
+- Hid the timeline rule on mobile, where the steps stack in one column, while
+  preserving the divider between columns on desktop.
 - Verified with 129 frontend tests, Oxlint, a production frontend build, and
   Playwright at 360, 390, 768, and 1280px. The Playwright flow now drags a
   section with the six-dot handle, checks the resulting order, and changes its

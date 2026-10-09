@@ -42,6 +42,10 @@ for (const width of widths) {
       } else {
         await expect(page.locator('main')).toBeVisible()
       }
+      if (path === '/') {
+        const timelineLine = await page.locator('#how > ol').evaluate((node) => getComputedStyle(node, '::before').display)
+        expect(timelineLine).toBe(width >= 1024 ? 'block' : 'none')
+      }
       await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true)
       if (path === '/privacy') {
         if (width < 1024) {

@@ -48,7 +48,7 @@ export function HowItWorks() {
         label="How it works"
         title={LANDING_CONTENT.how.title}
       />
-      <ol className="relative grid gap-12 before:absolute before:bottom-8 before:left-[2.625rem] before:top-8 before:w-px before:bg-line lg:gap-16 lg:before:left-1/2">
+      <ol className="relative grid gap-12 before:hidden lg:gap-16 lg:before:absolute lg:before:bottom-8 lg:before:left-1/2 lg:before:top-8 lg:before:block lg:before:w-px lg:before:bg-line">
         {LANDING_CONTENT.how.steps.map((step, index) => (
           <li
             key={step.title}
@@ -80,7 +80,7 @@ export function HowItWorks() {
               {index === 2 && <EditPreviewMock />}
             </div>
             {index === 1 && (
-              <div className="relative z-10 col-span-2 row-start-2 bg-paper lg:col-start-1 lg:col-span-1 lg:justify-self-end lg:bg-transparent">
+              <div className="col-span-2 row-start-2 lg:col-start-1 lg:col-span-1 lg:justify-self-end">
                 <SectionChips />
               </div>
             )}

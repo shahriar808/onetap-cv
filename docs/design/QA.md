@@ -12,9 +12,14 @@ by pytest. Screenshots are in `docs/design/qa-shots/`.
   flow verified pointer based drag reordering with the six-dot handle, then
   changed the position with the accessible selector.
 - [x] Reviewed the 360px full page screenshot: the How it works timeline is
-  interrupted behind the section chips, and the desktop timeline remains in
-  place at wider viewports.
+  hidden on mobile and remains in place at desktop widths.
 - [x] The section picker no longer displays `Core` badges.
+
+## Mobile timeline follow-up — 2026-10-09
+
+- [x] The How it works timeline pseudo-element is hidden below 1024px and shown
+  at desktop widths; Playwright checks both breakpoint behaviors.
+- [x] Refreshed the home screenshots at 360, 390, 768, and 1280px.
 
 ## Automated
 
