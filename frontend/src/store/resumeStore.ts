@@ -26,6 +26,7 @@ export interface ResumeState {
   setTemplate: (template: TemplateId) => void
   resetAll: () => void
   toggleSection: (sectionId: SectionId) => void
+  moveSection: (sectionId: SectionId, direction: 'up' | 'down') => void
   updateSingle: <Id extends SingleSectionId>(
     sectionId: Id,
     patch: Partial<ResumeData[Id]>,
@@ -74,6 +75,21 @@ export const useResumeStore = create<ResumeState>()(
                   : [...state.data.section_order, sectionId],
             },
           }
+        }),
+      moveSection: (sectionId, direction) =>
+        set((state) => {
+          if (!state.data.enabled_sections.includes(sectionId)) return state
+          const order = [...state.data.section_order]
+          const enabledOrder = order.filter((id) => state.data.enabled_sections.includes(id))
+          const position = enabledOrder.indexOf(sectionId)
+          const neighbor = enabledOrder[position + (direction === 'up' ? -1 : 1)]
+          if (position < 0 || !neighbor) return state
+          const currentIndex = order.indexOf(sectionId)
+          const neighborIndex = order.indexOf(neighbor)
+          const current = order[currentIndex]
+          order[currentIndex] = order[neighborIndex]
+          order[neighborIndex] = current
+          return { data: { ...state.data, section_order: order } }
         }),
       updateSingle: (sectionId, patch) =>
         set((state) => {

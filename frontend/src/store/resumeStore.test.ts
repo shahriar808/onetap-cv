@@ -79,6 +79,22 @@ describe('resume store', () => {
     )
   })
 
+  it('moves enabled sections and skips disabled entries', () => {
+    useResumeStore.setState((state) => ({
+      data: {
+        ...state.data,
+        enabled_sections: ['summary', 'experience', 'skills'],
+        section_order: ['summary', 'projects', 'experience', 'skills'],
+      },
+    }))
+    useResumeStore.getState().moveSection('skills', 'up')
+    expect(useResumeStore.getState().data.section_order).toEqual(['summary', 'projects', 'skills', 'experience'])
+    useResumeStore.getState().moveSection('summary', 'up')
+    useResumeStore.getState().moveSection('experience', 'down')
+    expect(useResumeStore.getState().data.section_order).toEqual(['summary', 'projects', 'skills', 'experience'])
+    expect(new Set(useResumeStore.getState().data.section_order).size).toBe(4)
+  })
+
   it('supports list item add, update, remove and reorder actions', () => {
     const store = useResumeStore.getState()
     const firstItem = {
