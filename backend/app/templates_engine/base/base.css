@@ -8,4 +8,4 @@ h2.section-title { break-after: avoid; }
 .line1, .line2 { display: flex; justify-content: space-between; align-items: baseline; }
 .entry-dates, .entry-meta { white-space: nowrap; margin-left: 12pt; font-weight: normal; }
 ul { margin: 2pt 0 0 14pt; padding: 0; }
-a { color: #111; text-decoration: none; }
+a { color: #111; text-decoration: none; overflow-wrap: anywhere; }
