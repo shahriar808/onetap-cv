@@ -7,3 +7,6 @@ dist/
 .env
 .pytest_cache/
 .coverage
+*.log
+frontend/test-results/
+frontend/playwright-report/
