@@ -21,13 +21,11 @@ const SOCIAL_ICONS: Record<SocialPlatform, ComponentType<IconProps>> = {
 interface SocialRowProps {
   platform: SocialPlatform
   action: string
-  accessibleName: string
 }
 
 export function SocialRow({
   platform,
   action,
-  accessibleName,
 }: SocialRowProps) {
   const social = LINKS[platform]
   const Icon = SOCIAL_ICONS[platform]
@@ -37,7 +35,6 @@ export function SocialRow({
       href={social.url}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label={`${accessibleName} (opens in a new tab)`}
       className="group grid min-h-14 grid-cols-[1.25rem_minmax(0,1fr)_auto] items-center gap-3 border-t border-line px-2 py-2 text-ink transition-colors hover:bg-paper-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
     >
       <Icon className="h-5 w-5 text-ink" />
@@ -48,7 +45,7 @@ export function SocialRow({
         </span>
       </span>
       <span className="flex shrink-0 items-center gap-2 text-xs font-medium text-ink-soft">
-        <span>{action}</span>
+        <span>{action}<span className="sr-only"> (opens in a new tab)</span></span>
         <ArrowRightIcon className="h-4 w-4 transition-transform group-hover:translate-x-1" />
       </span>
     </a>
