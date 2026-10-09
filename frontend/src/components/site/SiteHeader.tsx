@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { ArrowRightIcon, MenuIcon, XIcon } from '../icons'
 import { Wordmark } from './Wordmark'
+import { useActiveSection } from '../../hooks/useActiveSection'
+import { cn } from '../../lib/cn'
 
 const NAV_LINKS = [
   { label: 'How it works', to: '/#how' },
@@ -12,6 +14,8 @@ const NAV_LINKS = [
 ] as const
 
 export function SiteHeader() {
+  const { pathname } = useLocation()
+  const activeSection = useActiveSection(pathname === '/' ? ['how', 'designs', 'faq', 'feedback'] : [])
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const menuButtonRef = useRef<HTMLButtonElement>(null)
@@ -54,6 +58,11 @@ export function SiteHeader() {
     setMenuOpen(false)
   }
 
+  function isActive(to: string) {
+    if (to === '/privacy') return pathname === '/privacy'
+    return pathname === '/' && activeSection === to.split('#')[1]
+  }
+
   return (
     <header
       className={`sticky top-0 z-50 border-b bg-paper transition-colors ${
@@ -67,7 +76,8 @@ export function SiteHeader() {
             <Link
               key={label}
               to={to}
-              className="min-h-11 content-center text-sm font-medium text-ink-soft underline-offset-4 hover:text-ink hover:underline"
+              aria-current={isActive(to) ? (to === '/privacy' ? 'page' : 'location') : undefined}
+              className={cn('min-h-11 content-center text-sm font-medium text-ink-soft underline-offset-4 hover:text-ink hover:underline', isActive(to) && 'font-semibold text-ink decoration-accent decoration-2 underline underline-offset-8')}
             >
               {label}
             </Link>
@@ -104,7 +114,8 @@ export function SiteHeader() {
                 key={label}
                 to={to}
                 onClick={closeMenu}
-                className="flex min-h-12 items-center border-b border-line py-2 text-base font-medium text-ink"
+                aria-current={isActive(to) ? (to === '/privacy' ? 'page' : 'location') : undefined}
+                className={cn('flex min-h-12 items-center border-b border-line py-2 text-base font-medium text-ink', isActive(to) && 'border-l-4 border-accent bg-paper-2 pl-3')}
               >
                 {label}
                 <ArrowRightIcon className="ml-auto" />

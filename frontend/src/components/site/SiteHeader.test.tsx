@@ -38,4 +38,16 @@ describe('SiteHeader mobile navigation', () => {
     )
     expect(document.body.style.overflow).toBe('')
   })
+
+  it('marks the privacy page as the current page without activating landing links', () => {
+    render(
+      <MemoryRouter initialEntries={['/privacy']}>
+        <SiteHeader />
+      </MemoryRouter>,
+    )
+    const activeLinks = screen.getAllByRole('link', { current: 'page' })
+    expect(activeLinks).toHaveLength(1)
+    expect(activeLinks.every((link) => link.textContent?.includes('Privacy'))).toBe(true)
+    expect(screen.queryAllByRole('link', { current: 'location' })).toHaveLength(0)
+  })
 })
