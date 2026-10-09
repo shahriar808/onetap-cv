@@ -1,9 +1,12 @@
 import { render, screen } from '@testing-library/react'
-import { describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it } from 'vitest'
+import { cleanup } from '@testing-library/react'
 import { Input } from './Input'
 import { Textarea } from './Textarea'
+import { Select } from './Select'
 
 describe('form fields', () => {
+  afterEach(cleanup)
   it('connects the input label and shows an accessible error', () => {
     render(<Input label="Email" type="email" error="Enter a valid email" />)
 
@@ -28,7 +31,7 @@ describe('form fields', () => {
         label="Full name"
         required
         maxLength={4}
-        value="Alex"
+        value="Sami"
         onChange={() => {}}
       />,
     )
@@ -39,5 +42,25 @@ describe('form fields', () => {
     expect(screen.getByText('Required')).not.toBeNull()
     expect(counter.className).toContain('text-danger')
     expect(input.getAttribute('aria-describedby')).toContain(counter.id)
+  })
+
+  it('keeps a reserved message slot with no feedback text', () => {
+    render(<Input label="Name" />)
+    const input = screen.getByLabelText('Name')
+    expect(input.parentElement?.querySelector('.min-h-5')).not.toBeNull()
+  })
+
+  it('reserves the same message row with or without an error', () => {
+    const { rerender } = render(<Input label="Name" />)
+    const inputRow = screen.getByLabelText('Name').parentElement?.querySelector('div.min-h-5')
+    expect(inputRow).not.toBeNull()
+    rerender(<Input label="Name" error="Name is required." />)
+    expect(screen.getByLabelText('Name').parentElement?.querySelector('div.min-h-5')).not.toBeNull()
+  })
+
+  it('renders a labeled select with the shared control sizing', () => {
+    render(<Select label="Month" value="" onChange={() => {}}><option value="">Month</option></Select>)
+    expect(screen.getByLabelText('Month').className).toContain('min-h-11')
+    expect(screen.getByLabelText('Month').className).toContain('appearance-none')
   })
 })

@@ -1,4 +1,5 @@
 import { Input } from '../../../components/ui/Input'
+import { Select } from '../../../components/ui/Select'
 import { BulletsEditor } from '../components/BulletsEditor'
 import { ListSection } from '../components/ListSection'
 import { MonthYearInput } from '../components/MonthYearInput'
@@ -67,14 +68,8 @@ export function EducationForm() {
               value={item.gpa}
               onChange={(event) => update({ gpa: event.currentTarget.value })}
             />
-            <div className="grid gap-1.5">
-              <label
-                htmlFor={`${item.id}-gpa-label`}
-                className="text-sm font-medium text-slate-800"
-              >
-                GPA label
-              </label>
-              <select
+            <Select
+                label="GPA label"
                 id={`${item.id}-gpa-label`}
                 value={item.gpa_label}
                 onChange={(event) => {
@@ -83,12 +78,10 @@ export function EducationForm() {
                     update({ gpa_label: label })
                   }
                 }}
-                className="min-h-11 rounded-lg border border-slate-300 bg-white px-3 text-base text-slate-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-700"
               >
                 <option value="GPA">GPA</option>
                 <option value="CGPA">CGPA</option>
-              </select>
-            </div>
+            </Select>
           </div>
           <BulletsEditor
             label="Additional details"

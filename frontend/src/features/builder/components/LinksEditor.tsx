@@ -1,5 +1,6 @@
 import { Button } from '../../../components/ui/Button'
 import { Input } from '../../../components/ui/Input'
+import { Select } from '../../../components/ui/Select'
 import { PlusIcon, XIcon } from '../../../components/icons'
 import { normalizeUrl } from '../../../lib/validation'
 import type { LinkItem, ProjectLink } from '../../../types/resume'
@@ -36,20 +37,21 @@ export function LinksEditor(props: LinksEditorProps) {
   if (props.mode === 'typed') {
     return (
       <fieldset className="grid gap-3">
-        <legend className="font-semibold text-slate-900">Profile links</legend>
+        <legend className="font-semibold text-ink">Profile links</legend>
         {props.items.map((item, index) => (
           <div
             key={item.id}
-            className="grid gap-3 rounded-lg border border-slate-200 p-3 md:grid-cols-[minmax(8rem,0.7fr)_minmax(0,1.3fr)_auto]"
+            className="grid gap-3 rounded-lg border border-line p-3 md:grid-cols-[minmax(8rem,0.7fr)_minmax(0,1.3fr)_auto]"
           >
             <div className="grid gap-1.5">
               <label
                 htmlFor={`${item.id}-type`}
-                className="text-sm font-medium text-slate-800"
+                className="text-sm font-medium text-ink"
               >
                 Link {index + 1} type
               </label>
-              <select
+              <Select
+                label={`Link ${index + 1} type`}
                 id={`${item.id}-type`}
                 value={item.type}
                 onChange={(event) => {
@@ -62,14 +64,13 @@ export function LinksEditor(props: LinksEditorProps) {
                     )
                   }
                 }}
-                className="min-h-11 rounded-lg border border-slate-300 px-3 text-base focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-700"
               >
                 {LINK_TYPES.map((type) => (
                   <option key={type} value={type}>
                     {type}
                   </option>
                 ))}
-              </select>
+              </Select>
             </div>
             <Input
               label={`Link ${index + 1} URL`}
@@ -130,11 +131,11 @@ export function LinksEditor(props: LinksEditorProps) {
 
   return (
     <fieldset className="grid gap-3">
-      <legend className="font-semibold text-slate-900">Project links</legend>
+      <legend className="font-semibold text-ink">Project links</legend>
       {props.items.map((item, index) => (
         <div
           key={`${index}-${item.label}`}
-          className="grid gap-3 rounded-lg border border-slate-200 p-3 md:grid-cols-[minmax(8rem,0.7fr)_minmax(0,1.3fr)_auto]"
+          className="grid gap-3 rounded-lg border border-line p-3 md:grid-cols-[minmax(8rem,0.7fr)_minmax(0,1.3fr)_auto]"
         >
           <Input
             label={`Link ${index + 1} label`}
