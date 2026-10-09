@@ -19,10 +19,6 @@ export const LINKS = {
     handle: '@shahriar808',
     url: 'https://github.com/shahriar808',
   },
-  repo: {
-    label: 'Source code',
-    url: 'https://github.com/shahriar808/onetap-cv',
-  },
 } as const
 
 export const FEEDBACK_EMAIL = import.meta.env.VITE_FEEDBACK_EMAIL ?? ''

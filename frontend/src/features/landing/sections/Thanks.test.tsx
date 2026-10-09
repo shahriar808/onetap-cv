@@ -15,24 +15,22 @@ describe('Thanks', () => {
     )
 
     const rows = [
-      ['Follow Shahriar on Instagram (opens in a new tab)', LINKS.instagram.url],
-      ['Follow Shahriar on Facebook (opens in a new tab)', LINKS.facebook.url],
-      ['Connect with Shahriar on LinkedIn (opens in a new tab)', LINKS.linkedin.url],
-      ['Follow Shahriar on GitHub (opens in a new tab)', LINKS.github.url],
+      ['Follow on Instagram', LINKS.instagram.url],
+      ['Follow on Facebook', LINKS.facebook.url],
+      ['Connect on LinkedIn', LINKS.linkedin.url],
+      ['Follow on GitHub', LINKS.github.url],
     ] as const
 
     for (const [name, url] of rows) {
-      const link = screen.getByRole('link', { name })
+      const link = screen.getByRole('link', { name: new RegExp(name) })
       expect(link.getAttribute('href')).toBe(url)
       expect(link.getAttribute('target')).toBe('_blank')
       expect(link.getAttribute('rel')).toBe('noopener noreferrer')
+      expect(link.getAttribute('aria-label')).toBeNull()
+      expect(link.textContent).toContain('(opens in a new tab)')
     }
 
-    expect(
-      screen.getByRole('link', {
-        name: 'Star the project on GitHub (opens in a new tab)',
-      }).getAttribute('href'),
-    ).toBe(LINKS.repo.url)
+    expect(screen.queryByRole('link', { name: /onetap-cv/i })).toBeNull()
   })
 
   it('falls back to a monogram when the portrait image cannot load', () => {

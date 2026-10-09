@@ -1,34 +1,27 @@
 import { useState } from 'react'
-import { ArrowRightIcon } from '../../../components/icons'
 import { SectionHeader } from '../../../components/ui/SectionHeader'
-import { LINKS } from '../../../content/links'
 import { SocialRow, type SocialPlatform } from '../components/SocialRow'
 import { LANDING_CONTENT } from '../content'
 
 const SOCIAL_ROWS: {
   platform: SocialPlatform
   action: string
-  accessibleName: string
 }[] = [
   {
     platform: 'instagram',
     action: 'Follow on Instagram',
-    accessibleName: 'Follow Shahriar on Instagram',
   },
   {
     platform: 'facebook',
     action: 'Follow on Facebook',
-    accessibleName: 'Follow Shahriar on Facebook',
   },
   {
     platform: 'linkedin',
     action: 'Connect on LinkedIn',
-    accessibleName: 'Connect with Shahriar on LinkedIn',
   },
   {
     platform: 'github',
     action: 'Follow on GitHub',
-    accessibleName: 'Follow Shahriar on GitHub',
   },
 ]
 
@@ -53,12 +46,12 @@ export function Thanks() {
           <img
             src="/shahriar.jpg"
             alt="Shahriar Hasan"
-            width={220}
-            height={275}
+            width={640}
+            height={800}
             loading="lazy"
             decoding="async"
             onError={() => setPortraitFailed(true)}
-            className="aspect-[4/5] w-full max-w-[220px] rotate-[-2deg] rounded-[3px] object-cover shadow-paper"
+            className="aspect-[4/5] w-full max-w-[220px] rotate-[-2deg] rounded-[3px] object-cover object-[50%_20%] shadow-paper"
           />
         )}
         <p className="text-label text-ink-muted">
@@ -79,16 +72,6 @@ export function Thanks() {
             <SocialRow key={row.platform} {...row} />
           ))}
         </div>
-        <a
-          href={LINKS.repo.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Star the project on GitHub (opens in a new tab)"
-          className="inline-flex min-h-11 w-fit items-center gap-2 rounded-lg border border-line px-4 py-2 font-semibold text-ink transition-colors hover:bg-paper-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
-        >
-          {LANDING_CONTENT.thanks.githubAction}
-          <ArrowRightIcon className="h-4 w-4" />
-        </a>
       </div>
     </section>
   )
