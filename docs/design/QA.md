@@ -1,40 +1,44 @@
 # Design release QA
 
-This record describes checks performed in the current workspace. Automated
-checks are repeatable; device, external-service, and Lighthouse checks require
-the production environment and are not claimed here.
+Checks recorded for the V1 fix pass on 2026-10-09. Automated browser checks use
+Chromium and mock `/api/**`; backend integration behavior is covered separately
+by pytest. Screenshots are in `docs/design/qa-shots/`.
 
 ## Automated
 
-- [x] Frontend Vitest suite after the current changes: 119 tests passed.
-- [x] Frontend lint completed with no warnings.
-- [x] Frontend production build passed. `BuilderPage` is emitted as a separate
-  lazy chunk; landing code does not import builder page code.
-- [x] Backend `pytest -q`: 118 tests passed. Pytest reported a cache-directory
-  permission warning and a Starlette/httpx deprecation warning.
+- [x] Frontend Vitest: 129 tests passed across 58 files.
+- [x] Frontend lint: `npm run lint` passed.
+- [x] Frontend build: `VITE_SITE_URL=https://example.com npm run build` passed.
+  The generated `dist/index.html` contains absolute Open Graph, Twitter, and
+  canonical URLs. The build also generated `sitemap.xml` and `robots.txt`.
+- [x] Source `frontend/index.html` has no UTF-8 BOM.
+- [x] Backend `pytest -q`: 118 tests passed. Pytest emitted a cache-directory
+  permission warning; Starlette emitted an httpx deprecation warning.
+- [x] Playwright: 5 tests passed at 360, 390, 768, and 1280px. The suite checks
+  home, privacy, builder steps 1–4, horizontal overflow, contact field layout,
+  feedback alignment, section reordering, active privacy navigation, completed
+  step color, and step navigation surface color.
+- [x] The builder and site screenshots were saved at all four widths.
 
-## Responsive, visual, and accessibility
+## Browser measurements
 
-- [ ] Verify `/`, `/build` steps, `/privacy`, and 404 at 360, 390, 768, and
-  1280px, including no horizontal scroll.
-- [ ] Verify all tap targets and input font sizes in browser devtools.
-- [ ] Keyboard-only and screen-reader checks, including header menu, parser
-  tabs, FAQ, feedback, builder navigation, and dialogs.
-- [ ] Test reduced motion and landing reveal behavior in a browser.
-- [ ] Run Lighthouse mobile; target 90+ Performance and 95+ for Accessibility,
-  Best Practices, and SEO on `/`.
-- [ ] Check Chrome, Firefox, and iOS Safari, including a real phone bottom bar.
+- Contact form: 5 inputs measured at 360px and 1280px. Maximum vertical
+  displacement after blurring an empty name field: **0px** at both widths.
+- Feedback Name and Email fields: matched top positions and heights before and
+  after blur at 768px and 1280px. Input height: **44px**.
+- Footer height: **447px** at 360px, **427px** at 390px, **363px** at 768px,
+  and **312px** at 1280px.
 
-## Functional and release checks
+## Not run
 
-- [ ] Verify builder preview and PDF download for all three templates.
-- [ ] Verify feedback delivery, Reply-To, honeypot, timing drop, and rate limit
-  against configured SMTP; SMTP credentials and destination inbox are not in
-  this workspace.
-- [ ] Verify `/build?template=classic`, browser persistence, and clear-data.
-- [ ] Set `VITE_SITE_URL` and confirm canonical URLs, sitemap, and robots output.
-- [ ] Confirm owner social links, feedback inbox, domain, and Thanks copy.
-- [ ] Confirm PDF templates and CSS have no changes in the design diff.
-
-No Lighthouse score, production email receipt, or cross-browser result is
-asserted until those checks are run in their target environments.
+- SMTP delivery, Reply-To, and live feedback throttling; no SMTP account was
+  configured.
+- PDF downloads through a live backend from the browser. PDF render and API
+  behavior are covered by backend tests.
+- Firefox, Safari, iOS Safari, a physical phone, keyboard-only and
+  screen-reader review, reduced-motion review, and Lighthouse.
+- Real-domain share preview validation. The example.com build only verifies the
+  generated metadata; use the deployed domain in the LinkedIn/Facebook
+  debuggers after deployment.
+- Production deployment checks. `VITE_SITE_URL` remains unset in the source
+  environment because the production domain has not been provided.

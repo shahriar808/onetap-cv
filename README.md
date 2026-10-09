@@ -75,6 +75,7 @@ frontend uses browser storage and keeps the current route/data across refresh.
 | `FEEDBACK_TO_EMAIL` | Backend | Unset | Inbox that receives feedback. |
 | `FEEDBACK_FROM_EMAIL` | Backend | `SMTP_USER` | Sender address used for feedback mail. |
 | `FEEDBACK_RATE_LIMIT` | Backend | `3/hour` | Per-client feedback request limit. |
+| `FORWARDED_ALLOW_IPS` | Backend container | `127.0.0.1` | Trusted proxy IP addresses or CIDRs for forwarded client IP headers. Restrict this to your actual reverse proxy; do not use `*` on a public interface. |
 | `VITE_API_URL` | Frontend build | Empty | Backend origin, e.g. `https://api.example.com`. Empty uses the Vite development proxy. |
 | `VITE_FEEDBACK_EMAIL` | Frontend build | Empty | Optional direct-email fallback address shown by the feedback form. |
 | `VITE_SITE_URL` | Frontend build | Empty | Canonical HTTPS frontend origin; also generates production sitemap and robots files after the build. |
@@ -137,6 +138,8 @@ Run frontend checks from `frontend`:
 npm test -- --run
 npm run build
 npm run lint
+npx playwright install chromium
+npm run e2e
 ```
 
 The thumbnail generator needs Poppler's `pdftoppm` executable:
@@ -146,10 +149,11 @@ cd backend
 python scripts/make_thumbnails.py
 ```
 
-It renders the sample resume and updates `frontend/public/thumbnails/`.
-For neutral landing previews, install `backend/requirements-thumbnails.txt`,
-then run `python -m scripts.make_thumbnails --landing` from `backend` and
-`python scripts/optimize-thumbnails.py` from `frontend`.
+It renders the neutral landing sample by default and updates
+`frontend/public/thumbnails/landing-*.png`. Then run
+`python scripts/optimize-thumbnails.py` from `frontend` to create responsive
+WebP assets. The generator only supports the neutral fixture, preventing
+personal data from being rendered into public thumbnails.
 
 ## Deployment
 
@@ -244,6 +248,17 @@ Netlify-style redirects, so refreshing `/build` serves the app. Set backend
   requested. A Docker build could not be run because Docker/Podman is not
   installed in the development environment. Physical-device and Lighthouse
   checks remain outstanding.
+
+## Release QA (v1.1.0 fix pass)
+
+- Backend: `pytest -q` passed (118 tests).
+- Frontend: Vitest passed (129 tests); lint and production build passed.
+- Playwright: 5 Chromium checks passed at 360, 390, 768, and 1280px. See
+  `docs/design/QA.md` and `docs/design/FIX_LOG.md` for measured results and
+  remaining manual checks.
+- Social preview metadata and sitemap generation were verified with
+  `VITE_SITE_URL=https://example.com`; replace it with the production HTTPS
+  origin for deployment.
 
 ## Assumptions
 
