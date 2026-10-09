@@ -1,52 +1,42 @@
-import { Link } from 'react-router-dom'
+﻿import { Link, useLocation } from 'react-router-dom'
+import { FacebookIcon, GitHubIcon, InstagramIcon, LinkedInIcon } from '../icons'
 import { LINKS } from '../../content/links'
+import { Wordmark } from './Wordmark'
 import { LANDING_CONTENT } from '../../features/landing/content'
 
 const COPYRIGHT_YEAR = new Date().getFullYear()
+const footerLinkClass = 'inline-flex min-h-11 items-center gap-2 text-sm text-ink-soft hover:text-ink hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent lg:min-h-10'
 
 export function SiteFooter() {
+  const { pathname } = useLocation()
   return (
-    <footer className="border-t border-line bg-paper py-10">
-      <div className="container-page grid grid-cols-2 gap-8 lg:grid-cols-[1.3fr_1fr_1fr_1fr]">
-        <div className="col-span-2 grid content-start gap-3 sm:col-span-1">
-          <Link
-            to="/"
-            className="inline-flex min-h-11 items-center font-display text-lg font-semibold text-ink underline-offset-4 hover:underline"
-          >
-            OneTap CV
-          </Link>
-          <p className="text-sm text-ink-muted">
-            {LANDING_CONTENT.footer.copyright} © {COPYRIGHT_YEAR}
-          </p>
+    <footer className="border-t border-line bg-paper">
+      <div className="container-page grid gap-6 py-8 lg:grid-cols-[1.4fr_1fr_1fr] lg:gap-12 lg:py-10">
+        <div className="grid content-start gap-2">
+          <Wordmark />
+          <p className="max-w-sm text-sm text-ink-muted">A clear, private way to make a CV that software can read.</p>
         </div>
-        <nav aria-label="Product" className="grid content-start justify-items-start gap-2">
-          <p className="text-label text-ink-muted">Product</p>
-          <Link to="/#how" className="min-h-11 content-center text-sm text-ink-soft hover:text-ink hover:underline">
-            How it works
-          </Link>
-          <Link to="/#designs" className="min-h-11 content-center text-sm text-ink-soft hover:text-ink hover:underline">
-            Designs
-          </Link>
-          <Link to="/privacy" className="min-h-11 content-center text-sm text-ink-soft hover:text-ink hover:underline">
-            Privacy
-          </Link>
+        <nav aria-label="Explore" className="grid content-start gap-1">
+          <p className="text-label text-ink-muted">Explore</p>
+          <ul className="flex flex-wrap gap-x-5 gap-y-0 lg:grid lg:gap-0">
+            <li><Link to="/#how" className={footerLinkClass}>How it works</Link></li>
+            <li><Link to="/#designs" className={footerLinkClass}>Designs</Link></li>
+            <li><Link to="/privacy" aria-current={pathname === '/privacy' ? 'page' : undefined} className={footerLinkClass}>Privacy</Link></li>
+            <li><Link to="/#feedback" className={footerLinkClass}>Feedback</Link></li>
+          </ul>
         </nav>
-        <nav aria-label="Project" className="grid content-start justify-items-start gap-2">
-          <p className="text-label text-ink-muted">Project</p>
-          <a href={LINKS.repo.url} target="_blank" rel="noopener noreferrer" className="min-h-11 content-center text-sm text-ink-soft hover:text-ink hover:underline">
-            Source code
-          </a>
-          <Link to="/#feedback" className="min-h-11 content-center text-sm text-ink-soft hover:text-ink hover:underline">
-            Feedback
-          </Link>
+        <nav aria-label="Follow" className="grid content-start gap-1">
+          <p className="text-label text-ink-muted">Follow</p>
+          <ul className="flex flex-wrap gap-x-5 gap-y-0 lg:grid lg:gap-0">
+            <li><a href={LINKS.instagram.url} target="_blank" rel="noopener noreferrer" className={footerLinkClass}><InstagramIcon size={16} />Instagram<span className="sr-only"> (opens in a new tab)</span></a></li>
+            <li><a href={LINKS.facebook.url} target="_blank" rel="noopener noreferrer" className={footerLinkClass}><FacebookIcon size={16} />Facebook<span className="sr-only"> (opens in a new tab)</span></a></li>
+            <li><a href={LINKS.linkedin.url} target="_blank" rel="noopener noreferrer" className={footerLinkClass}><LinkedInIcon size={16} />LinkedIn<span className="sr-only"> (opens in a new tab)</span></a></li>
+            <li><a href={LINKS.github.url} target="_blank" rel="noopener noreferrer" className={footerLinkClass}><GitHubIcon size={16} />GitHub<span className="sr-only"> (opens in a new tab)</span></a></li>
+          </ul>
         </nav>
-        <nav aria-label="Maker" className="grid content-start justify-items-start gap-2">
-          <p className="text-label text-ink-muted">Maker</p>
-          <a href={LINKS.instagram.url} target="_blank" rel="noopener noreferrer" className="min-h-11 content-center text-sm text-ink-soft hover:text-ink hover:underline">Instagram</a>
-          <a href={LINKS.facebook.url} target="_blank" rel="noopener noreferrer" className="min-h-11 content-center text-sm text-ink-soft hover:text-ink hover:underline">Facebook</a>
-          <a href={LINKS.linkedin.url} target="_blank" rel="noopener noreferrer" className="min-h-11 content-center text-sm text-ink-soft hover:text-ink hover:underline">LinkedIn</a>
-          <a href={LINKS.github.url} target="_blank" rel="noopener noreferrer" className="min-h-11 content-center text-sm text-ink-soft hover:text-ink hover:underline">GitHub</a>
-        </nav>
+      </div>
+      <div className="border-t border-line">
+        <p className="container-page py-4 text-sm text-ink-muted">© {COPYRIGHT_YEAR} OneTap CV. {LANDING_CONTENT.footer.copyright}</p>
       </div>
     </footer>
   )
