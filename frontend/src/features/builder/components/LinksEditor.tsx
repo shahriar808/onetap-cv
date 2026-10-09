@@ -43,14 +43,7 @@ export function LinksEditor(props: LinksEditorProps) {
             key={item.id}
             className="grid gap-3 rounded-lg border border-line p-3 md:grid-cols-[minmax(8rem,0.7fr)_minmax(0,1.3fr)_auto]"
           >
-            <div className="grid gap-1.5">
-              <label
-                htmlFor={`${item.id}-type`}
-                className="text-sm font-medium text-ink"
-              >
-                Link {index + 1} type
-              </label>
-              <Select
+            <Select
                 label={`Link ${index + 1} type`}
                 id={`${item.id}-type`}
                 value={item.type}
@@ -70,8 +63,7 @@ export function LinksEditor(props: LinksEditorProps) {
                     {type}
                   </option>
                 ))}
-              </Select>
-            </div>
+            </Select>
             <Input
               label={`Link ${index + 1} URL`}
               inputMode="url"

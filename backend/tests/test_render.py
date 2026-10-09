@@ -17,7 +17,7 @@ def test_template_html_contains_contact_and_resume_content(
     assert "Shahriar Hasan" in html
     assert "shahriar@example.com" in html
     assert f'class="tpl-{template_id}"' in html
-    assert 'href="https://github.com/shahriar-hasan-example"' in html
+    assert 'href="https://github.com/shahriar-hasan-example">GitHub</a>' in html
     assert "GitHub" in html
     header = html.split("</header>", 1)[0]
     assert header.index("Shahriar Hasan") < header.index(
@@ -28,6 +28,7 @@ def test_template_html_contains_contact_and_resume_content(
     )
     assert header.index("+1 555 010 2000") < header.index("LinkedIn")
     assert ">github.com/shahriar-hasan-example<" not in header
+    assert 'href="https://www.linkedin.com/in/shahriar-hasan-example/">LinkedIn</a>' in header
     experience_start = html.index("Work Experience")
     company = html.index("Example Labs", experience_start)
     position = html.index("Software Engineer", experience_start)
@@ -86,8 +87,18 @@ def test_render_pdf_contains_selectable_text_in_reading_order(
     else:
         assert name_position < email_position < company_position
     assert "GitHub" in text
-    assert "linkedin.com/in/shahriar-hasan-example" in text
-    assert "github.com/shahriar-hasan-example" in text
+    assert "LinkedIn" in text
+    assert "GitHub" in text
+    assert "linkedin.com/in/shahriar-hasan-example" not in text
+    assert "github.com/shahriar-hasan-example" not in text
+    reader = PdfReader(BytesIO(pdf))
+    link_uris = {
+        annotation.get_object().get("/A", {}).get("/URI")
+        for page in reader.pages
+        for annotation in page.get("/Annots", [])
+    }
+    assert "https://www.linkedin.com/in/shahriar-hasan-example/" in link_uris
+    assert "https://github.com/shahriar-hasan-example" in link_uris
     assert text.index("Programming Languages") < text.index("Frontend Frameworks")
 
 

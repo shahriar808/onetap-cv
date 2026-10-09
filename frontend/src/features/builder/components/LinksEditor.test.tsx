@@ -18,6 +18,9 @@ describe('LinksEditor', () => {
       <LinksEditor mode="typed" items={items} max={2} onChange={onChange} />,
     )
 
+    expect(screen.getAllByText('Link 1 type')).toHaveLength(1)
+    expect(screen.getByRole('combobox', { name: 'Link 1 type' })).not.toBeNull()
+
     fireEvent.click(screen.getByRole('button', { name: 'Add link' }))
     expect(items).toHaveLength(2)
     expect(screen.getByText('2 of 2 links')).not.toBeNull()

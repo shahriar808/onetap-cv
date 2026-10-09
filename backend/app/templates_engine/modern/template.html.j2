@@ -14,7 +14,7 @@
     {% if contact.address_line %}<p class="address-line">{{ contact.address_line }}</p>{% endif %}
     {% if contact.contact_line %}<p class="contact-line">{{ contact.contact_line }}</p>{% endif %}
     {% if contact.links %}
-    <p class="contact-links">{% for link in contact.links %}{% if not loop.first %} | {% endif %}<a href="{{ link.href }}">{{ link.label }}: {{ link.text }}</a>{% endfor %}</p>
+    <p class="contact-links">{% for link in contact.links %}{% if not loop.first %} | {% endif %}<a href="{{ link.href }}">{{ link.label }}</a>{% endfor %}</p>
     {% endif %}
     {% if contact.job_title %}<p class="job-title">{{ contact.job_title }}</p>{% endif %}
   </header>

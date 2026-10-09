@@ -13,17 +13,17 @@ def test_build_context_formats_contact_and_links(sample_resume: ResumeData) -> N
         "links": [
             {
                 "label": "LinkedIn",
-                "text": "linkedin.com/in/shahriar-hasan-example",
+                "text": "LinkedIn",
                 "href": "https://www.linkedin.com/in/shahriar-hasan-example/",
             },
             {
                 "label": "GitHub",
-                "text": "github.com/shahriar-hasan-example",
+                "text": "GitHub",
                 "href": "https://github.com/shahriar-hasan-example",
             },
             {
                 "label": "LeetCode",
-                "text": "leetcode.com/u/shahriar_hasan_example",
+                "text": "LeetCode",
                 "href": "https://leetcode.com/u/shahriar_hasan_example",
             },
         ],
@@ -153,7 +153,7 @@ def test_build_context_formats_project_links_and_interests(
     assert sections["projects"]["items"][0]["links"] == [
         {
             "label": "GitHub",
-            "text": "github.com/example",
+            "text": "GitHub",
             "href": "https://github.com/example/",
         }
     ]
