@@ -112,7 +112,7 @@ export function ContactForm({ validationRequest = 0 }: ContactFormProps) {
         max={6}
         onChange={(links) => updateContact({ links })}
       />
-      <p role="status" className="text-sm text-slate-600">
+      <p role="status" className="text-sm text-ink-soft">
         Contact details save automatically in this browser.
       </p>
     </section>

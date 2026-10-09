@@ -30,7 +30,7 @@ export function BulletsEditor({
 
   return (
     <fieldset className="grid gap-3">
-      <legend className="font-semibold text-slate-900">{label}</legend>
+      <legend className="font-semibold text-ink">{label}</legend>
       {bullets.map((bullet, index) => (
         <div key={index} className="flex items-start gap-3">
           <span

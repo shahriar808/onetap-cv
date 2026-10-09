@@ -35,7 +35,7 @@ export function CertificationsForm() {
             disabled={item.is_ongoing}
             onChange={(date) => update({ date })}
           />
-          <label className="flex min-h-11 items-center gap-3 text-sm font-medium text-slate-800">
+          <label className="flex min-h-11 items-center gap-3 text-sm font-medium text-ink">
             <input
               type="checkbox"
               checked={item.is_ongoing}
@@ -45,7 +45,7 @@ export function CertificationsForm() {
                   ...(event.currentTarget.checked ? { date: '' } : {}),
                 })
               }
-              className="h-5 w-5 rounded border-slate-300 accent-blue-700"
+              className="h-5 w-5 rounded border-line accent-accent"
             />
             In progress / ongoing
           </label>

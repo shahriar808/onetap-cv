@@ -16,8 +16,8 @@ export function Toggle({
   return (
     <div className="flex min-h-11 items-center justify-between gap-4">
       <div>
-        <p className="font-medium text-slate-900">{label}</p>
-        {description && <p className="text-sm text-slate-600">{description}</p>}
+        <p className="font-medium text-ink">{label}</p>
+        {description && <p className="text-sm text-ink-soft">{description}</p>}
       </div>
       <button
         type="button"

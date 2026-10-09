@@ -26,7 +26,7 @@ export function InterestsForm() {
         }
       />
       {interests.items.length > 0 && (
-        <p className="text-sm text-slate-600" aria-live="polite">
+        <p className="text-sm text-ink-soft" aria-live="polite">
           Preview: {interests.items.join(' · ')}
         </p>
       )}

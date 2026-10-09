@@ -18,7 +18,7 @@ export function SkillsForm() {
   return (
     <div className="grid gap-4">
       <div className="flex flex-wrap items-center gap-2">
-        <p className="mr-1 text-sm font-medium text-slate-700">
+        <p className="mr-1 text-sm font-medium text-ink">
           Quick add groups:
         </p>
         {SUGGESTED_GROUPS.map((group) => (

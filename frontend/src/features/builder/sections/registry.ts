@@ -25,7 +25,7 @@ export interface SectionConfig {
 export function ComingSoonForm() {
   return createElement(
     'p',
-    { className: 'text-sm text-slate-600' },
+    { className: 'text-sm text-ink-soft' },
     'This section is being prepared. Your information will be saved here soon.',
   )
 }
