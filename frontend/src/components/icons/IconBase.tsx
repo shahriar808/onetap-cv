@@ -3,13 +3,14 @@ import type { ReactNode } from 'react'
 export interface IconProps {
   className?: string
   size?: number
+  strokeWidth?: number
 }
 
 interface IconBaseProps extends IconProps {
   children: ReactNode
 }
 
-export function IconBase({ children, className = '', size = 20 }: IconBaseProps) {
+export function IconBase({ children, className = '', size = 20, strokeWidth = 1.75 }: IconBaseProps) {
   return (
     <svg
       aria-hidden="true"
@@ -20,7 +21,7 @@ export function IconBase({ children, className = '', size = 20 }: IconBaseProps)
       className={className}
       fill="none"
       stroke="currentColor"
-      strokeWidth="1.75"
+      strokeWidth={strokeWidth}
       strokeLinecap="round"
       strokeLinejoin="round"
     >

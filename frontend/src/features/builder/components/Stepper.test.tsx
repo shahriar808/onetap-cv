@@ -29,4 +29,22 @@ describe('Stepper', () => {
       '2',
     )
   })
+
+  it('uses a visible moss circle and check icon for completed steps', () => {
+    render(<Stepper currentStep={2} onStepChange={() => {}} />)
+    const completed = screen.getByRole('button', { name: /Contact details.*completed/ })
+    const circle = completed.querySelector('span[aria-hidden="true"]')
+    expect(circle?.className).toContain('bg-moss')
+    expect(circle?.className).not.toContain('bg-paper')
+    expect(circle?.querySelector('svg')).not.toBeNull()
+  })
+
+  it('uses a visible moss circle and check icon for completed steps', () => {
+    render(<Stepper currentStep={2} onStepChange={() => {}} />)
+    const completed = screen.getByRole('button', { name: /Contact details.*completed/ })
+    const circle = completed.querySelector('span[aria-hidden="true"]')
+    expect(circle?.className).toContain('bg-moss')
+    expect(circle?.className).not.toContain('bg-paper')
+    expect(circle?.querySelector('svg')).not.toBeNull()
+  })
 })
