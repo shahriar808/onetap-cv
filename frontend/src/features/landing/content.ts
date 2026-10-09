@@ -144,7 +144,6 @@ export const LANDING_CONTENT = {
     title: 'Thank you for using OneTap CV.',
     body: "I'm Shahriar, a software engineer from Dhaka. I built this so that getting a clean, ATS-friendly CV doesn't need an account, a subscription or a watermark. If it helped you, I'd love to hear about it.",
     location: 'Dhaka, Bangladesh',
-    githubAction: 'Star the project on GitHub',
   },
   feedback: {
     title: 'Found a bug? Want another design? Tell me.',
@@ -168,7 +167,7 @@ export const LANDING_CONTENT = {
       },
       {
         title: 'Choose your sections',
-        intro: "Turn on what's relevant. Anything you switch off is kept, in case you turn it back on.",
+        intro: "Turn on what's relevant, then use the arrows to put your sections in the order you want. Anything you remove is kept, in case you add it back.",
       },
       { title: 'Add your details', intro: 'Use the fields that fit your experience.' },
       { title: 'Pick a design and download', intro: 'Choose a clear layout and check your PDF.' },
