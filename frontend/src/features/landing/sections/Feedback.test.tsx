@@ -83,4 +83,9 @@ describe('Feedback', () => {
     expect(name).toHaveProperty('value', 'Taylor Example')
     expect(screen.getByRole('button', { name: 'Retry' })).not.toBeNull()
   })
+
+  it('shows a single character counter for the message', () => {
+    renderFeedback()
+    expect(screen.getAllByText('0 / 1000 characters')).toHaveLength(1)
+  })
 })

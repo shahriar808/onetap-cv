@@ -215,6 +215,7 @@ export function Feedback() {
                 <Textarea
                   label="Message"
                   required
+                  maxLength={1000}
                   value={fields.message}
                   onChange={(event) =>
                     updateField('message', event.currentTarget.value)
@@ -226,12 +227,9 @@ export function Feedback() {
                   placeholder="Tell me what happened or what you'd like to see."
                   rows={5}
                 />
-                <p className="text-right text-xs text-ink-muted" aria-live="polite">
-                  {fields.message.length}/1000
-                </p>
               </div>
 
-              <div className="grid gap-5 sm:grid-cols-2">
+              <div className="grid items-start gap-5 sm:grid-cols-2">
                 <Input
                   label="Name"
                   value={fields.name}
